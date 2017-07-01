@@ -22,6 +22,7 @@
 #include "parallax-lib/bin/functions.c"
 #include "main.h"
 #include "mobile_goal.c"
+#include "config.c"
 
 void pre_auton(){
 
@@ -36,7 +37,17 @@ task autonomous(){
 */
 
 task usercontrol(){
+  int V, H;
+
   while(true){
+
+    V = vexRT[Ch3];
+		H = vexRT[Ch1];
+
+		if (abs(V) < 15) V = 0;
+		if (abs(H) < 15) H = 0;
+		move(V, H, 0);
+
     if(vexRT[Btn6U] == 1){
       moveMobileGoalLift(UP);
     }
