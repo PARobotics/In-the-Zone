@@ -16,4 +16,13 @@ int mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the
   return SensorValue(mobileGoalLimitSwitch);
 }
 
+void automaticMobileGoalLift(){
+  int t0 = time1[T1];
+  moveMobileGoalLift(UP);
+  while(!isTimedOut(t0 + 5000) || !mobileGoalIsInPlace()){
+    wait1Msec(10);
+  }
+  moveMobileGoalLift(STOP);
+}
+
 #endif

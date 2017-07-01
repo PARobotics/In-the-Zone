@@ -12,5 +12,6 @@
 //Mobile Goal
 void moveMobileGoalLift(int status);
 int mobileGoalIsInPlace();
+void automaticMobileGoalLift();
 
 #endif
