@@ -70,6 +70,16 @@ task usercontrol(){
       moveMobileGoalLift(STOP);
     }
 
+    if(vexRT[Btn5U] == 1){
+      moveTurntable(CLOCKWISE);
+    }
+    else if(vexRT[Btn5D] == 1){
+      moveTurntable(COUNTERCLOCKWISE);
+    }
+    else{
+      moveTurntable(STOP);
+    }
+
 		wait1Msec(10);
 	}
 }
