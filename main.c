@@ -33,6 +33,7 @@
 #include "parallax-lib/bin/functions.c"
 #include "main.h"
 #include "mobile_goal.c"
+#include "cone_lift.c"
 #include "config.c"
 
 void pre_auton(){
