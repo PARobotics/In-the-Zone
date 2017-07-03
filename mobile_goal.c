@@ -19,7 +19,7 @@ int mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the
 void automaticMobileGoalLift(){
   int t0 = time1[T1];
   moveMobileGoalLift(UP);
-  while(!isTimedOut(t0 + 5000) || !mobileGoalIsInPlace()){
+  while(!isTimedOut(t0 + 5000) && !mobileGoalIsInPlace() && vexRT[BAILOUT_BUTTON] == 0){
     wait1Msec(10);
   }
   moveMobileGoalLift(STOP);
