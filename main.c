@@ -80,6 +80,16 @@ task usercontrol(){
       moveTurntable(STOP);
     }
 
+    if(vexRT[Btn7U] == 1){
+      moveFirstLiftJoint(UP);
+    }
+    else if(vexRT[Btn7D] == 1){
+      moveFirstLiftJoint(DOWN);
+    }
+    else{
+      moveFirstLiftJoint(STOP);
+    }
+
 		wait1Msec(10);
 	}
 }

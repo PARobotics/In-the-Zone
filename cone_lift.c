@@ -12,6 +12,20 @@ void moveTurntable(int status){ //Manually controls the turntable rotation
   else if(status == STOP) motor[M_TURNTABLE] = 0;
 }
 
+void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
+  if(status == UP){
+    motor[M_FIRST_LIFT1] = 127;
+    motor[M_FIRST_LIFT2] = 127;
+  }
+  else if(status == DOWN){
+    motor[M_FIRST_LIFT1] = -127;
+    motor[M_FIRST_LIFT2] = -127;
+  }
+  else if(status == STOP){
+    motor[M_FIRST_LIFT1] = 0;
+    motor[M_FIRST_LIFT2] = 0;
+  }
+}
 
 
 

@@ -14,4 +14,8 @@ void moveMobileGoalLift(int status);
 int mobileGoalIsInPlace();
 void automaticMobileGoalLift();
 
+//Cone lift
+void moveTurntable(int status);
+void moveFirstLiftJoint(int status);
+
 #endif
