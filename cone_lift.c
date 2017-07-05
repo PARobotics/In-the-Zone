@@ -6,30 +6,12 @@
   Contains all the code for the cone claw and lift
 */
 
+//Turntable
 void moveTurntable(int val){ //Manually controls the turntable rotation
   if(val == CLOCKWISE) motor[M_TURNTABLE] = 127;
   else if(val == COUNTERCLOCKWISE) motor[M_TURNTABLE] = -127;
   else if(val == STOP) motor[M_TURNTABLE] = 0;
   else motor[M_TURNTABLE] = val;
-}
-
-void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
-  if(status == UP){
-    motor[M_FIRST_LIFT1] = 127;
-    motor[M_FIRST_LIFT2] = 127;
-  }
-  else if(status == DOWN){
-    motor[M_FIRST_LIFT1] = -127;
-    motor[M_FIRST_LIFT2] = -127;
-  }
-  else if(status == STOP){
-    motor[M_FIRST_LIFT1] = 0;
-    motor[M_FIRST_LIFT2] = 0;
-  }
-}
-
-int getTurntableValue(){ //Returns the raw tick value of the turntable
-  return nMotorEncoder[M_TURNTABLE];
 }
 
 void moveTurntableBy(int degrees, int status){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
@@ -58,5 +40,31 @@ void moveTurntableBy(int degrees, int status){ //Automatically rotates the turnt
 
 }
 
+int getTurntableValue(){ //Returns the raw tick value of the turntable
+  return nMotorEncoder[M_TURNTABLE];
+}
+
+//Lift
+void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
+  if(status == UP){
+    motor[M_FIRST_LIFT1] = 127;
+    motor[M_FIRST_LIFT2] = 127;
+  }
+  else if(status == DOWN){
+    motor[M_FIRST_LIFT1] = -127;
+    motor[M_FIRST_LIFT2] = -127;
+  }
+  else if(status == STOP){
+    motor[M_FIRST_LIFT1] = 0;
+    motor[M_FIRST_LIFT2] = 0;
+  }
+}
+
+//Claw
+void moveClaw(int status){
+  if(status == CLOSE) motor[M_CLAW] = 127;
+  else if(status == OPEN) motor[M_CLAW] = -127;
+  else if(status == STOP) motor[M_CLAW] = 0;
+}
 
 #endif

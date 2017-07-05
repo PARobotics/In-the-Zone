@@ -19,5 +19,6 @@ void moveTurntable(int status);
 void moveFirstLiftJoint(int status);
 int getTurntableValue();
 void moveTurntableBy(int degrees, int status);
+void moveClaw(int status);
 
 #endif
