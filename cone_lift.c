@@ -60,22 +60,22 @@ void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
   }
 }
 
-void moveSecondLiftJoint(int status){
+void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
   if(status == UP) motor[M_SECOND_LIFT] = 127;
   else if(status == DOWN) motor[M_SECOND_LIFT] = -127;
   else if(status == STOP) motor[M_SECOND_LIFT] = 0
 }
 
-int getFirstLiftValue(){
+int getFirstLiftValue(){ //Returns the raw tick value of the first lift joint
   return nMotorEncoder[M_FIRST_LIFT1];
 }
 
-int getSecondLiftValue(){
+int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
   return nMotorEncoder[M_SECOND_LIFT];
 }
 
 //Claw
-void moveClaw(int status){
+void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;
   else if(status == OPEN) motor[M_CLAW] = -127;
   else if(status == STOP) motor[M_CLAW] = 0;
