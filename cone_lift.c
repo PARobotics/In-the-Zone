@@ -60,6 +60,20 @@ void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
   }
 }
 
+void moveSecondLiftJoint(int status){
+  if(status == UP) motor[M_SECOND_LIFT] = 127;
+  else if(status == DOWN) motor[M_SECOND_LIFT] = -127;
+  else if(status == STOP) motor[M_SECOND_LIFT] = 0
+}
+
+int getFirstLiftValue(){
+  return nMotorEncoder[M_FIRST_LIFT1];
+}
+
+int getSecondLiftValue(){
+  return nMotorEncoder[M_SECOND_LIFT];
+}
+
 //Claw
 void moveClaw(int status){
   if(status == CLOSE) motor[M_CLAW] = 127;
