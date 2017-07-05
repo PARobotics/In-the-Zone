@@ -90,6 +90,16 @@ task usercontrol(){
       moveFirstLiftJoint(STOP);
     }
 
+    if(vexRT[Btn8U] == 1){
+      moveClaw(OPEN);
+    }
+    else if(vexRT[Btn8D] == 1){
+      moveClaw(CLOSE);
+    }
+    else{
+      moveClaw(STOP);
+    }
+
 		wait1Msec(10);
 	}
 }
