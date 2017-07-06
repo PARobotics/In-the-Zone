@@ -15,7 +15,7 @@ int mobileGoalIsInPlace();
 void automaticMobileGoalLift();
 
 //Cone lift
-void moveTurntable(int status);
+void moveTurntable(int val);
 void moveFirstLiftJoint(int status);
 int getTurntableValue();
 void moveTurntableBy(int degrees, int status);
