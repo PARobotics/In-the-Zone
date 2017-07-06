@@ -45,6 +45,8 @@ void pre_auton(){
 }
 
 task autonomous(){
+	PlaySoundFile("streetknowledge.wav");
+	wait1Msec(3000);
 	autonProcedure();
 }
 
