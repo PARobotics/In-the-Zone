@@ -14,10 +14,13 @@ void userControlProcedure(){
 
 //Set up push release buttons
 #define USE_PR_BUTTON  0
-#define NUM_PR_BUTTONS  0 //Only include if using remote
+#define NUM_PR_BUTTONS  1 //Only include if using remote
 void setUpButtons(){ //Only include if using remote
 
 }
+
+//Configure Sensors
+#define USE_SECOND_BATTERY 1
 
 #define USE_LCD  1
 
@@ -49,8 +52,6 @@ void getWheelVal(){
   SENSORS
 */
 
-//Configure Sensors
-#define USE_SECOND_BATTERY 1
 
 /*
   DEBUGGING TOGGLES

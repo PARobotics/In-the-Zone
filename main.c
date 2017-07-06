@@ -31,10 +31,7 @@
 #pragma userControlDuration(1200)
 
 #include "Vex_Competition_Includes.c"
-//#include "parallax-lib/bin/constants.h"
-//#include "parallax-lib/bin/functions.c"
 #include "parallax-lib/main.c"
-//#include "config.c"
 #include "main.h"
 #include "mobile_goal.c"
 #include "cone_lift.c"
