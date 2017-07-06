@@ -31,9 +31,10 @@
 #pragma userControlDuration(1200)
 
 #include "Vex_Competition_Includes.c"
-#include "parallax-lib/bin/constants.h"
-#include "parallax-lib/bin/functions.c"
-#include "config.c"
+//#include "parallax-lib/bin/constants.h"
+//#include "parallax-lib/bin/functions.c"
+#include "parallax-lib/main.c"
+//#include "config.c"
 #include "main.h"
 #include "mobile_goal.c"
 #include "cone_lift.c"
@@ -92,16 +93,18 @@ task usercontrol(){
       moveFirstLiftJoint(STOP);
     }
 
-    if(vexRT[Btn8L] == 1){
+    if(getPrButton(0) == PUSHED_RELEASED){
       moveClaw(OPEN);
+			resetPrButton(0);
     }
-    else if(vexRT[Btn8R] == 1){
+    else if(getPrButton(1) == PUSHED_RELEASED){
       moveClaw(CLOSE);
+			resetPrButton(1);
     }
     else{
       moveClaw(STOP);
     }
-
+		
 		wait1Msec(10);
 	}
 }
