@@ -37,8 +37,6 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 40, 40, 255, 255, 255, 255, 255};
 #define USE_MONITOR 0//Toggles the monitor task (Necessary for move functions, should be disabled otherwise)
 
 
-#define USE_LCD  0 //Disable if having LCD reset problems, or don't want LCD Selection
-
 //Move functions
 
 void getWheelVal(){
