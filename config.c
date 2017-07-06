@@ -13,11 +13,10 @@ void userControlProcedure(){
 
 
 //Set up push release buttons
-#define USE_PR_BUTTON  1
-#define NUM_PR_BUTTONS  2 //Only include if using remote
+#define USE_PR_BUTTON  0
+#define NUM_PR_BUTTONS  0 //Only include if using remote
 void setUpButtons(){ //Only include if using remote
-  addPrButton(0, Btn8U);
-  addPrButton(1, Btn8D);
+
 }
 
 #define USE_LCD  1
