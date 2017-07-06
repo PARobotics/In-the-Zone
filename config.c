@@ -1,6 +1,7 @@
 #ifndef CONFIG_C
 #define CONFIG_C
 
+
 //Configure preauton
 void preAutonProcedure(){
   //This code runs during preauton
@@ -19,7 +20,8 @@ void setUpButtons(){ //Only include if using remote
   addPrButton(1, Btn8D);
 }
 
-/*
+#define USE_LCD  1
+
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
   sprintf(lcdStr2, "Parallax");
@@ -51,7 +53,7 @@ void getWheelVal(){
 */
 
 //Configure Sensors
-#define USE_SECOND_BATTERY 0
+#define USE_SECOND_BATTERY 1
 
 /*
   DEBUGGING TOGGLES
