@@ -81,16 +81,4 @@ void moveClaw(int status){ //Manually opens and closes the claw
   else if(status == STOP) motor[M_CLAW] = 0;
 }
 
-void openClaw(){ //Automatically opens the claw
-  moveClaw(OPEN);
-  wait1Msec(300);
-  moveClaw(STOP);
-}
-
-void closeClaw(){ //Automatically closes the claw
-  moveClaw(CLOSE);
-  wait1Msec(300);
-  moveClaw(STOP);
-}
-
 #endif

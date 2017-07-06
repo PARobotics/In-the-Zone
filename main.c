@@ -41,10 +41,11 @@
 
 void pre_auton(){
 	nMotorEncoder[M_CLAW] = 0;
+	initialize();
 }
 
 task autonomous(){
-
+	autonProcedure();
 }
 
 /*
@@ -93,18 +94,16 @@ task usercontrol(){
       moveFirstLiftJoint(STOP);
     }
 
-    if(getPrButton(0) == PUSHED_RELEASED){
+    if(vexRT[Btn8U] == 1){
       moveClaw(OPEN);
-			resetPrButton(0);
     }
-    else if(getPrButton(1) == PUSHED_RELEASED){
-      moveClaw(CLOSE);
-			resetPrButton(1);
+    else if(vexRT[Btn8D] == 1){
+      moveClaw(CLOSE):
     }
     else{
-      moveClaw(STOP);
-    }
-		
-		wait1Msec(10);
+    	moveClaw(STOP);
+  	}
+
+		userControlUpdate();
 	}
 }

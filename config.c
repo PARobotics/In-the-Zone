@@ -15,16 +15,11 @@ void userControlProcedure(){
 #define USE_PR_BUTTON  1
 #define NUM_PR_BUTTONS  2 //Only include if using remote
 void setUpButtons(){ //Only include if using remote
-  addPrButton(0, Btn8L);
-  addPrButton(1, Btn8R); 
+  addPrButton(0, Btn8U);
+  addPrButton(1, Btn8D);
 }
 
 /*
-  LCD
-*/
-
-#define USE_LCD  0 //Disable if having LCD reset problems, or don't want LCD Selection
-
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
   sprintf(lcdStr2, "Parallax");
@@ -40,15 +35,15 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 40, 40, 255, 255, 255, 255, 255};
 
 #define USE_MONITOR 0//Toggles the monitor task (Necessary for move functions, should be disabled otherwise)
 
+
+#define USE_LCD  0 //Disable if having LCD reset problems, or don't want LCD Selection
+
 //Move functions
 
 void getWheelVal(){
-  DRV.raw[X_POS] = -SensorValue(WHEEL_L);
-  DRV.raw[Y_POS] = SensorValue(WHEEL_R);
-  DRV.raw[THETA] = SensorValue(G_SENSOR);
-  // no more than 360 deg per move
-  if (DRV.raw[THETA] - DRV.raw_last[THETA] > 2700)  DRV.raw[THETA] = DRV.raw[THETA] - 3600;
-  if (DRV.raw[THETA] - DRV.raw_last[THETA] < -2700) DRV.raw[THETA] = DRV.raw[THETA] + 3600;
+  DRV.raw[X_POS] = 0;
+  DRV.raw[Y_POS] = 0;
+  DRV.raw[THETA] = 0;
 }
 
 /*
