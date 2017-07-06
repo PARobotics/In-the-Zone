@@ -81,4 +81,12 @@ void moveClaw(int status){ //Manually opens and closes the claw
   else if(status == STOP) motor[M_CLAW] = 0;
 }
 
+void openClaw(){
+
+}
+
+void closeClaw(){
+
+}
+
 #endif

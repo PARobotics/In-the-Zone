@@ -39,7 +39,7 @@
 #include "cone_lift.c"
 
 void pre_auton(){
-
+	nMotorEncoder[M_CLAW] = 0;
 }
 
 task autonomous(){
