@@ -93,6 +93,16 @@ task usercontrol(){
       moveFirstLiftJoint(STOP);
     }
 
+		if(vexRT[Btn7L] == 1){
+      moveSecondLiftJoint(UP);
+    }
+    else if(vexRT[Btn7R] == 1){
+      moveSecondLiftJoint(DOWN);
+    }
+    else{
+      moveSecondLiftJoint(STOP);
+    }
+
     if(vexRT[Btn8U] == 1){
       moveClaw(OPEN);
     }

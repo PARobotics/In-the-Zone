@@ -16,7 +16,7 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
 
 void moveTurntableBy(int degrees, int status){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
   int initial = getTurntableValue();
-  int target = initial + degrees * 5 * 10 * RPM_393 / 360; //1:5 gear ratio CHECK OVERCLOCKING HERE
+  int target = initial + degrees * 5 * 10 * RPM_393 / 360; //1:5 gear ratio, underclocked
   int distanceToTarget = abs(target - initial);
   int currentVal = initial;
 
