@@ -42,8 +42,6 @@ void pre_auton(){
 }
 
 task autonomous(){
-	PlaySoundFile("streetknowledge.wav");
-	wait1Msec(3000);
 	autonProcedure();
 }
 
@@ -53,6 +51,9 @@ task autonomous(){
 
 task usercontrol(){
   int V, H;
+
+  playSoundFile("yeahboi.wav");
+	wait1Msec(3000);
 
   while(true){
 
