@@ -53,7 +53,6 @@ task usercontrol(){
   int V, H;
 
   playSoundFile("yeahboi.wav");
-	wait1Msec(3000);
 
   while(true){
 
