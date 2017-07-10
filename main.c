@@ -39,10 +39,12 @@
 void pre_auton(){
 	nMotorEncoder[M_CLAW] = 0;
 	bStopTasksBetweenModes = false;
+	startTask(mobileGoalTask, 9);
 	initialize();
 }
 
 task autonomous(){
+	stopTask(usercontrol);
 	autonProcedure();
 }
 
@@ -52,6 +54,8 @@ task autonomous(){
 
 task usercontrol(){
   int V, H;
+
+  stopTask(autonomous);
 
   playSoundFile("yeahboi.wav");
 
