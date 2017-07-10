@@ -64,13 +64,10 @@ task usercontrol(){
 		move(V, H, 0);
 
     if(vexRT[Btn6U] == 1){
-      moveMobileGoalLift(UP);
+      automaticMobileGoalLift();
     }
     else if(vexRT[Btn6D] == 1){
-      moveMobileGoalLift(DOWN);
-    }
-    else{
-      moveMobileGoalLift(STOP);
+      automaticMobileGoalScore();
     }
 
     if(vexRT[Btn5U] == 1){
