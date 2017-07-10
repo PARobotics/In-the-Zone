@@ -6,8 +6,12 @@
   Holds various variables and wrapper functions
 */
 
+// ** Global variables **
 
-//Wrapper functions
+//Command Flags
+int MOBILE_GOAL_COMMAND = STOP;
+
+// ** Wrapper functions **
 
 //Mobile Goal
 void moveMobileGoalLift(int status);

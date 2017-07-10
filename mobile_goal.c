@@ -17,34 +17,52 @@ int mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the
   return SensorValue(mobileGoalLimitSwitch);
 }
 
-void automaticMobileGoalLift(){ //Automatically raises mobile goal into place
-  int t0 = time1[T1];
-  moveMobileGoalLift(UP);
-  while(!isTimedOut(t0 + 5000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
- 		moveMobileGoalLift(UP);
-    wait1Msec(10);
-  }
-  moveMobileGoalLift(STOP);
-}
+task mobileGoalTask(){
+  while (true) {
+    if(MOBILE_GOAL_COMMAND == UP){ //Automatically raises mobile goal into place
+      int t0 = time1[T1];
+      moveMobileGoalLift(UP);
+      while(!isTimedOut(t0 + 5000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
+     		moveMobileGoalLift(UP);
+        wait1Msec(10);
+      }
+      moveMobileGoalLift(STOP);
+      MOBILE_GOAL_COMMAND = STOP;
+    }
+    else if(MOBILE_GOAL_COMMAND == DOWN){ //Automatically lowers mobile goal into place
+      int t0 = time1[T1];
+      moveMobileGoalLift(DOWN);
+      while(!isTimedOut(t0 + 1200)){
+     		moveMobileGoalLift(DOWN);
+        wait1Msec(10);
+      }
+      t0 = time1[T1];
+      while(!isTimedOut(t0 + 300)){
+      	moveMobileGoalLift(-30);
+        wait1Msec(10);
+    	}
+    	t0 = time1[T1];
+      while(!isTimedOut(t0 + 200)){
+      	moveMobileGoalLift(30);
+        wait1Msec(10);
+    	}
+      moveMobileGoalLift(STOP);
+      MOBILE_GOAL_COMMAND = STOP;
+    }
+    else if(MOBILE_GOAL_COMMAND == MANUAL_UP){
+      moveMobileGoalLift(UP);
+      MOBILE_GOAL_COMMAND = STOP;
+    }
+    else if(MOBILE_GOAL_COMMAND == MANUAL_DOWN){
+      moveMobileGoalLift(DOWN);
+      MOBILE_GOAL_COMMAND = STOP;
+    }
+    else{
+      moveMobileGoalLift(STOP);
+    }
 
-void automaticMobileGoalScore(){ //Automatically lowers mobile goal into place
-	int t0 = time1[T1];
-  moveMobileGoalLift(DOWN);
-  while(!isTimedOut(t0 + 1200)){
- 		moveMobileGoalLift(DOWN);
-    wait1Msec(10);
+		wait1Msec(10);
   }
-  t0 = time1[T1];
-  while(!isTimedOut(t0 + 300)){
-  	moveMobileGoalLift(-30);
-    wait1Msec(10);
-	}
-	t0 = time1[T1];
-  while(!isTimedOut(t0 + 200)){
-  	moveMobileGoalLift(30);
-    wait1Msec(10);
-	}
-  moveMobileGoalLift(STOP);
 }
 
 #endif

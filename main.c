@@ -38,6 +38,7 @@
 
 void pre_auton(){
 	nMotorEncoder[M_CLAW] = 0;
+	bStopTasksBetweenModes = false;
 	initialize();
 }
 
@@ -64,10 +65,10 @@ task usercontrol(){
 		move(V, H, 0);
 
     if(vexRT[Btn6U] == 1){
-      automaticMobileGoalLift();
+      MOBILE_GOAL_COMMAND = UP;
     }
     else if(vexRT[Btn6D] == 1){
-      automaticMobileGoalScore();
+      MOBILE_GOAL_COMMAND = DOWN;
     }
 
     if(vexRT[Btn5U] == 1){

@@ -5,6 +5,7 @@
 //Configure preauton
 void preAutonProcedure(){
   //This code runs during preauton
+  startTask(mobileGoalTask, 9);
 }
 
 void userControlProcedure(){
