@@ -74,6 +74,9 @@ task usercontrol(){
     else if(vexRT[Btn6D] == 1){
       MOBILE_GOAL_COMMAND = DOWN;
     }
+		else if(vexRT[Btn7L] == 1){
+			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+		}
 
     if(vexRT[Btn5U] == 1){
       moveTurntable(CLOCKWISE);

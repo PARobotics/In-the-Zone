@@ -6,6 +6,9 @@
   Holds various variables and wrapper functions
 */
 
+// ** Custom Easy Names **
+#define DOWN_WITHOUT_GOAL 10
+
 // ** Global variables **
 
 //Command Flags
