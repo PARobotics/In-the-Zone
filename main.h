@@ -27,6 +27,7 @@ void automaticMobileGoalLift();
 void moveTurntable(int val);
 void moveFirstLiftJoint(int status);
 int getTurntableValue();
+int getTurntableDegrees();
 void moveTurntableBy(int degrees, int status);
 void moveClaw(int status);
 void moveSecondLiftJoint(int status);

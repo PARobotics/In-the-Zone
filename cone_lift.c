@@ -14,7 +14,7 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
   else motor[M_TURNTABLE] = val;
 }
 
-void moveTurntableBy(int degrees, int status){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
+void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
   int initial = getTurntableValue();
   int target = initial + degrees * 5 * 10 * RPM_393 / 360; //1:5 gear ratio, underclocked
   int distanceToTarget = abs(target - initial);
@@ -24,7 +24,7 @@ void moveTurntableBy(int degrees, int status){ //Automatically rotates the turnt
 
   moveTurntable(status);
 
-  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + 3000)){
+  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
     currentVal = getTurntableValue();
 
     if(distanceToTarget < 5 * RPM_393 / 360){ //Within 1 degree: STOP
@@ -42,6 +42,13 @@ void moveTurntableBy(int degrees, int status){ //Automatically rotates the turnt
 
 int getTurntableValue(){ //Returns the raw tick value of the turntable
   return nMotorEncoder[M_TURNTABLE];
+}
+
+int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
+  int raw = getTurntableValue();
+  int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
+
+  return degrees;
 }
 
 // ** Lift **
