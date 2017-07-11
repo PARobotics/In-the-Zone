@@ -98,7 +98,7 @@ void closeClaw(){ //Automatically closes the claw
   moveClaw(CLOSE);
   clawIsClosed = 1;
   while(!isTimedOut(t0 +500)){
-    moveClaw(100);
+    moveClaw(15);
     wait1Msec(10);
   }
 }
