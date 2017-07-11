@@ -7,6 +7,17 @@
 */
 
 // ** Turntable **
+int getTurntableValue(){ //Returns the raw tick value of the turntable
+  return nMotorEncoder[M_TURNTABLE];
+}
+
+int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
+  int raw = getTurntableValue();
+  int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
+
+  return degrees;
+}
+
 void moveTurntable(int val){ //Manually controls the turntable rotation
   if(val == CLOCKWISE) motor[M_TURNTABLE] = 127;
   else if(val == COUNTERCLOCKWISE) motor[M_TURNTABLE] = -127;
@@ -29,26 +40,23 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
     if(distanceToTarget < 5 * RPM_393 / 360){ //Within 1 degree: STOP
       moveTurntable(STOP);
+      break;
     }
     else if(distanceToTarget < 5 * 5 * RPM_393 / 360){ //Within 5 degree: Start BRAKING
-      moveTurntable(60);
+      moveTurntable(SIGN(status) * 60);
     }
 
     distanceToTarget = abs(target - currentVal);
     wait1Msec(10);
   }
+}
+
+void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
 
 }
 
-int getTurntableValue(){ //Returns the raw tick value of the turntable
-  return nMotorEncoder[M_TURNTABLE];
-}
+void moveTurntableToFront(){ //Automatically snaps the turntable to the front 
 
-int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
-  int raw = getTurntableValue();
-  int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
-
-  return degrees;
 }
 
 // ** Lift **
