@@ -11,6 +11,8 @@
 
 // ** Global variables **
 
+int clawIsClosed = 0;
+
 //Command Flags
 int MOBILE_GOAL_COMMAND = STOP;
 

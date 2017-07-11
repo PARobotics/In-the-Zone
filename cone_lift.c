@@ -79,12 +79,14 @@ void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;
   else if(status == OPEN) motor[M_CLAW] = -127;
   else if(status == STOP) motor[M_CLAW] = 0;
+  else motor[M_CLAW] = status;
 }
 
 void openClaw(){ //Automatically opens the claw
   int t0 = time1[T1];
   moveClaw(OPEN);
-  while(!isTimedOut(t0 + 500)){
+  clawIsClosed = 0;
+  while(!isTimedOut(t0 + 200)){
     moveClaw(OPEN);
     wait1Msec(10);
   }
@@ -94,11 +96,11 @@ void openClaw(){ //Automatically opens the claw
 void closeClaw(){ //Automatically closes the claw
   int t0 = time1[T1];
   moveClaw(CLOSE);
-  while(!isTimedOut(t0 + 500)){
-    moveClaw(CLOSE);
+  clawIsClosed = 1;
+  while(!isTimedOut(t0 +500)){
+    moveClaw(100);
     wait1Msec(10);
   }
-  moveClaw(STOP);
 }
 
 #endif

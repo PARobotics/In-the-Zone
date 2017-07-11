@@ -114,6 +114,9 @@ task usercontrol(){
     else if(vexRT[Btn8D] == 1){
       closeClaw():
     }
+    else if(clawIsClosed){
+    	moveClaw(10);
+    }
 
 		userControlUpdate();
 	}
