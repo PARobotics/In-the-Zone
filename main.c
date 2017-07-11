@@ -109,14 +109,11 @@ task usercontrol(){
     }
 
     if(vexRT[Btn8U] == 1){
-      moveClaw(OPEN);
+      openClaw();
     }
     else if(vexRT[Btn8D] == 1){
-      moveClaw(CLOSE):
+      closeClaw():
     }
-    else{
-    	moveClaw(STOP);
-  	}
 
 		userControlUpdate();
 	}

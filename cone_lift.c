@@ -6,7 +6,7 @@
   Contains all the code for the cone claw and lift
 */
 
-//Turntable
+// ** Turntable **
 void moveTurntable(int val){ //Manually controls the turntable rotation
   if(val == CLOCKWISE) motor[M_TURNTABLE] = 127;
   else if(val == COUNTERCLOCKWISE) motor[M_TURNTABLE] = -127;
@@ -44,7 +44,7 @@ int getTurntableValue(){ //Returns the raw tick value of the turntable
   return nMotorEncoder[M_TURNTABLE];
 }
 
-//Lift
+// ** Lift **
 void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
   if(status == UP){
     motor[M_FIRST_LIFT1] = 127;
@@ -74,11 +74,31 @@ int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
   return nMotorEncoder[M_SECOND_LIFT];
 }
 
-//Claw
+// ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;
   else if(status == OPEN) motor[M_CLAW] = -127;
   else if(status == STOP) motor[M_CLAW] = 0;
+}
+
+void openClaw(){ //Automatically opens the claw
+  int t0 = time1[T1];
+  moveClaw(OPEN);
+  while(!isTimedOut(t0 + 500)){
+    moveClaw(OPEN);
+    wait1Msec(10);
+  }
+  moveClaw(STOP);
+}
+
+void closeClaw(){ //Automatically closes the claw
+  int t0 = time1[T1];
+  moveClaw(CLOSE);
+  while(!isTimedOut(t0 + 500)){
+    moveClaw(CLOSE);
+    wait1Msec(10);
+  }
+  moveClaw(STOP);
 }
 
 #endif
