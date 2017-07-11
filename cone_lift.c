@@ -15,6 +15,8 @@ int getTurntableDegrees(){ //Returns the degree value of the turntable in units 
   int raw = getTurntableValue();
   int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
 
+  if(degrees < 0) degrees += 3600; 
+
   return degrees;
 }
 
@@ -45,6 +47,9 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
     else if(distanceToTarget < 5 * 5 * RPM_393 / 360){ //Within 5 degree: Start BRAKING
       moveTurntable(SIGN(status) * 60);
     }
+    else{
+      moveTurntable(status);
+    }
 
     distanceToTarget = abs(target - currentVal);
     wait1Msec(10);
@@ -52,11 +57,31 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 }
 
 void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
+  int currentTheta = getTurntableDegrees();
+  int desiredTheta = 0;
 
+  if(currentTheta - desiredTheta <= 1800){
+    //Counterclockwise
+    moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
+  }
+  else{
+    //Clockwise
+    moveTurntableBy(3600 - (currentTheta - desiredTheta), CLOCKWISE, 1500);
+  }
 }
 
-void moveTurntableToFront(){ //Automatically snaps the turntable to the front 
+void moveTurntableToFront(){ //Automatically snaps the turntable to the front
+  int currentTheta = getTurntableDegrees();
+  int desiredTheta = 1800;
 
+  if(currentTheta - desiredTheta <= 1800){
+    //Counterclockwise
+    moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
+  }
+  else{
+    //Clockwise
+    moveTurntableBy(3600 - (currentTheta - desiredTheta), CLOCKWISE, 1500);
+  }
 }
 
 // ** Lift **
