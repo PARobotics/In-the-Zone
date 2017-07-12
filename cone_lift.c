@@ -13,7 +13,7 @@ int getTurntableValue(){ //Returns the raw tick value of the turntable
 
 int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
   int raw = getTurntableValue();
-  int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
+  int degrees = (raw * 360 * 10 * 12 / RPM_393_HS / 66) % 3600; //Make sure degrees dont overflow past 360 degrees
 
   if(degrees < 0) degrees += 3600;
 

@@ -14,7 +14,7 @@
 int clawIsClosed = 0;
 
 //Command Flags
-int MOBILE_GOAL_COMMAND = STOP;
+int MOBILE_GOAL_COMMAND = 0;
 
 // ** Wrapper functions **
 

@@ -31,13 +31,14 @@
 #pragma userControlDuration(1200)
 
 #include "Vex_Competition_Includes.c"
-#include "parallax-lib/main.c"
 #include "main.h"
+#include "parallax-lib/main.c"
 #include "mobile_goal.c"
 #include "cone_lift.c"
 
 void pre_auton(){
 	nMotorEncoder[M_CLAW] = 0;
+	nMotorEncoder[M_TURNTABLE] = 0;
 	bStopTasksBetweenModes = false;
 	startTask(mobileGoalTask, 9);
 	initialize();
