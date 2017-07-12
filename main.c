@@ -80,10 +80,10 @@ task usercontrol(){
 		}
 
     if(vexRT[Btn5U] == 1){
-      moveTurntable(CLOCKWISE);
+      moveTurntableBy(450, CLOCKWISE, 2000);
     }
     else if(vexRT[Btn5D] == 1){
-      moveTurntable(COUNTERCLOCKWISE);
+      moveTurntableBy(450, COUNTERCLOCKWISE, 2000);
     }
     else{
       moveTurntable(STOP);
