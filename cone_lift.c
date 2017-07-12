@@ -19,6 +19,12 @@ int ticksToDegrees(int ticks){
   return degrees;
 }
 
+int degreesToTicks(int degrees){
+  int ticks = degrees * 66 * RPM_393_HS / 360 / 10 / 12;
+
+  return ticks;
+}
+
 int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
   int raw = getTurntableValue();
   int degrees = ticksToDegrees(raw);
@@ -34,10 +40,12 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
 }
 
 void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
-  int initial = getTurntableDegrees();
-  int target = ticksToDegrees(initial) + degrees;
+  int initial = getTurntableValue();
+  int target = initial + degreesToTicks(degrees);
   int distanceToTarget = abs(target - initial);
   int currentVal = initial;
+
+  writeDebugStreamLine("initial: %d target: %d", initial, target);
 
   int t0 = time1[T1];
 
@@ -46,12 +54,12 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
   while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
     currentVal = getTurntableDegrees();
 
-    if(distanceToTarget < 10){ //Within 1 degree: STOP
+    if(distanceToTarget < degreesToTicks(10)){ //Within 1 degree: STOP
       moveTurntable(STOP);
       break;
     }
-    else if(distanceToTarget < 50){ //Within 5 degree: Start BRAKING
-      moveTurntable(SIGN(status) * 60);
+    else if(distanceToTarget < degreesToTicks(50)){ //Within 5 degree: Start BRAKING
+      moveTurntable(SIGN(status) * 50);
     }
     else{
       moveTurntable(status);
