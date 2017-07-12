@@ -40,34 +40,33 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
 }
 
 void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
-  int initial = getTurntableValue();
-  int target = initial + degreesToTicks(degrees);
-  int distanceToTarget = abs(target - initial);
-  int currentVal = initial;
+  int currentVal = getTurntableValue();
+  int target = initial + status * abs(degreesToTicks(degrees));
 
-  writeDebugStreamLine("initial: %d target: %d", initial, target);
+  writeDebugStreamLine("initial: %d target: %d", currentVal, target);
 
   int t0 = time1[T1];
 
   moveTurntable(status);
 
   while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
-    currentVal = getTurntableDegrees();
+    currentVal = getTurntableValue();
 
-    if(distanceToTarget < degreesToTicks(10)){ //Within 1 degree: STOP
-      moveTurntable(STOP);
-      break;
+    if(status == CLOCKWISE){
+      if(target - currentVal < degreesToTicks(20)) break;
+      else if(target - currentVal < degreesToTicks(50)) moveTurntable(status * 50);
+      else moveTurntable(status);
     }
-    else if(distanceToTarget < degreesToTicks(50)){ //Within 5 degree: Start BRAKING
-      moveTurntable(SIGN(status) * 50);
-    }
-    else{
-      moveTurntable(status);
+    else if(status == COUNTERCLOCKWISE){
+      if(currentVal - target < degreesToTicks(20)) break;
+      else if(currentVal - target < degreesToTicks(50)) moveTurntable(status * 50);
+      else moveTurntable(status);
     }
 
-    distanceToTarget = abs(target - currentVal);
     wait1Msec(10);
   }
+
+  moveTurntable(STOP);
 }
 
 void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
