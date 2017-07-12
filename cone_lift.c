@@ -41,7 +41,7 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
 
 void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
   int currentVal = getTurntableValue();
-  int target = initial + status * abs(degreesToTicks(degrees));
+  int target = currentVal + status * abs(degreesToTicks(degrees));
 
   writeDebugStreamLine("initial: %d target: %d", currentVal, target);
 
