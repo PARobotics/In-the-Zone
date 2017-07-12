@@ -15,7 +15,7 @@ int getTurntableDegrees(){ //Returns the degree value of the turntable in units 
   int raw = getTurntableValue();
   int degrees = (raw * 360 * 10 / RPM_393) % 3600; //Make sure degrees dont overflow past 360 degrees
 
-  if(degrees < 0) degrees += 3600; 
+  if(degrees < 0) degrees += 3600;
 
   return degrees;
 }
@@ -126,7 +126,7 @@ void openClaw(){ //Automatically opens the claw
   int t0 = time1[T1];
   moveClaw(OPEN);
   clawIsClosed = 0;
-  while(!isTimedOut(t0 + 200)){
+  while(!isTimedOut(t0 + 150)){
     moveClaw(OPEN);
     wait1Msec(10);
   }
@@ -137,8 +137,8 @@ void closeClaw(){ //Automatically closes the claw
   int t0 = time1[T1];
   moveClaw(CLOSE);
   clawIsClosed = 1;
-  while(!isTimedOut(t0 +500)){
-    moveClaw(15);
+  while(!isTimedOut(t0 +400)){
+    moveClaw(100);
     wait1Msec(10);
   }
 }
