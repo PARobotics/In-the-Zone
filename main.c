@@ -80,10 +80,10 @@ task usercontrol(){
 		}*/
 
     if(vexRT[Btn5U] == 1){
-      moveTurntableBy(450, CLOCKWISE, 2000);
+      moveTurntableBy(900, CLOCKWISE, 2000);
     }
     else if(vexRT[Btn5D] == 1){
-      moveTurntableBy(450, COUNTERCLOCKWISE, 2000);
+      moveTurntableBy(900, COUNTERCLOCKWISE, 2000);
     }
     else{
       moveTurntable(STOP);
@@ -113,7 +113,7 @@ task usercontrol(){
       openClaw();
     }
     else if(vexRT[Btn8D] == 1){
-      closeClaw():
+      closeClaw();
     }
     else if(clawIsClosed){
     	moveClaw(10);

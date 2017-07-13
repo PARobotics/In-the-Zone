@@ -47,7 +47,7 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
   int t0 = time1[T1];
 
-  moveTurntable(status);
+  moveTurntable(status * 80);
 
   int distanceToTarget = 0;
 
@@ -58,11 +58,12 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
     if(status == COUNTERCLOCKWISE) distanceToTarget = currentVal - target;
 
     if(distanceToTarget < degreesToTicks(20)) break;
-    else if(distanceToTarget < degreesToTicks(50)) moveTurntable(status * 10);
-    else if(distanceToTarget < degreesToTicks(200)) moveTurntable(status * 30);
-    else if(distanceToTarget < degreesToTicks(450)) moveTurntable(status * 60);
-    else if(distanceToTarget < degreesToTicks(900)) moveTurntable(status * 100);
-    else moveTurntable(status);
+    else if(distanceToTarget < degreesToTicks(40)) moveTurntable(-1 * status * 10);
+    else if(distanceToTarget < degreesToTicks(70)) moveTurntable(status * 10);
+    else if(distanceToTarget < degreesToTicks(150)) moveTurntable(status * 20);
+    else if(distanceToTarget < degreesToTicks(450)) moveTurntable(status * 30);
+    else if(distanceToTarget < degreesToTicks(600)) moveTurntable(status * 60);
+    else moveTurntable(status * 80);
 
     wait1Msec(10);
   }
