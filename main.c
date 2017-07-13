@@ -44,7 +44,9 @@ void pre_auton(){
 	nMotorEncoder[M_SECOND_LIFT] = 0;
 
 	bStopTasksBetweenModes = false;
-	startTask(mobileGoalTask, 9);
+	startTask(mobileGoalTask);
+	startTask(coneLiftTask);
+	
 	initialize();
 }
 

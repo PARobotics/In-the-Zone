@@ -168,4 +168,22 @@ void closeClaw(){ //Automatically closes the claw
   }
 }
 
+task coneLiftTask(){
+  int currentlyCarrying = 0;
+
+  while(true){
+    if(CONE_LIFT_COMMAND == CARRY){
+      if(currentlyCarrying == 0){
+        //Initially set desired values
+      }
+    }
+    else{
+      moveFirstLiftJoint(STOP);
+      moveSecondLiftJoint(STOP);
+    }
+
+    wait1Msec(10);
+  }
+}
+
 #endif

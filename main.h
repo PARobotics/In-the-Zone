@@ -15,6 +15,7 @@ int clawIsClosed = 0;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;
+int CONE_LIFT_COMMAND = 0;
 
 // ** Wrapper functions **
 
@@ -36,7 +37,7 @@ void moveSecondLiftJoint(int status);
 int getFirstLiftValue();
 int getSecondLiftValue();
 int getFirstLiftDegrees();
-int getFirstLiftDegrees();
+int getSecondLiftDegrees();
 void openClaw();
 void closeClaw();
 
