@@ -49,19 +49,20 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
   moveTurntable(status);
 
+  int distanceToTarget = 0;
+
   while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
     currentVal = getTurntableValue();
 
-    if(status == CLOCKWISE){
-      if(target - currentVal < degreesToTicks(20)) break;
-      else if(target - currentVal < degreesToTicks(50)) moveTurntable(status * 50);
-      else moveTurntable(status);
-    }
-    else if(status == COUNTERCLOCKWISE){
-      if(currentVal - target < degreesToTicks(20)) break;
-      else if(currentVal - target < degreesToTicks(50)) moveTurntable(status * 50);
-      else moveTurntable(status);
-    }
+    distanceToTarget = target - currentVal;
+    if(status == COUNTERCLOCKWISE) distanceToTarget = currentVal - target;
+
+    if(distanceToTarget < degreesToTicks(20)) break;
+    else if(distanceToTarget < degreesToTicks(50)) moveTurntable(status * 10);
+    else if(distanceToTarget < degreesToTicks(200)) moveTurntable(status * 30);
+    else if(distanceToTarget < degreesToTicks(450)) moveTurntable(status * 60);
+    else if(distanceToTarget < degreesToTicks(900)) moveTurntable(status * 100);
+    else moveTurntable(status);
 
     wait1Msec(10);
   }
