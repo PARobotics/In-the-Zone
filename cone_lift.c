@@ -127,6 +127,18 @@ int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
   return nMotorEncoder[M_SECOND_LIFT];
 }
 
+int getFirstLiftDegrees(){ //Returns the value of the first lift joint in 0.1 degrees
+  int raw = getFirstLiftValue();
+  int degrees = raw * 360 * 10 / RPM_393 / 3;
+  return degrees;
+}
+
+int getSecondLiftDegrees(){ //Returns the value of the second lift joint in 0.1 degrees
+  int raw = getSecondLiftValue();
+  int degrees = raw * 360 * 10 / RPM_393 / 6;
+  return degrees;
+}
+
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;

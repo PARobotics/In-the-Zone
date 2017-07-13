@@ -35,6 +35,8 @@ void moveClaw(int status);
 void moveSecondLiftJoint(int status);
 int getFirstLiftValue();
 int getSecondLiftValue();
+int getFirstLiftDegrees();
+int getFirstLiftDegrees();
 void openClaw();
 void closeClaw();
 
