@@ -73,15 +73,14 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
 void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
   int currentTheta = getTurntableDegrees();
-  int desiredTheta = 0;
 
-  if(currentTheta - desiredTheta <= 1800){
+  if(currentTheta <= 1800){
     //Counterclockwise
-    moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
+    moveTurntableBy(currentTheta, COUNTERCLOCKWISE, 1000);
   }
   else{
     //Clockwise
-    moveTurntableBy(3600 - (currentTheta - desiredTheta), CLOCKWISE, 1500);
+    moveTurntableBy(3600 - currentTheta, CLOCKWISE, 1000);
   }
 }
 
@@ -89,14 +88,13 @@ void moveTurntableToFront(){ //Automatically snaps the turntable to the front
   int currentTheta = getTurntableDegrees();
   int desiredTheta = 1800;
 
-  if(currentTheta - desiredTheta <= 1800){
-    //Counterclockwise
-    moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
-  }
-  else{
-    //Clockwise
-    moveTurntableBy(3600 - (currentTheta - desiredTheta), CLOCKWISE, 1500);
-  }
+  if(currentTheta <= 1800){
+  	//Clockwise
+  	moveTurntableBy(desiredTheta - currentTheta, CLOCKWISE, 1000);
+	}
+	else{
+		moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1000);
+	}
 }
 
 // ** Lift **
