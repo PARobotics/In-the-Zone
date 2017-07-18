@@ -208,12 +208,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       getLiftValue();
 
       appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (getFirstLiftValue() - targetVals[0]) - CONE_LIFT1_KV * LIFT1_SPEED;
-      appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (getSecondLiftValue() - targetVals[1]) - CONE_LIFT2_KV * LIFT2_SPEED;
+      //appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (getSecondLiftValue() - targetVals[1]) - CONE_LIFT2_KV * LIFT2_SPEED;
 
       appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
-      appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
+      //appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
-      writeDebugStreamLine("%d %d", appliedVoltages[0], appliedVoltages[1]);
+      writeDebugStreamLine("%d %d %d %d", targetVals[0], targetVals[1], appliedVoltages[0], appliedVoltages[1]);
 
       moveFirstLiftJoint(appliedVoltages[0]);
     	moveSecondLiftJoint(appliedVoltages[1]);
