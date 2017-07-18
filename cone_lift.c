@@ -147,18 +147,6 @@ void getLiftValue(){
   timeI = timeF;
 }
 
-#define CONE_LIFT1_MAX_V 127
-#define CONE_LIFT1_MIN_V -127
-#define CONE_LIFT1_DEFAULT_V 60
-#define CONE_LIFT1_KX 0.1
-#define CONE_LIFT1_KV 0.1
-
-#define CONE_LIFT2_MAX_V 127
-#define CONE_LIFT2_MIN_V -127
-#define CONE_LIFT2_DEFAULT_V 60
-#define CONE_LIFT2_KX 0.1
-#define CONE_LIFT2_KV 0.1
-
 task coneLiftTask(){ //Controls the position of the lift continuously
   int currentlyCarrying = 0;
   int targetVals[2];

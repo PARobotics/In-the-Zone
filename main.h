@@ -6,11 +6,31 @@
   Holds various variables and wrapper functions
 */
 
+// ** Constants **
+#define CONE_LIFT1_MAX_V 127
+#define CONE_LIFT1_MIN_V -127
+#define CONE_LIFT1_DEFAULT_V 60
+#define CONE_LIFT1_KX 0.1
+#define CONE_LIFT1_KV 0.1
+
+#define CONE_LIFT2_MAX_V 127
+#define CONE_LIFT2_MIN_V -127
+#define CONE_LIFT2_DEFAULT_V 60
+#define CONE_LIFT2_KX 0.1
+#define CONE_LIFT2_KV 0.1
+
+
 // ** Custom Easy Names **
 #define DOWN_WITHOUT_GOAL 10
 
 // ** Global variables **
-int LIFT1_VALUE, LIFT2_VALUE, LIFT1_VALUE0, LIFT2_VALUE0, LIFT1_SPEED, LIFT2_SPEED, timeI;
+int LIFT1_VALUE = 0;
+int LIFT2_VALUE = 0;
+int LIFT1_VALUE0 = 0;
+int LIFT2_VALUE0 = 0;
+int LIFT1_SPEED = 0;
+int LIFT2_SPEED = 0;
+int timeI = 0;
 int clawIsClosed = 0;
 
 //Command Flags
