@@ -33,6 +33,7 @@
 #include "Vex_Competition_Includes.c"
 #include "main.h"
 #include "parallax-lib/main.c"
+#include "Includes/PID.c"
 #include "mobile_goal.c"
 #include "cone_lift.c"
 
@@ -46,7 +47,7 @@ void pre_auton(){
 	bStopTasksBetweenModes = false;
 	startTask(mobileGoalTask);
 	startTask(coneLiftTask);
-	
+
 	initialize();
 }
 
@@ -121,6 +122,13 @@ task usercontrol(){
     else if(clawIsClosed){
     	moveClaw(10);
     }
+
+		if(vexRT[Btn8L] == 1){
+			CONE_LIFT_COMMAND = HOLD;
+		}
+		else if(vexRT[Btn8R] == 1){
+			CONE_LIFT_COMMAND = STOP;
+		}
 
 		userControlUpdate();
 	}

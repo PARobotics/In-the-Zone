@@ -10,7 +10,7 @@
 #define DOWN_WITHOUT_GOAL 10
 
 // ** Global variables **
-
+int LIFT1_VALUE, LIFT2_VALUE, LIFT1_VALUE0, LIFT2_VALUE0, LIFT1_SPEED, LIFT2_SPEED, timeI;
 int clawIsClosed = 0;
 
 //Command Flags
@@ -36,8 +36,7 @@ void moveClaw(int status);
 void moveSecondLiftJoint(int status);
 int getFirstLiftValue();
 int getSecondLiftValue();
-int getFirstLiftDegrees();
-int getSecondLiftDegrees();
+void getLiftValue();
 void openClaw();
 void closeClaw();
 
