@@ -112,8 +112,8 @@ void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
     motor[M_FIRST_LIFT2] = 0;
   }
   else{
-    motor[M_FIRST_LIFT1] = val;
-    motor[M_FIRST_LIFT2] = val;
+    motor[M_FIRST_LIFT1] = status;
+    motor[M_FIRST_LIFT2] = status;
   }
 }
 
@@ -121,7 +121,7 @@ void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
   if(status == UP) motor[M_SECOND_LIFT] = 127;
   else if(status == DOWN) motor[M_SECOND_LIFT] = -127;
   else if(status == STOP) motor[M_SECOND_LIFT] = 0;
-  else motor[M_SECOND_LIFT] = val;
+  else motor[M_SECOND_LIFT] = status;
 }
 
 int getFirstLiftValue(){ //Returns the raw tick value of the first lift joint
@@ -140,59 +140,14 @@ void getLiftValue(){
   LIFT2_VALUE = getSecondLiftValue();
 
   int timeF = time1[T1];
+	int deltaT = (timeF - timeI);
+	if(deltaT == 0) deltaT = 1;
 
-  LIFT1_SPEED = (LIFT1_VALUE - LIFT1_VALUE0) / (timeF - timeI);
-  LIFT2_SPEED = (LIFT2_VALUE - LIFT2_VALUE0) / (timeF - timeI);
+
+  LIFT1_SPEED = (LIFT1_VALUE - LIFT1_VALUE0) / deltaT;
+  LIFT2_SPEED = (LIFT2_VALUE - LIFT2_VALUE0) / deltaT;
 
   timeI = timeF;
-}
-
-task coneLiftTask(){ //Controls the position of the lift continuously
-  int currentlyCarrying = 0;
-  int targetVals[2];
-  int appliedVoltages[2] = {0, 0};
-
-  while(true){
-    if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
-
-    if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
-      if(currentlyCarrying == 0){
-        //Initially set desired values
-        targetVals[0] = getFirstLiftValue();
-        targetVals[1] = getSecondLiftValue();
-
-        //Reset values
-        LIFT1_SPEED = 0;
-        LIFT2_SPEED = 0;
-        timeI = time1[T1];
-        LIFT1_VALUE0 = getFirstLiftValue();
-        LIFT2_VALUE0 = getSecondLiftValue();
-        LIFT1_VALUE = getSecondLiftValue();
-        LIFT2_VALUE = getSecondLiftValue();
-
-        currentlyCarrying = 1;
-      }
-
-      getLiftValue();
-
-      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (getFirstLiftValue() - targetVals[0]) - CONE_LIFT1_KV * LIFT1_SPEED;
-      appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - ONE_LIFT2_KX * (getSecondLiftValue() - targetVals[1]) - ONE_LIFT2_KV * LIFT2_SPEED;
-
-      appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
-      appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
-
-      wait1Msec(5);
-    }
-    else{
-      appliedVoltages[0] = 0;
-      appliedVoltages[1] = 0;
-    }
-
-    moveFirstLiftJoint(appliedVoltages[0]);
-    moveSecondLiftJoint(appliedVoltages[1]);
-
-    wait1Msec(10);
-  }
 }
 
 // ** Claw **
@@ -220,6 +175,58 @@ void closeClaw(){ //Automatically closes the claw
   clawIsClosed = 1;
   while(!isTimedOut(t0 +400)){
     moveClaw(100);
+    wait1Msec(10);
+  }
+}
+
+task coneLiftTask(){ //Controls the position of the lift continuously
+  int currentlyCarrying = 0;
+  int targetVals[2] = {0, 0};
+  int appliedVoltages[2] = {0, 0};
+
+  while(true){
+    if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
+
+    if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
+      if(currentlyCarrying == 0){
+        //Initially set desired values
+        targetVals[0] = getFirstLiftValue();
+        targetVals[1] = getSecondLiftValue();
+
+        //Reset values
+        LIFT1_SPEED = 0;
+        LIFT2_SPEED = 0;
+        timeI = time1[T1];
+        LIFT1_VALUE0 = getFirstLiftValue();
+        LIFT2_VALUE0 = getSecondLiftValue();
+        LIFT1_VALUE = getSecondLiftValue();
+        LIFT2_VALUE = getSecondLiftValue();
+
+        currentlyCarrying = 1;
+      }
+
+      getLiftValue();
+
+      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (getFirstLiftValue() - targetVals[0]) - CONE_LIFT1_KV * LIFT1_SPEED;
+      appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (getSecondLiftValue() - targetVals[1]) - CONE_LIFT2_KV * LIFT2_SPEED;
+
+      appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
+      appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
+
+      writeDebugStreamLine("%d %d", appliedVoltages[0], appliedVoltages[1]);
+
+      moveFirstLiftJoint(appliedVoltages[0]);
+    	moveSecondLiftJoint(appliedVoltages[1]);
+
+      wait1Msec(5);
+    }
+    else{
+      appliedVoltages[0] = 0;
+      appliedVoltages[1] = 0;
+      moveFirstLiftJoint(appliedVoltages[0]);
+    	moveSecondLiftJoint(appliedVoltages[1]);
+    }
+
     wait1Msec(10);
   }
 }

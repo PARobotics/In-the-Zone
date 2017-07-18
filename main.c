@@ -92,26 +92,6 @@ task usercontrol(){
       moveTurntableToFront();
     }
 
-    if(vexRT[Btn7U] == 1){
-      moveFirstLiftJoint(UP);
-    }
-    else if(vexRT[Btn7D] == 1){
-      moveFirstLiftJoint(DOWN);
-    }
-    else{
-      moveFirstLiftJoint(STOP);
-    }
-
-		if(vexRT[Btn7L] == 1){
-      moveSecondLiftJoint(UP);
-    }
-    else if(vexRT[Btn7R] == 1){
-      moveSecondLiftJoint(DOWN);
-    }
-    else{
-      moveSecondLiftJoint(STOP);
-    }
-
     if(vexRT[Btn8U] == 1){
       openClaw();
     }
