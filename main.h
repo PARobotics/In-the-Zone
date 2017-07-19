@@ -46,8 +46,6 @@ void closeClaw();
 #define DOWN_WITHOUT_GOAL 10
 
 // ** Global variables **
-struct Sensor firstLiftJoint = {0, 0, 0, 0, getFirstLiftValue};
-struct Sensor secondLiftJoint = {0, 0, 0, 0, getSecondLiftValue};
 
 int clawIsClosed = 0;
 
