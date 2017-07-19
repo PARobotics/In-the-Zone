@@ -132,24 +132,6 @@ int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
   return nMotorEncoder[M_SECOND_LIFT];
 }
 
-void getLiftValue(){
-  LIFT1_VALUE0 = LIFT1_VALUE;
-  LIFT2_VALUE0 = LIFT2_VALUE;
-
-  LIFT1_VALUE = getFirstLiftValue();
-  LIFT2_VALUE = getSecondLiftValue();
-
-  int timeF = time1[T1];
-	int deltaT = (timeF - timeI);
-	if(deltaT == 0) deltaT = 1;
-
-
-  LIFT1_SPEED = (LIFT1_VALUE - LIFT1_VALUE0) / deltaT;
-  LIFT2_SPEED = (LIFT2_VALUE - LIFT2_VALUE0) / deltaT;
-
-  timeI = timeF;
-}
-
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;
@@ -205,10 +187,11 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         currentlyCarrying = 1;
       }
 
-      getLiftValue();
+      updateSensorValue(firstLiftJoint);
+      updateSensorValue(secondLiftJoint);
 
-      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (getFirstLiftValue() - targetVals[0]) - CONE_LIFT1_KV * LIFT1_SPEED;
-      appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (getSecondLiftValue() - targetVals[1]) - CONE_LIFT2_KV * LIFT2_SPEED;
+      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (firstLiftJoint.val - targetVals[0]) - CONE_LIFT1_KV * firstLiftJoint.speed;
+      appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (secondLiftJoint.val - targetVals[1]) - CONE_LIFT2_KV * secondLiftJoint.speed;
 
       appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
       appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
