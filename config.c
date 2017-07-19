@@ -61,6 +61,7 @@ void getWheelVal(){
 #define DEBUG_REMOTE 0
 #define DEBUG_MONITOR  0
 #define DEBUG_WHEEL   0
+#define DEBUG_SENSORS    0
 
 #define USE_BAILOUT 0
 #define BAILOUT_BUTTON Btn7D

@@ -37,12 +37,6 @@
 #include "cone_lift.c"
 
 void pre_auton(){
-	//Reset encoders
-	nMotorEncoder[M_CLAW] = 0;
-	nMotorEncoder[M_TURNTABLE] = 0;
-	nMotorEncoder[M_FIRST_LIFT1] = 0;
-	nMotorEncoder[M_SECOND_LIFT] = 0;
-
 	bStopTasksBetweenModes = false;
 	startTask(mobileGoalTask);
 	startTask(coneLiftTask);
