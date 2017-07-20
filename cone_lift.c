@@ -125,7 +125,7 @@ void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
 }
 
 int getFirstLiftValue(){ //Returns the raw tick value of the first lift joint
-  return nMotorEncoder[M_FIRST_LIFT1];
+  return nMotorEncoder[M_FIRST_LIFT2];
 }
 
 int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
