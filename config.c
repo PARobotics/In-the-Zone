@@ -22,7 +22,7 @@ void setUpButtons(){ //Only include if using remote
 //Configure Sensors
 #define USE_SECOND_BATTERY 1
 
-#define USE_LCD  1
+#define USE_LCD 1
 
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
@@ -57,8 +57,12 @@ void getWheelVal(){
   DEBUGGING TOGGLES
 */
 
-#define USE_BAILOUT 0
+//debug.slew = 1;
+
 #define BAILOUT_BUTTON Btn7D
+void bailOut(){
+
+}
 
 void move(int V, int H, int X){
   motorReq[M_WHEEL_L1] = BOUND(V + H, -127, 127);
@@ -66,5 +70,6 @@ void move(int V, int H, int X){
   motorReq[M_WHEEL_R1] = BOUND(V - H, -127, 127);
   motorReq[M_WHEEL_R2] = BOUND(V - H, -127, 127);
 }
+
 
 #endif
