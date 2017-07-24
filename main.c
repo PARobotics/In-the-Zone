@@ -7,7 +7,7 @@
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_4,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
-#pragma config(Motor,  port1,           M_MOBILE_GOAL_LIFT, tmotorVex393_HBridge, openLoop, reversed)
+#pragma config(Motor,  port1,           M_MOBILE_GOAL_LIFT, tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           M_TURNTABLE,   tmotorVex393_MC29, openLoop, encoderPort, I2C_1)
