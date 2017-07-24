@@ -32,6 +32,7 @@
 
 #include "Vex_Competition_Includes.c"
 #include "main.h"
+#include "auton.c"
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"
 #include "cone_lift.c"

@@ -166,12 +166,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
 
-  sensor firstLiftJoint;
-  firstLiftJoint.port = I2C_2;
-  firstLiftJoint.scalingFactor = 1.0;
-	sensor secondLiftJoint;
-	secondLiftJoint.port = I2C_3;
-  secondLiftJoint.scalingFactor = 1.0;
+  sensor firstLiftJoint = initializeSensor(1.0, I2C_2);
+  sensor secondLiftJoint = initializeSensor(1.0, I2C_#);
 
   while(true){
     if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
