@@ -195,6 +195,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(appliedVoltages[1]);
 
     }
+    else if(CONE_LIFT_COMMAND == UP){
+
+    }
+    else if(CONE_LIFT_COMMAND == DOWN){
+      
+    }
     else{
       appliedVoltages[0] = 0;
       appliedVoltages[1] = 0;

@@ -103,6 +103,16 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = STOP;
 		}
 
+		if(vexRT[Btn7L] == 1){
+			moveFirstLiftJoint(UP);
+		}
+		else if(vexRT[Btn7R] == 1){
+			moveFirstLiftJoint(DOWN);
+		}
+		else{
+			moveFirstLiftJoint(STOP);
+		}
+
 		userControlUpdate();
 	}
 }
