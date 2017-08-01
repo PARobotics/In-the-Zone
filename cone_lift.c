@@ -166,8 +166,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
 
-  sensor firstLiftJoint = initializeSensor(1.0, I2C_2);
-  sensor secondLiftJoint = initializeSensor(1.0, I2C_#);
+  sensor* firstLiftJoint = initializeSensor(1.0, I2C_2);
+  sensor* secondLiftJoint = initializeSensor(1.0, I2C_3);
 
   while(true){
     if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
@@ -180,10 +180,10 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         currentlyCarrying = 1;
       }
 
-      updateSensorValue(&firstLiftJoint);
-      updateSensorValue(&secondLiftJoint);
+      updateSensorValue(firstLiftJoint);
+      updateSensorValue(secondLiftJoint);
 
-      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (firstLiftJoint.val - targetVals[0]) - CONE_LIFT1_KV * firstLiftJoint.speed;
+      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (firstLiftJoint->val - targetVals[0]) - CONE_LIFT1_KV * firstLiftJoint->speed;
       //appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (secondLiftJoint.val - targetVals[1]) - CONE_LIFT2_KV * secondLiftJoint.speed;
 
       appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
