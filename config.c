@@ -58,6 +58,7 @@ void getWheelVal(){
 */
 
 //debug.slew = 1;
+debug.sensors = 1;
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
