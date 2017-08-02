@@ -57,7 +57,7 @@ void getWheelVal(){
   DEBUGGING TOGGLES
 */
 
-//debug.slew = 1;
+#define DEBUG_SENSORS 1
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
