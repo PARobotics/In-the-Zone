@@ -166,8 +166,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
 
-  sensor* firstLiftJoint = initializeSensor(72.0 / RPM_393_HS, I2C_2); //Overclocked 1 to 5 gear ratio
-  sensor* secondLiftJoint = initializeSensor(1.0, dgtl6); //Underclocked 1 to 3 gear ratio
+  firstLiftJoint = initializeSensor(72.0 / RPM_393_HS, I2C_2); //Overclocked 1 to 5 gear ratio
+  secondLiftJoint = initializeSensor(1.0, dgtl6); //Underclocked 1 to 3 gear ratio
 
   while(true){
     if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
@@ -199,7 +199,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
 
     }
     else if(CONE_LIFT_COMMAND == DOWN){
-      
+
     }
     else{
       appliedVoltages[0] = 0;

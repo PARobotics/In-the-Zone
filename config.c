@@ -25,8 +25,11 @@ void setUpButtons(){ //Only include if using remote
 #define USE_LCD 1
 
 void lcdGenerateMessage(){
+	updateSensorValue(firstLiftJoint);
+  updateSensorValue(secondLiftJoint);
+
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
-  sprintf(lcdStr2, "%d   ", getTurntableDegrees());
+  sprintf(lcdStr2, "%4d %4d %3d", getTurntableDegrees(), firstLiftJoint->val, secondLiftJoint->val);
 }
 
 /*

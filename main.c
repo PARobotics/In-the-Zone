@@ -10,8 +10,8 @@
 #pragma config(Motor,  port2,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           M_TURNTABLE,   tmotorVex393_MC29, openLoop, encoderPort, I2C_1)
-#pragma config(Motor,  port5,           M_FIRST_LIFT1, tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port6,           M_FIRST_LIFT2, tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_2)
+#pragma config(Motor,  port5,           M_FIRST_LIFT1, tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port6,           M_FIRST_LIFT2, tmotorVex393_MC29, openLoop, encoderPort, I2C_2)
 #pragma config(Motor,  port7,           M_SECOND_LIFT, tmotorVex393_MC29, openLoop, encoderPort, dgtl6)
 #pragma config(Motor,  port8,           M_WHEEL_L1,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           M_WHEEL_L2,    tmotorVex393_MC29, openLoop)
@@ -32,6 +32,11 @@
 #include "Vex_Competition_Includes.c"
 #include "main.h"
 #include "auton.c"
+#include "parallax-lib/bin/constants.h"
+
+sensor* firstLiftJoint;
+sensor* secondLiftJoint;
+
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"
 #include "cone_lift.c"
