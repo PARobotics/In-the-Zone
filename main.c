@@ -34,8 +34,8 @@
 #include "auton.c"
 #include "parallax-lib/bin/constants.h"
 
-sensor* firstLiftJoint;
-sensor* secondLiftJoint;
+sensor firstLiftJoint;
+sensor secondLiftJoint;
 
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"
