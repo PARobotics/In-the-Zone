@@ -132,6 +132,37 @@ int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
   return nMotorEncoder[M_SECOND_LIFT];
 }
 
+void moveLiftUp(){
+  if(coneNum < 10){
+    coneNum++;
+    CONE_LIFT_COMMAND = MOVE;
+  }
+}
+
+void moveLiftDown(){
+  if(coneNum > 0){
+    coneNum--;
+    CONE_LIFT_COMMAND = MOVE;
+  }
+}
+
+void moveLiftToPreset(int firstVal, int secondVal){
+  firstLiftVal = firstVal;
+  secondLiftVal = secondVal;
+  CONE_LIFT_COMMAND = PRESET;
+}
+
+void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
+  //Move first joint to correct point
+
+  //Hold the first joint at this point
+
+  //Move second joint to correct point
+
+  //Hold both joints
+  CONE_LIFT_COMMAND = HOLD;
+}
+
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
   if(status == CLOSE) motor[M_CLAW] = 127;
@@ -161,28 +192,14 @@ void closeClaw(){ //Automatically closes the claw
   }
 }
 
-void moveLiftUp(){
-  if(coneNum < 10){
-    coneNum++;
-    CONE_LIFT_COMMAND = UP;
-  }
-}
-
-void moveLiftDown(){
-  if(coneNum > 1){
-    coneNum--;
-    CONE_LIFT_COMMAND = DOWN;
-  }
-}
-
-void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
-
-}
-
 task coneLiftTask(){ //Controls the position of the lift continuously
   int currentlyCarrying = 0;
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
+
+  //Store values for the lifting up and down
+  int[] firstLiftValsForLifting = {117, 131, 134, 134, 135, 137, 136, 133, 129, 121, 118};
+  int[] secondLiftValsForLifting = {365, 299, 289, 285, 275, 269, 254, 245, 226, 211, 171};
 
   PID firstPid, secondPid;
   firstPid.kp = CONE_LIFT1_KX;
@@ -216,11 +233,11 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       moveFirstLiftJoint(appliedVoltages[0]);
     	moveSecondLiftJoint(appliedVoltages[1]);
     }
-    else if(CONE_LIFT_COMMAND == UP){
-      CONE_LIFT_COMMAND = HOLD;
+    else if(CONE_LIFT_COMMAND == MOVE){
+      moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
     }
-    else if(CONE_LIFT_COMMAND == DOWN){
-      CONE_LIFT_COMMAND = HOLD;
+    else if(CONE_LIFT_COMMAND == PRESET){
+      moveLiftTo(firstLiftVal, secondLiftVal);
     }
     else{
       appliedVoltages[0] = 0;

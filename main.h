@@ -27,6 +27,10 @@ int getFirstLiftValue();
 int getSecondLiftValue();
 void openClaw();
 void closeClaw();
+void moveLiftDown();
+void moveLiftUp();
+void moveLiftTo(int firstVal, int secondVal);
+void moveLiftToPreset(int firstVal, int secondVal);
 
 // ** Constants **
 #define CONE_LIFT1_MAX_V 100
@@ -46,8 +50,10 @@ void closeClaw();
 #define DOWN_WITHOUT_GOAL 10
 
 // ** Global variables **
+#define PRESET 20
 int clawIsClosed = 0;
 int coneNum = 0;
+int firstLiftVal, secondLiftVal;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;

@@ -129,13 +129,13 @@ task usercontrol(){
     }
 
 		if(getPrButton(7U_Partner) == PUSHED_RELEASED){ //Hovering preset
-
+			moveLiftToPreset(129, 327);
 		}
 		else if(getPrButton(7L_Partner) == PUSHED_RELEASED){ //Loader preset
-
+			//moveLiftToPreset();
 		}
 		else if(getPrButton(7R_Partner) == PUSHED_RELEASED){ //On the ground preset
-
+			moveLiftToPreset(72, 317);
 		}
 
 		if(getPrButton(8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
