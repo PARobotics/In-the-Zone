@@ -46,8 +46,8 @@ void closeClaw();
 #define DOWN_WITHOUT_GOAL 10
 
 // ** Global variables **
-
 int clawIsClosed = 0;
+int coneNum = 0;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;

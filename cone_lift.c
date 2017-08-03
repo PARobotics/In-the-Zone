@@ -161,6 +161,20 @@ void closeClaw(){ //Automatically closes the claw
   }
 }
 
+void moveLiftUp(){
+  if(coneNum < 10){
+    coneNum++;
+    CONE_LIFT_COMMAND = UP;
+  }
+}
+
+void moveLiftDown(){
+  if(coneNum > 1){
+    coneNum--;
+    CONE_LIFT_COMMAND = DOWN;
+  }
+}
+
 void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
 
 }
@@ -203,10 +217,10 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(appliedVoltages[1]);
     }
     else if(CONE_LIFT_COMMAND == UP){
-
+      CONE_LIFT_COMMAND = HOLD;
     }
     else if(CONE_LIFT_COMMAND == DOWN){
-
+      CONE_LIFT_COMMAND = HOLD;
     }
     else{
       appliedVoltages[0] = 0;

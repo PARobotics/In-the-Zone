@@ -59,7 +59,7 @@ task autonomous(){
 */
 
 task usercontrol(){
-  int V, H;
+  int V, H, T;
 
   stopTask(autonomous);
 
@@ -67,39 +67,24 @@ task usercontrol(){
 
   while(true){
 
-    V = vexRT[Ch3];
+		// ** Primary joystick **
+
+    /*V = vexRT[Ch3];
 		H = vexRT[Ch1];
 
-		if (abs(V) < 15) V = 0;
-		if (abs(H) < 15) H = 0;
+		if(abs(V) < 15) V = 0;
+		if(abs(H) < 15) H = 0;
 		move(V, H, 0);
 
-    if(vexRT[Btn6U] == 1){
+    if(vexRT[Btn5U] == 1 || vexRT[Btn6U] == 1){
       MOBILE_GOAL_COMMAND = UP;
     }
     else if(vexRT[Btn6D] == 1){
       MOBILE_GOAL_COMMAND = DOWN;
     }
-		/*else if(vexRT[Btn7L] == 1){
+		else if(vexRT[Btn5D] == 1){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
-		}*/
-
-    if(vexRT[Btn5U] == 1){
-      moveTurntableToGoal();
-    }
-    else if(vexRT[Btn5D] == 1){
-      moveTurntableToFront();
-    }
-
-    if(vexRT[Btn8U] == 1){
-      openClaw();
-    }
-    else if(vexRT[Btn8D] == 1){
-      closeClaw();
-    }
-    else if(clawIsClosed){
-    	moveClaw(10);
-    }
+		}
 
 		if(vexRT[Btn8L] == 1){
 			CONE_LIFT_COMMAND = HOLD;
@@ -116,6 +101,53 @@ task usercontrol(){
 		}
 		else{
 			moveFirstLiftJoint(STOP);
+		}*/
+
+		// ** Partner Joystick**
+
+		T = vexRT[Ch4];
+		if(abs(T) < 15) T = 0;
+
+		if(getPrButton(5U_Partner) == PUSHED_RELEASED){ //Turntable to mobile goal
+			moveTurntableToGoal();
+		}
+		else if(getPrButton(5D_Partner) == PUSHED_RELEASED){ //Turntable to grabbing position
+			moveTurntableToFront();
+		}
+		else{
+			moveTurntable(T);
+		}
+
+		if(vexRT[Btn6U] == 1){
+      openClaw();
+    }
+    else if(vexRT[Btn6D] == 1){
+      closeClaw();
+    }
+    else if(clawIsClosed){
+    	moveClaw(10);
+    }
+
+		if(getPrButton(7U_Partner) == PUSHED_RELEASED){ //Hovering preset
+
+		}
+		else if(getPrButton(7L_Partner) == PUSHED_RELEASED){ //Loader preset
+
+		}
+		else if(getPrButton(7R_Partner) == PUSHED_RELEASED){ //On the ground preset
+
+		}
+
+		if(getPrButton(8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
+			moveLiftUp();
+		}
+		else if(getPrButton(8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
+			moveLiftDown();
+		}
+
+		if(getPrButton(8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
+			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
+			else(CONE_LIFT_COMMAND == STOP) CONE_LIFT_COMMAND = HOLD;
 		}
 
 		userControlUpdate();
