@@ -161,13 +161,24 @@ void closeClaw(){ //Automatically closes the claw
   }
 }
 
+void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
+
+}
+
 task coneLiftTask(){ //Controls the position of the lift continuously
   int currentlyCarrying = 0;
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
 
-  initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2); //Overclocked 1 to 5 gear ratio
-  initializeSensor(&secondLiftJoint, 1.0, dgtl6); //Underclocked 1 to 3 gear ratio
+  PID firstPid, secondPid;
+  firstPid.kp = CONE_LIFT1_KX;
+  firstPid.kd = CONE_LIFT1_KV;
+
+  secondPid.kp = CONE_LIFT2_KX;
+  secondPid.kd = CONE_LIFT2_KV;
+
+  initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2, firstPid); //Overclocked 1 to 5 gear ratio
+  initializeSensor(&secondLiftJoint, 1.0, dgtl6, secondPid); //Underclocked 1 to 3 gear ratio
 
   while(true){
   	updateSensorValue(&firstLiftJoint);
@@ -183,19 +194,13 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         currentlyCarrying = 1;
       }
 
-
-
-      appliedVoltages[0] = CONE_LIFT1_DEFAULT_V - CONE_LIFT1_KX * (firstLiftJoint.val - targetVals[0]) - CONE_LIFT1_KV * firstLiftJoint.speed;
-      //appliedVoltages[1] = CONE_LIFT2_DEFAULT_V - CONE_LIFT2_KX * (secondLiftJoint.val - targetVals[1]) - CONE_LIFT2_KV * secondLiftJoint.speed;
-
-      appliedVoltages[0] = BOUND(appliedVoltages[0], CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
-      //appliedVoltages[1] = BOUND(appliedVoltages[1], CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
+      appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
+      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
       writeDebugStreamLine("%d %d %d %d", targetVals[0], targetVals[1], appliedVoltages[0], appliedVoltages[1]);
 
       moveFirstLiftJoint(appliedVoltages[0]);
     	moveSecondLiftJoint(appliedVoltages[1]);
-
     }
     else if(CONE_LIFT_COMMAND == UP){
 
