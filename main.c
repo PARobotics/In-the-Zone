@@ -59,7 +59,7 @@ task autonomous(){
 */
 
 task usercontrol(){
-  int V, H, T;
+  int V, H, T, F, S;
 
   stopTask(autonomous);
 
@@ -106,7 +106,12 @@ task usercontrol(){
 		// ** Partner Joystick**
 
 		T = vexRT[Ch4];
+		F = vexRT[Ch3];
+		S = vexRT[Ch2];
+
 		if(abs(T) < 15) T = 0;
+		if(abs(F) < 15) F = 0;
+		if(abs(S) < 15) S = 0;
 
 		if(getPrButton(Btn5U_Partner) == PUSHED_RELEASED){ //Turntable to mobile goal
 			moveTurntableToGoal();
@@ -137,12 +142,17 @@ task usercontrol(){
 		else if(getPrButton(Btn7R_Partner) == PUSHED_RELEASED){ //On the ground preset
 			moveLiftToPreset(72, 317);
 		}
-
-		if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
+		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
 		}
 		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
+		}
+		else if(F != 0){
+			moveFirstLiftJoint(F);
+		}
+		else if(S != 0){
+			moveSecondLiftJoint(S);
 		}
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
