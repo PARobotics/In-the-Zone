@@ -65,6 +65,9 @@ task usercontrol(){
 
   playSoundFile("yeahboi.wav");
 
+  moveFirstLiftJoint(0);
+  moveSecondLiftJoint(0);
+
   while(true){
 
 		// ** Primary joystick **
@@ -159,15 +162,15 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
-		else if(CONE_LIFT_COMMAND = MANUAL) moveFirstLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL && F == 0) moveFirstLiftJoint(0);
 
 		if(S != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND = MANUAL) moveSecondLiftJoint(0);
-		
-		if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
+		else if(CONE_LIFT_COMMAND == MANUAL && S == 0) moveSecondLiftJoint(0);
+
+		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
 		/*if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;

@@ -222,10 +222,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   initializeSensor(&secondLiftJoint, 1.0, dgtl6, secondPid); //Underclocked 1 to 3 gear ratio
 
   while(true){
-  	updateSensorValue(&firstLiftJoint);
-    updateSensorValue(&secondLiftJoint);
-
-    if(CONE_LIFT_COMMAND != HOLD) currentlyCarrying = 0;
+  	//updateSensorValue(&firstLiftJoint);
+    //updateSensorValue(&secondLiftJoint);
 
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
       if(currentlyCarrying == 0){
@@ -245,9 +243,11 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     }
     else if(CONE_LIFT_COMMAND == MOVE){
       moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
+      //currentlyCarrying = 0;
     }
     else if(CONE_LIFT_COMMAND == PRESET){
       moveLiftTo(firstLiftVal, secondLiftVal);
+      //currentlyCarrying = 0;
     }
     else if(CONE_LIFT_COMMAND != MANUAL){
       appliedVoltages[0] = 0;
