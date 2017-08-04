@@ -208,10 +208,10 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int appliedVoltages[2] = {0, 0};
 
   //Store values for the lifting up and down
-  int[] firstLiftValsForLifting = {117, 131, 134, 134, 135, 137, 136, 133, 129, 121, 118};
-  int[] secondLiftValsForLifting = {365, 299, 289, 285, 275, 269, 254, 245, 226, 211, 171};
+  int firstLiftValsForLifting[] = {117, 131, 134, 134, 135, 137, 136, 133, 129, 121, 118};
+  int secondLiftValsForLifting[] = {365, 299, 289, 285, 275, 269, 254, 245, 226, 211, 171};
 
-  PID firstPid, secondPid;
+  pid firstPid, secondPid;
   firstPid.kp = CONE_LIFT1_KX;
   firstPid.kd = CONE_LIFT1_KV;
 

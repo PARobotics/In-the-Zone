@@ -108,10 +108,10 @@ task usercontrol(){
 		T = vexRT[Ch4];
 		if(abs(T) < 15) T = 0;
 
-		if(getPrButton(5U_Partner) == PUSHED_RELEASED){ //Turntable to mobile goal
+		if(getPrButton(Btn5U_Partner) == PUSHED_RELEASED){ //Turntable to mobile goal
 			moveTurntableToGoal();
 		}
-		else if(getPrButton(5D_Partner) == PUSHED_RELEASED){ //Turntable to grabbing position
+		else if(getPrButton(Btn5D_Partner) == PUSHED_RELEASED){ //Turntable to grabbing position
 			moveTurntableToFront();
 		}
 		else{
@@ -128,26 +128,26 @@ task usercontrol(){
     	moveClaw(10);
     }
 
-		if(getPrButton(7U_Partner) == PUSHED_RELEASED){ //Hovering preset
+		if(getPrButton(Btn7U_Partner) == PUSHED_RELEASED){ //Hovering preset
 			moveLiftToPreset(129, 327);
 		}
-		else if(getPrButton(7L_Partner) == PUSHED_RELEASED){ //Loader preset
+		else if(getPrButton(Btn7L_Partner) == PUSHED_RELEASED){ //Loader preset
 			//moveLiftToPreset();
 		}
-		else if(getPrButton(7R_Partner) == PUSHED_RELEASED){ //On the ground preset
+		else if(getPrButton(Btn7R_Partner) == PUSHED_RELEASED){ //On the ground preset
 			moveLiftToPreset(72, 317);
 		}
 
-		if(getPrButton(8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
+		if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
 		}
-		else if(getPrButton(8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
+		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
 		}
 
-		if(getPrButton(8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
+		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
-			else(CONE_LIFT_COMMAND == STOP) CONE_LIFT_COMMAND = HOLD;
+			else if(CONE_LIFT_COMMAND == STOP) CONE_LIFT_COMMAND = HOLD;
 		}
 
 		userControlUpdate();
