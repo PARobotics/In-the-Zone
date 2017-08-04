@@ -116,6 +116,8 @@ task usercontrol(){
 		if(abs(F) < 15) F = 0;
 		if(abs(S) < 15) S = 0;
 
+		// TURNTABLE CONTROLS
+
 		if(vexRT[Btn5U] == 1){ //Turntable to mobile goal
 			moveTurntableToGoal();
 		}
@@ -125,6 +127,8 @@ task usercontrol(){
 		else{
 			if(T != 0) moveTurntable(SIGN(T) * 127);
 		}
+
+		// CLAW CONTROLS
 
 		if(vexRT[Btn6U] == 1){
       openClaw();
@@ -136,7 +140,9 @@ task usercontrol(){
     	moveClaw(10);
     }
 
-		/*if(vexRT[Btn7U] == 1){ //Hovering preset
+		// LIFT CONTROLS
+
+		if(vexRT[Btn7U] == 1){ //Hovering preset
 			moveLiftToPreset(129, 327);
 		}
 		else if(vexRT[Btn7L] == 1){ //Loader preset
@@ -151,31 +157,26 @@ task usercontrol(){
 		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
 		}
-		else if(F != 0){
-			moveFirstLiftJoint(F);
-		}
-		else if(S != 0){
-			moveSecondLiftJoint(S);
-		}*/
 
+		//Manual lift controls
 		if(F != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL && F == 0) moveFirstLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) moveFirstLiftJoint(0);
 
 		if(S != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL && S == 0) moveSecondLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
 
-		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
+		if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
-		/*if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
+		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
 			else if(CONE_LIFT_COMMAND == STOP) CONE_LIFT_COMMAND = HOLD;
-		}*/
+		}
 
 		userControlUpdate();
 	}
