@@ -71,7 +71,7 @@ task mobileGoalTask(){
       moveMobileGoalLift(STOP);
     }
 
-		wait1Msec(10);
+		wait1Msec(50);
   }
 }
 

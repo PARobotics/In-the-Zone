@@ -155,8 +155,19 @@ task usercontrol(){
 			moveSecondLiftJoint(S);
 		}*/
 
-		if(F != 0) moveFirstLiftJoint(SIGN(F) * 127);
-		if(S != 0) moveSecondLiftJoint(SIGN(S) * 127);
+		if(F != 0){
+			CONE_LIFT_COMMAND = MANUAL;
+			moveFirstLiftJoint(SIGN(F) * 127);
+		}
+		else if(CONE_LIFT_COMMAND = MANUAL) moveFirstLiftJoint(0);
+
+		if(S != 0){
+			CONE_LIFT_COMMAND = MANUAL;
+			moveSecondLiftJoint(SIGN(S) * 127);
+		}
+		else if(CONE_LIFT_COMMAND = MANUAL) moveSecondLiftJoint(0);
+		
+		if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
 		/*if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
