@@ -120,7 +120,7 @@ task usercontrol(){
 			moveTurntableToFront();
 		}
 		else{
-			moveTurntable(T);
+			if(T != 0) moveTurntable(SIGN(T) * 127);
 		}
 
 		if(vexRT[Btn6U] == 1){
@@ -155,8 +155,8 @@ task usercontrol(){
 			moveSecondLiftJoint(S);
 		}*/
 
-		moveFirstLiftJoint(F);
-		moveSecondLiftJoint(S);
+		if(F != 0) moveFirstLiftJoint(SIGN(F) * 127);
+		if(S != 0) moveSecondLiftJoint(SIGN(S) * 127);
 
 		/*if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
