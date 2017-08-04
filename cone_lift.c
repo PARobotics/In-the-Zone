@@ -256,7 +256,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(appliedVoltages[1]);
     }
 
-    wait1Msec(10);
+    wait1Msec(50);
   }
 }
 

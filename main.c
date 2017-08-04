@@ -171,7 +171,7 @@ task usercontrol(){
 		}
 		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
 
-		if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
+		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
