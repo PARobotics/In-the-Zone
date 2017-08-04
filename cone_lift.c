@@ -154,10 +154,20 @@ void moveLiftToPreset(int firstVal, int secondVal){
 
 void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
   //Move first joint to correct point
+  int entered = 0;
+  int tnow = time1[T1];
 
-  //Hold the first joint at this point
+  while(true){
+    if(BAILOUT == 1 || isTimedOut(tnow + 3000) || abs(secondVal - secondLiftJoint.val) <= 1) break;
 
-  //Move second joint to correct point
+    moveFirstLiftJoint(sensorHold(&firstLiftJoint, firstVal, CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V));
+
+    //Move second joint to correct point
+    if(abs(firstVal - firstLiftJoint.val) <= 1 || entered == 1){
+      moveSecondLiftJoint(sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V));
+      entered = 1;
+    }
+  }
 
   //Hold both joints
   CONE_LIFT_COMMAND = HOLD;
