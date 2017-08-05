@@ -64,11 +64,9 @@ void getWheelVal(){
   DEBUGGING TOGGLES
 */
 
-#define DEBUG_SENSORS 0
-
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
-
+	CONE_LIFT_COMMAND = STOP;
 }
 
 void move(int V, int H, int X){

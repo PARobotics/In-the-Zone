@@ -228,8 +228,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
       if(currentlyCarrying == 0){
         //Initially set desired values
-        targetVals[0] = getFirstLiftValue();
-        targetVals[1] = getSecondLiftValue();
+        targetVals[0] = firstLiftJoint.val;
+        targetVals[1] = secondLiftJoint.val;
         currentlyCarrying = 1;
       }
 
@@ -237,6 +237,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
       //writeDebugStreamLine("%d %d %d %d", targetVals[0], targetVals[1], appliedVoltages[0], appliedVoltages[1]);
+			writeDebugStreamLine("%d %d %d", targetVals[0], firstLiftJoint.val, appliedVoltages[0]);
 
       moveFirstLiftJoint(appliedVoltages[0]);
     	//moveSecondLiftJoint(appliedVoltages[1]);
@@ -252,11 +253,9 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     else if(CONE_LIFT_COMMAND == MANUAL){
       currentlyCarrying = 0;
     }
-    else{
-      appliedVoltages[0] = 0;
-      appliedVoltages[1] = 0;
-      moveFirstLiftJoint(appliedVoltages[0]);
-    	moveSecondLiftJoint(appliedVoltages[1]);
+    else if(CONE_LIFT_COMMAND == STOP){
+      moveFirstLiftJoint(0);
+    	moveSecondLiftJoint(0);
     }
 
     wait1Msec(50);

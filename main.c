@@ -153,13 +153,15 @@ task usercontrol(){
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
+			resetPrButton(Btn8U_Partner);
 		}
 		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
+			resetPrButton(Btn8D_Partner);
 		}
 
 		//Manual lift controls
-		if(F != 0){
+		/*if(F != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
@@ -169,13 +171,15 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);*/
 
 		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
-			if(CONE_LIFT_COMMAND == HOLD) CONE_LIFT_COMMAND = STOP;
-			else if(CONE_LIFT_COMMAND == STOP) CONE_LIFT_COMMAND = HOLD;
+			writeDebugStreamLine("we're here");
+			CONE_LIFT_COMMAND = HOLD;
+			writeDebugStreamLine("%d", CONE_LIFT_COMMAND);
+			resetPrButton(Btn8L_Partner);
 		}
 
 		userControlUpdate();

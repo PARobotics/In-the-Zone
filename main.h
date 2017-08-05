@@ -33,9 +33,9 @@ void moveLiftTo(int firstVal, int secondVal);
 void moveLiftToPreset(int firstVal, int secondVal);
 
 // ** Constants **
-#define CONE_LIFT1_MAX_V 100
+#define CONE_LIFT1_MAX_V 127
 #define CONE_LIFT1_MIN_V -40
-#define CONE_LIFT1_DEFAULT_V 40
+#define CONE_LIFT1_DEFAULT_V 0
 #define CONE_LIFT1_KX 0.1
 #define CONE_LIFT1_KV 0.1
 
