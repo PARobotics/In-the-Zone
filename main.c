@@ -161,7 +161,7 @@ task usercontrol(){
 		}
 
 		//Manual lift controls
-		/*if(F != 0){
+		if(F != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
@@ -171,7 +171,7 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);*/
+		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
 
 		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 

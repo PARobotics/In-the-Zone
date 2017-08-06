@@ -237,7 +237,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
       //writeDebugStreamLine("%d %d %d %d", targetVals[0], targetVals[1], appliedVoltages[0], appliedVoltages[1]);
-			writeDebugStreamLine("%d %d %d", targetVals[0], firstLiftJoint.val, appliedVoltages[0]);
+			writeDebugStreamLine("%d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
 
       moveFirstLiftJoint(appliedVoltages[0]);
     	//moveSecondLiftJoint(appliedVoltages[1]);
