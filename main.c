@@ -89,22 +89,7 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
-		if(vexRT[Btn8L] == 1){
-			CONE_LIFT_COMMAND = HOLD;
-		}
-		else if(vexRT[Btn8R] == 1){
-			CONE_LIFT_COMMAND = STOP;
-		}
-
-		if(vexRT[Btn7L] == 1){
-			moveFirstLiftJoint(UP);
-		}
-		else if(vexRT[Btn7R] == 1){
-			moveFirstLiftJoint(DOWN);
-		}
-		else{
-			moveFirstLiftJoint(STOP);
-		}*/
+		*/
 
 		// ** Partner Joystick**
 
@@ -161,7 +146,7 @@ task usercontrol(){
 		}
 
 		//Manual lift controls
-		if(F != 0){
+		/*if(F != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
@@ -171,14 +156,12 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);*/
 
 		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
-			writeDebugStreamLine("we're here");
 			CONE_LIFT_COMMAND = HOLD;
-			writeDebugStreamLine("%d", CONE_LIFT_COMMAND);
 			resetPrButton(Btn8L_Partner);
 		}
 

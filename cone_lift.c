@@ -234,7 +234,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       moveFirstLiftJoint(appliedVoltages[0]);
     	//moveSecondLiftJoint(appliedVoltages[1]);
     }
-    else if(CONE_LIFT_COMMAND == MOVE){
+    /*else if(CONE_LIFT_COMMAND == MOVE){
       moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
       currentlyCarrying = 0;
     }
@@ -248,7 +248,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     else if(CONE_LIFT_COMMAND == STOP){
       moveFirstLiftJoint(0);
     	moveSecondLiftJoint(0);
-    }
+    }*/
 
     wait1Msec(50);
   }
