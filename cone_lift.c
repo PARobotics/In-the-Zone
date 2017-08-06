@@ -124,14 +124,6 @@ void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
   else motor[M_SECOND_LIFT] = status;
 }
 
-int getFirstLiftValue(){ //Returns the raw tick value of the first lift joint
-  return nMotorEncoder[M_FIRST_LIFT2];
-}
-
-int getSecondLiftValue(){ //Returns the raw tick value of the second lift joint
-  return nMotorEncoder[M_SECOND_LIFT];
-}
-
 void moveLiftUp(){
   if(coneNum < 10){
     coneNum++;
