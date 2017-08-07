@@ -100,28 +100,28 @@ void moveTurntableToFront(){ //Automatically snaps the turntable to the front
 // ** Lift **
 void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
   if(status == UP){
-    motor[M_FIRST_LIFT1] = 127;
-    motor[M_FIRST_LIFT2] = 127;
+    motorReq[M_FIRST_LIFT1] = 127;
+    motorReq[M_FIRST_LIFT2] = 127;
   }
   else if(status == DOWN){
-    motor[M_FIRST_LIFT1] = -127;
-    motor[M_FIRST_LIFT2] = -127;
+    motorReq[M_FIRST_LIFT1] = -127;
+    motorReq[M_FIRST_LIFT2] = -127;
   }
   else if(status == STOP){
-    motor[M_FIRST_LIFT1] = 0;
-    motor[M_FIRST_LIFT2] = 0;
+    motorReq[M_FIRST_LIFT1] = 0;
+    motorReq[M_FIRST_LIFT2] = 0;
   }
   else{
-    motor[M_FIRST_LIFT1] = status;
-    motor[M_FIRST_LIFT2] = status;
+    motorReq[M_FIRST_LIFT1] = status;
+    motorReq[M_FIRST_LIFT2] = status;
   }
 }
 
 void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
-  if(status == UP) motor[M_SECOND_LIFT] = 127;
-  else if(status == DOWN) motor[M_SECOND_LIFT] = -127;
-  else if(status == STOP) motor[M_SECOND_LIFT] = 0;
-  else motor[M_SECOND_LIFT] = status;
+  if(status == UP) motorReq[M_SECOND_LIFT] = 127;
+  else if(status == DOWN) motorReq[M_SECOND_LIFT] = -127;
+  else if(status == STOP) motorReq[M_SECOND_LIFT] = 0;
+  else motorReq[M_SECOND_LIFT] = status;
 }
 
 void moveLiftUp(){
@@ -232,7 +232,6 @@ task coneLiftTask(){ //Controls the position of the lift continuously
 
       //writeDebugStreamLine("%d %d %d %d", targetVals[0], targetVals[1], appliedVoltages[0], appliedVoltages[1]);
 			writeDebugStreamLine("%d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
-
 
       //moveFirstLiftJoint(appliedVoltages[0]);
     	moveSecondLiftJoint(appliedVoltages[1]);

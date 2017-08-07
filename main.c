@@ -44,7 +44,7 @@ sensor secondLiftJoint;
 void pre_auton(){
 	bStopTasksBetweenModes = false;
 	startTask(mobileGoalTask);
-	startTask(coneLiftTask, 8);
+	startTask(coneLiftTask, 9);
 
 	initialize();
 }
@@ -150,13 +150,13 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveFirstLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) 	moveFirstLiftJoint(0);
 
 		if(S != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == MANUAL) 	moveSecondLiftJoint(0);
 
 		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 
