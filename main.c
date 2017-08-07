@@ -43,7 +43,7 @@ sensor secondLiftJoint;
 
 void pre_auton(){
 	bStopTasksBetweenModes = false;
-	startTask(mobileGoalTask, 8);
+	startTask(mobileGoalTask);
 	startTask(coneLiftTask, 8);
 
 	initialize();

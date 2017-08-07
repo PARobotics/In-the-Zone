@@ -67,7 +67,7 @@ void getWheelVal(){
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
-	//CONE_LIFT_COMMAND = STOP;
+	CONE_LIFT_COMMAND = STOP;
 }
 
 void move(int V, int H, int X){

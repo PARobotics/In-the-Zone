@@ -251,7 +251,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(0);
     }
 
-    wait1Msec(50);
+    wait1Msec(10); //This NEEDS to be 10msec
   }
 }
 
