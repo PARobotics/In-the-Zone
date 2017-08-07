@@ -148,17 +148,26 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
   //Move first joint to correct point
   int entered = 0;
   int tnow = time1[T1];
+  int appliedVoltages[2] = {0, 0};
 
   while(true){
     if(BAILOUT == 1 || isTimedOut(tnow + 3000) || abs(secondVal - secondLiftJoint.val) <= 1) break;
 
-    moveFirstLiftJoint(sensorHold(&firstLiftJoint, firstVal, CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V));
+    appliedVoltages[0] = sensorHold(&firstLiftJoint, firstVal, CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
+
+    moveFirstLiftJoint(appliedVoltages[0]);
 
     //Move second joint to correct point
     if(abs(firstVal - firstLiftJoint.val) <= 1 || entered == 1){
-      moveSecondLiftJoint(sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V));
+      appliedVoltages[1] = sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
+      moveSecondLiftJoint(appliedVoltages[1]);
       entered = 1;
     }
+
+    #if DEBUG_CONE_LIFT == 1
+      writeDebugStreamLine("[LIFT 1] %d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
+      writeDebugStreamLine("[LIFT 2] %d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+    #endif
   }
 
   //Hold both joints
