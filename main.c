@@ -43,7 +43,7 @@ sensor secondLiftJoint;
 
 void pre_auton(){
 	bStopTasksBetweenModes = false;
-	//startTask(mobileGoalTask);
+	startTask(mobileGoalTask, 8);
 	startTask(coneLiftTask, 8);
 
 	initialize();
@@ -127,7 +127,7 @@ task usercontrol(){
 
 		// LIFT CONTROLS
 
-		/*if(vexRT[Btn7U] == 1){ //Hovering preset
+		if(vexRT[Btn7U] == 1){ //Hovering preset
 			moveLiftToPreset(129, 327);
 		}
 		else if(vexRT[Btn7L] == 1){ //Loader preset
@@ -143,10 +143,10 @@ task usercontrol(){
 		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
 			resetPrButton(Btn8D_Partner);
-		}*/
+		}
 
 		//Manual lift controls
-		/*if(F != 0){
+		if(F != 0){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
@@ -156,7 +156,7 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = MANUAL;
 			moveSecondLiftJoint(SIGN(S) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);*/
+		else if(CONE_LIFT_COMMAND == MANUAL) moveSecondLiftJoint(0);
 
 		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
 

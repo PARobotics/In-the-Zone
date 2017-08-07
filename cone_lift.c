@@ -213,7 +213,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
   initializeSensor(&secondLiftJoint, 1.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
 
-  /*while(0){
+  while(true){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
 
@@ -251,14 +251,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(0);
     }
 
-    wait1Msec(10);
-  }*/
-  while(true){
-  	if(CONE_LIFT_COMMAND == HOLD){
-			moveFirstLiftJoint(127);
-		}
-		wait1Msec(10);
-	}
+    wait1Msec(50);
+  }
 }
 
 #endif
