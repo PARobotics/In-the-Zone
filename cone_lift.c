@@ -51,7 +51,7 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
   int distanceToTarget = 0;
 
-  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
+  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){ //TODO: Make this a real p control
     currentVal = getTurntableValue();
 
     distanceToTarget = target - currentVal;
@@ -124,21 +124,21 @@ void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
   else motorReq[M_SECOND_LIFT] = status;
 }
 
-void moveLiftUp(){
+void moveLiftUp(){ //Increments the cone lift's height up one
   if(coneNum < 10){
     coneNum++;
     CONE_LIFT_COMMAND = MOVE;
   }
 }
 
-void moveLiftDown(){
+void moveLiftDown(){ //Decrements the cone lift's height up one
   if(coneNum > 0){
     coneNum--;
     CONE_LIFT_COMMAND = MOVE;
   }
 }
 
-void moveLiftToPreset(int firstVal, int secondVal){
+void moveLiftToPreset(int firstVal, int secondVal){ 
   firstLiftVal = firstVal;
   secondLiftVal = secondVal;
   CONE_LIFT_COMMAND = PRESET;

@@ -42,9 +42,10 @@ sensor secondLiftJoint;
 #include "cone_lift.c"
 
 void pre_auton(){
-	bStopTasksBetweenModes = false;
+	bStopTasksBetweenModes = false; //Make sure all tasks we create actually execute in user control
+
 	startTask(mobileGoalTask);
-	startTask(coneLiftTask, 9);
+	startTask(coneLiftTask, 9); //TODO: Change task priority
 
 	initialize();
 }
@@ -93,10 +94,11 @@ task usercontrol(){
 
 		// ** Partner Joystick**
 
-		T = vexRT[Ch4];
-		F = vexRT[Ch3];
-		S = vexRT[Ch2];
+		T = vexRT[Ch4]; //Turntable channel
+		F = vexRT[Ch3]; //First lift joint channel
+		S = vexRT[Ch2]; //Second lift joint channel
 
+		//Prevent tiny accidental motions
 		if(abs(T) < 15) T = 0;
 		if(abs(F) < 15) F = 0;
 		if(abs(S) < 15) S = 0;
@@ -121,7 +123,7 @@ task usercontrol(){
     else if(vexRT[Btn6D] == 1){
       closeClaw();
     }
-    else if(clawIsClosed){
+    else if(clawIsClosed){ //Apply a small voltage to keep claw closed
     	moveClaw(10);
     }
 
@@ -158,7 +160,7 @@ task usercontrol(){
 		}
 		else if(CONE_LIFT_COMMAND == MANUAL) 	moveSecondLiftJoint(0);
 
-		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP;
+		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP; //TODO: Add this back
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			CONE_LIFT_COMMAND = HOLD;
