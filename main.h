@@ -57,6 +57,7 @@ int firstLiftVal, secondLiftVal;
 int MOBILE_GOAL_COMMAND = 0;
 int CONE_LIFT_COMMAND = 0;
 
+//Debug flags
 #define DEBUG_CONE_LIFT 1
 
 #endif

@@ -46,6 +46,8 @@ task mobileGoalTask(){
       	moveMobileGoalLift(30);
         wait1Msec(10);
     	}
+
+      coneNum = 0;
       moveMobileGoalLift(STOP);
       MOBILE_GOAL_COMMAND = STOP;
     }
