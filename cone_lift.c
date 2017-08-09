@@ -138,7 +138,7 @@ void moveLiftDown(){ //Decrements the cone lift's height up one
   }
 }
 
-void moveLiftToPreset(int firstVal, int secondVal){ 
+void moveLiftToPreset(int firstVal, int secondVal){
   firstLiftVal = firstVal;
   secondLiftVal = secondVal;
   CONE_LIFT_COMMAND = PRESET;
@@ -148,7 +148,7 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
   int tnow = time1[T1];
   int appliedVoltages[2] = {0, 0};
 
-  while(BAILOUT == 0 &&!isTimedOut(tnow + 3000) && abs(secondVal - secondLiftJoint.val) > 1 && abs(firstVal - firstLiftJoint.val) > 1){
+  while(BAILOUT == 0 &&!isTimedOut(tnow + 2000) && abs(secondVal - secondLiftJoint.val) > 2 && abs(firstVal - firstLiftJoint.val) > 2){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
 
@@ -165,6 +165,8 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
 
     wait1Msec(10);
   }
+
+  CONE_LIFT_COMMAND = HOLD;
 }
 
 // ** Claw **
@@ -241,12 +243,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(appliedVoltages[1]);
     }
     else if(CONE_LIFT_COMMAND == MOVE){
-      moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
       currentlyCarrying = 0;
+      moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
-      moveLiftTo(firstLiftVal, secondLiftVal);
       currentlyCarrying = 0;
+      moveLiftTo(firstLiftVal, secondLiftVal);
     }
     else if(CONE_LIFT_COMMAND == MANUAL){
       currentlyCarrying = 0;
