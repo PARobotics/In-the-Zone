@@ -175,10 +175,10 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
 
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
-  if(status == CLOSE) motor[M_CLAW] = 127;
-  else if(status == OPEN) motor[M_CLAW] = -127;
-  else if(status == STOP) motor[M_CLAW] = 0;
-  else motor[M_CLAW] = status;
+  if(status == CLOSE) motorReq[M_CLAW] = 127;
+  else if(status == OPEN) motorReq[M_CLAW] = -127;
+  else if(status == STOP) motorReq[M_CLAW] = 0;
+  else motorReq[M_CLAW] = status;
 }
 
 void openClaw(){ //Automatically opens the claw
