@@ -95,7 +95,7 @@ task usercontrol(){
 		// ** Partner Joystick**
 
 		T = vexRT[Ch4]; //Turntable channel
-		F = vexRT[Ch3]; //First lift joint channel
+		F = vexRT[Ch1]; //First lift joint channel
 		S = vexRT[Ch2]; //Second lift joint channel
 
 		//Prevent tiny accidental motions
@@ -160,7 +160,7 @@ task usercontrol(){
 		}
 		else if(CONE_LIFT_COMMAND == MANUAL) 	moveSecondLiftJoint(0);
 
-		//if(F == 0 && S == 0) CONE_LIFT_COMMAND = STOP; //TODO: Add this back
+		if(F == 0 && S == 0 && CONE_LIFT_COMMAND == MANUAL) CONE_LIFT_COMMAND = HOLD;
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			CONE_LIFT_COMMAND = HOLD;
