@@ -148,16 +148,18 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
   int tnow = time1[T1];
   int appliedVoltages[2] = {0, 0};
 
+  writeDebugStreamLine("NOW MOVING");
+
   while(BAILOUT == 0 &&!isTimedOut(tnow + 2000) && abs(secondVal - secondLiftJoint.val) > 2 && abs(firstVal - firstLiftJoint.val) > 2){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
 
-    appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
-    appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
+    appliedVoltages[0] = sensorHold(&firstLiftJoint, firstVal, CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
+    appliedVoltages[1] = sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
     #if DEBUG_CONE_LIFT == 1
-      writeDebugStreamLine("[LIFT 1] %d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
-		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+      writeDebugStreamLine("[LIFT 1] %d %d %d %d", firstVal, firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
+		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", secondVal, secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
     #endif
 
     moveFirstLiftJoint(appliedVoltages[0]);
@@ -165,6 +167,8 @@ void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
 
     wait1Msec(10);
   }
+
+  writeDebugStreamLine("NOW HOLDING");
 
   CONE_LIFT_COMMAND = HOLD;
 }
