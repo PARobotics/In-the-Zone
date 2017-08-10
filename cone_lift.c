@@ -22,7 +22,7 @@ int degreesToTicks(int degrees){
 }
 
 int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
-  return ticksToDegrees(turntable.val;);
+  return ticksToDegrees(turntable.val);
 }
 
 void moveTurntable(int val){ //Manually controls the turntable rotation
@@ -57,12 +57,6 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
     moveTurntable(vcmd);
 
     wait1Msec(10);
-  }
-
-  sensorPControl(sensor* s, int target)
-
-  while(){
-
   }
 
   moveTurntable(STOP);
