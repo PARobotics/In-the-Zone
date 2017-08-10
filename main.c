@@ -36,6 +36,7 @@
 
 sensor firstLiftJoint;
 sensor secondLiftJoint;
+sensor turntable;
 
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"

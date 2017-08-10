@@ -7,10 +7,6 @@
 */
 
 // ** Turntable **
-int getTurntableValue(){ //Returns the raw tick value of the turntable
-  return nMotorEncoder[M_TURNTABLE];
-}
-
 int ticksToDegrees(int ticks){
   int degrees = (ticks * 360 * 10 * 12 / RPM_393_HS / 66) % 3600; //Make sure degrees dont overflow past 360 degrees
 
@@ -26,10 +22,7 @@ int degreesToTicks(int degrees){
 }
 
 int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
-  int raw = getTurntableValue();
-  int degrees = ticksToDegrees(raw);
-
-  return degrees;
+  return ticksToDegrees(turntable.val;);
 }
 
 void moveTurntable(int val){ //Manually controls the turntable rotation
@@ -40,10 +33,9 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
 }
 
 void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
-  int currentVal = getTurntableValue();
-  int target = currentVal + status * abs(degreesToTicks(degrees));
+  updateSensorValue(&turntable);
 
-  writeDebugStreamLine("initial: %d target: %d", currentVal, target);
+  int target = turntable.val + status * abs(degreesToTicks(degrees));
 
   int t0 = time1[T1];
 
@@ -51,21 +43,26 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
   int distanceToTarget = 0;
 
+  int vcmd;
+
   while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){ //TODO: Make this a real p control
-    currentVal = getTurntableValue();
+    updateSensorValue(&turntable);
 
-    distanceToTarget = target - currentVal;
-    if(status == COUNTERCLOCKWISE) distanceToTarget = currentVal - target;
+    vcmd = sensorPControl(&turntable, target);
 
-    if(distanceToTarget < degreesToTicks(20)) break;
-    else if(distanceToTarget < degreesToTicks(40)) moveTurntable(-1 * status * 10);
-    else if(distanceToTarget < degreesToTicks(70)) moveTurntable(status * 10);
-    else if(distanceToTarget < degreesToTicks(150)) moveTurntable(status * 20);
-    else if(distanceToTarget < degreesToTicks(450)) moveTurntable(status * 30);
-    else if(distanceToTarget < degreesToTicks(600)) moveTurntable(status * 60);
-    else moveTurntable(status * 80);
+    #if DEBUG_CONE_LIFT == 1
+      writeDebugStreamLine("[TURNTABLE] %4d %4d %3d", target, turntable.val, vcmd);
+    #endif
+
+    moveTurntable(vcmd);
 
     wait1Msec(10);
+  }
+
+  sensorPControl(sensor* s, int target)
+
+  while(){
+
   }
 
   moveTurntable(STOP);
@@ -211,15 +208,18 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int firstLiftValsForLifting[] = {117, 131, 134, 134, 135, 137, 136, 133, 129, 121, 118};
   int secondLiftValsForLifting[] = {365, 299, 289, 285, 275, 269, 254, 245, 226, 211, 171};
 
-  pid firstPid, secondPid;
+  pid firstPid, secondPid, turntablePid;
   firstPid.kp = CONE_LIFT1_KX;
   firstPid.kd = CONE_LIFT1_KV;
 
   secondPid.kp = CONE_LIFT2_KX;
   secondPid.kd = CONE_LIFT2_KV;
 
+  turntablePid.kp = TURNTABLE_KP;
+
   initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
   initializeSensor(&secondLiftJoint, 1.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
+  initializeSensor(&turntable, 1.0, I2C_1, &turntablePid); //Underclocked 1 to 3 gear ratio
 
   writeDebugStreamLine("Default: %d Min: %d Max: %d KP : %.2f KD: %.2f", CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT2_MAX_V, CONE_LIFT2_KX, CONE_LIFT2_KV);
 

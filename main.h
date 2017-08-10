@@ -16,7 +16,6 @@ void automaticMobileGoalLift();
 //Cone lift
 void moveTurntable(int val);
 void moveFirstLiftJoint(int status);
-int getTurntableValue();
 int getTurntableDegrees();
 void moveTurntableBy(int degrees, int status, int tlimit);
 void moveTurntableToGoal();
@@ -31,6 +30,8 @@ void moveLiftTo(int firstVal, int secondVal);
 void moveLiftToPreset(int firstVal, int secondVal);
 
 // ** Constants **
+#define TURNTABLE_KP 0.43992
+
 #define CONE_LIFT1_MAX_V 127
 #define CONE_LIFT1_MIN_V -127
 #define CONE_LIFT1_DEFAULT_V 0
