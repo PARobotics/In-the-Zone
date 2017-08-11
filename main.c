@@ -131,13 +131,14 @@ task usercontrol(){
 		// LIFT CONTROLS
 
 		if(vexRT[Btn7U] == 1){ //Hovering preset
-			moveLiftToPreset(129, 327);
+			//moveLiftToPreset(129, 327);
+			moveLiftToPreset(1290, 0);
 		}
 		else if(vexRT[Btn7L] == 1){ //Loader preset
 			//moveLiftToPreset();
 		}
 		else if(vexRT[Btn7R] == 1){ //On the ground preset
-			moveLiftToPreset(72, 317);
+			//moveLiftToPreset(72, 317);
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();

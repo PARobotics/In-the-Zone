@@ -135,13 +135,13 @@ void moveLiftToPreset(int firstVal, int secondVal){
   CONE_LIFT_COMMAND = PRESET;
 }
 
-void moveLiftTo(int firstVal, int secondVal){ //Swings the lift to the preset
+void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to the preset
   int tnow = time1[T1];
   int appliedVoltages[2] = {0, 0};
 
   writeDebugStreamLine("NOW MOVING");
 
-  while(BAILOUT == 0 &&!isTimedOut(tnow + 2000) && abs(secondVal - secondLiftJoint.val) > 2 && abs(firstVal - firstLiftJoint.val) > 2){
+  while(BAILOUT == 0 &&!isTimedOut(tnow + tlimit)){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
 
@@ -212,8 +212,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   turntablePid.kp = TURNTABLE_KP;
   turntablePid.kd = TURNTABLE_KD;
 
-  initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
-  initializeSensor(&secondLiftJoint, 1.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
+  initializeSensor(&firstLiftJoint, 720.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
+  initializeSensor(&secondLiftJoint, 10.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
   initializeSensor(&turntable, 1.0, I2C_1, &turntablePid); //Underclocked 1 to 3 gear ratio
 
   writeDebugStreamLine("Default: %d Min: %d Max: %d KP : %.2f KD: %.2f", CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT2_MAX_V, CONE_LIFT2_KX, CONE_LIFT2_KV);
@@ -242,12 +242,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	moveSecondLiftJoint(appliedVoltages[1]);
     }
     else if(CONE_LIFT_COMMAND == MOVE){
-      currentlyCarrying = 0;
-      moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum]);
+      //currentlyCarrying = 0;
+      //moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum], 2000);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
       currentlyCarrying = 0;
-      moveLiftTo(firstLiftVal, secondLiftVal);
+      moveLiftTo(firstLiftVal, secondLiftVal, 2000);
     }
     else if(CONE_LIFT_COMMAND == MANUAL){
       currentlyCarrying = 0;
