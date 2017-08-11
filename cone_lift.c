@@ -247,7 +247,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     }
     else if(CONE_LIFT_COMMAND == PRESET){
       currentlyCarrying = 0;
-      moveLiftTo(firstLiftVal, secondLiftVal, 2000);
+      moveLiftTo(firstLiftVal, secondLiftVal, 3000);
     }
     else if(CONE_LIFT_COMMAND == MANUAL){
       currentlyCarrying = 0;
