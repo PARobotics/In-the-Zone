@@ -131,7 +131,7 @@ task usercontrol(){
 		// LIFT CONTROLS
 
 		if(vexRT[Btn7U] == 1){ //Hovering preset
-			moveLiftToPreset(0, 3170);
+			moveLiftToPreset(975, 3170);
 			//moveLiftToPreset(1290, 0);
 		}
 		else if(vexRT[Btn7L] == 1){ //Loader preset
