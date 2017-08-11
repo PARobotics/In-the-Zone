@@ -153,15 +153,15 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
 		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", secondVal, secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
     #endif
 
-    moveFirstLiftJoint(appliedVoltages[0]);
+    //moveFirstLiftJoint(appliedVoltages[0]);
     moveSecondLiftJoint(appliedVoltages[1]);
 
     wait1Msec(10);
   }
 
-  writeDebugStreamLine("NOW HOLDING");
+  //writeDebugStreamLine("NOW HOLDING");
 
-  CONE_LIFT_COMMAND = HOLD;
+  CONE_LIFT_COMMAND = STOP;
 }
 
 // ** Claw **

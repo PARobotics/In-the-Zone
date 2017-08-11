@@ -131,8 +131,8 @@ task usercontrol(){
 		// LIFT CONTROLS
 
 		if(vexRT[Btn7U] == 1){ //Hovering preset
-			//moveLiftToPreset(129, 327);
-			moveLiftToPreset(1290, 0);
+			moveLiftToPreset(0, 3270);
+			//moveLiftToPreset(1290, 0);
 		}
 		else if(vexRT[Btn7L] == 1){ //Loader preset
 			//moveLiftToPreset();
@@ -162,7 +162,7 @@ task usercontrol(){
 		}
 		else if(CONE_LIFT_COMMAND == MANUAL) 	moveSecondLiftJoint(0);
 
-		if(F == 0 && S == 0 && CONE_LIFT_COMMAND == MANUAL) CONE_LIFT_COMMAND = HOLD;
+		if(F == 0 && S == 0 && CONE_LIFT_COMMAND == MANUAL) CONE_LIFT_COMMAND = STOP;
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			CONE_LIFT_COMMAND = HOLD;
