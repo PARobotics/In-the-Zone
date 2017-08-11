@@ -30,7 +30,9 @@ void moveLiftTo(int firstVal, int secondVal);
 void moveLiftToPreset(int firstVal, int secondVal);
 
 // ** Constants **
-#define TURNTABLE_KP 0.43992
+//#define TURNTABLE_KP 0.43992
+#define TURNTABLE_KP 0.4
+#define TURNTABLE_KD 0.03
 
 #define CONE_LIFT1_MAX_V 127
 #define CONE_LIFT1_MIN_V -127

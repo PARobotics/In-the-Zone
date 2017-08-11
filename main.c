@@ -113,7 +113,7 @@ task usercontrol(){
 			moveTurntableToFront();
 		}
 		else{
-			if(T != 0) moveTurntable(SIGN(T) * 127);
+			moveTurntable(T);
 		}
 
 		// CLAW CONTROLS

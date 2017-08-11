@@ -26,10 +26,10 @@ int getTurntableDegrees(){ //Returns the degree value of the turntable in units 
 }
 
 void moveTurntable(int val){ //Manually controls the turntable rotation
-  if(val == CLOCKWISE) motor[M_TURNTABLE] = 127;
-  else if(val == COUNTERCLOCKWISE) motor[M_TURNTABLE] = -127;
-  else if(val == STOP) motor[M_TURNTABLE] = 0;
-  else motor[M_TURNTABLE] = val;
+  if(val == CLOCKWISE) motorReq[M_TURNTABLE] = 127;
+  else if(val == COUNTERCLOCKWISE) motorReq[M_TURNTABLE] = -127;
+  else if(val == STOP) motorReq[M_TURNTABLE] = 0;
+  else motorReq[M_TURNTABLE] = val;
 }
 
 void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
@@ -48,10 +48,10 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
   while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){ //TODO: Make this a real p control
     updateSensorValue(&turntable);
 
-    vcmd = sensorPControl(&turntable, target);
+    vcmd = sensorPDControl(&turntable, target, 0);
 
     #if DEBUG_CONE_LIFT == 1
-      writeDebugStreamLine("[TURNTABLE] %4d %4d %3d", target, turntable.val, vcmd);
+      writeDebugStreamLine("[TURNTABLE] %4d %4d %4d %3d", target, turntable.val, turntable.speed, vcmd);
     #endif
 
     moveTurntable(vcmd);
@@ -67,11 +67,11 @@ void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobi
 
   if(currentTheta <= 1800){
     //Counterclockwise
-    moveTurntableBy(currentTheta, COUNTERCLOCKWISE, 1000);
+    moveTurntableBy(currentTheta, COUNTERCLOCKWISE, 1500);
   }
   else{
     //Clockwise
-    moveTurntableBy(3600 - currentTheta, CLOCKWISE, 1000);
+    moveTurntableBy(3600 - currentTheta, CLOCKWISE, 1500);
   }
 }
 
@@ -81,10 +81,10 @@ void moveTurntableToFront(){ //Automatically snaps the turntable to the front
 
   if(currentTheta <= 1800){
   	//Clockwise
-  	moveTurntableBy(desiredTheta - currentTheta, CLOCKWISE, 1000);
+  	moveTurntableBy(desiredTheta - currentTheta, CLOCKWISE, 1500);
 	}
 	else{
-		moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1000);
+		moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
 	}
 }
 
@@ -210,6 +210,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   secondPid.kd = CONE_LIFT2_KV;
 
   turntablePid.kp = TURNTABLE_KP;
+  turntablePid.kd = TURNTABLE_KD;
 
   initializeSensor(&firstLiftJoint, 72.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
   initializeSensor(&secondLiftJoint, 1.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
