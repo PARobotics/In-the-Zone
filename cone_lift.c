@@ -139,8 +139,6 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
   int tnow = time1[T1];
   int appliedVoltages[2] = {0, 0};
 
-  writeDebugStreamLine("NOW MOVING");
-
   while(BAILOUT == 0 &&!isTimedOut(tnow + tlimit)){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
@@ -159,9 +157,7 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
     wait1Msec(10);
   }
 
-  //writeDebugStreamLine("NOW HOLDING");
-
-  CONE_LIFT_COMMAND = STOP;
+  CONE_LIFT_COMMAND = HOLD;
 }
 
 // ** Claw **
