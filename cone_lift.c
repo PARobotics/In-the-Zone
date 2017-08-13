@@ -88,6 +88,35 @@ void moveTurntableToFront(){ //Automatically snaps the turntable to the front
 	}
 }
 
+// ** Claw **
+void moveClaw(int status){ //Manually opens and closes the claw
+  if(status == CLOSE) motorReq[M_CLAW] = 127;
+  else if(status == OPEN) motorReq[M_CLAW] = -127;
+  else if(status == STOP) motorReq[M_CLAW] = 0;
+  else motorReq[M_CLAW] = status;
+}
+
+void openClaw(){ //Automatically opens the claw
+  int t0 = time1[T1];
+  moveClaw(OPEN);
+  clawIsClosed = 0;
+  while(!isTimedOut(t0 + 150)){
+    moveClaw(OPEN);
+    wait1Msec(10);
+  }
+  moveClaw(STOP);
+}
+
+void closeClaw(){ //Automatically closes the claw
+  int t0 = time1[T1];
+  moveClaw(CLOSE);
+  clawIsClosed = 1;
+  while(!isTimedOut(t0 +400)){
+    moveClaw(100);
+    wait1Msec(10);
+  }
+}
+
 // ** Lift **
 void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
   if(status == UP){
@@ -158,35 +187,6 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
   }
 
   CONE_LIFT_COMMAND = HOLD;
-}
-
-// ** Claw **
-void moveClaw(int status){ //Manually opens and closes the claw
-  if(status == CLOSE) motorReq[M_CLAW] = 127;
-  else if(status == OPEN) motorReq[M_CLAW] = -127;
-  else if(status == STOP) motorReq[M_CLAW] = 0;
-  else motorReq[M_CLAW] = status;
-}
-
-void openClaw(){ //Automatically opens the claw
-  int t0 = time1[T1];
-  moveClaw(OPEN);
-  clawIsClosed = 0;
-  while(!isTimedOut(t0 + 150)){
-    moveClaw(OPEN);
-    wait1Msec(10);
-  }
-  moveClaw(STOP);
-}
-
-void closeClaw(){ //Automatically closes the claw
-  int t0 = time1[T1];
-  moveClaw(CLOSE);
-  clawIsClosed = 1;
-  while(!isTimedOut(t0 +400)){
-    moveClaw(100);
-    wait1Msec(10);
-  }
 }
 
 task coneLiftTask(){ //Controls the position of the lift continuously
