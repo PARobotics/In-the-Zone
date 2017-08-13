@@ -74,7 +74,7 @@ task usercontrol(){
 
 		// ** Primary joystick **
 
-    /*V = vexRT[Ch3];
+    V = vexRT[Ch3];
 		H = vexRT[Ch1];
 
 		if(abs(V) < 15) V = 0;
@@ -91,11 +91,9 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
-		*/
-
 		// ** Partner Joystick**
 
-		T = vexRT[Ch4]; //Turntable channel
+		/*T = vexRT[Ch4]; //Turntable channel
 		F = vexRT[Ch1]; //First lift joint channel
 		S = vexRT[Ch2]; //Second lift joint channel
 
@@ -166,9 +164,9 @@ task usercontrol(){
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND != HOLD) CONE_LIFT_COMMAND = HOLD;
 			else CONE_LIFT_COMMAND = STOP;
-			
+
 			resetPrButton(Btn8L_Partner);
-		}
+		}*/
 
 		userControlUpdate();
 	}
