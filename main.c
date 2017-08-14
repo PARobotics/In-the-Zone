@@ -31,8 +31,8 @@
 
 #include "Vex_Competition_Includes.c"
 #include "main.h"
-#include "auton.c"
 #include "parallax-lib/bin/constants.h"
+#include "auton.c"
 
 sensor firstLiftJoint;
 sensor secondLiftJoint;
@@ -69,6 +69,8 @@ task usercontrol(){
 
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
+
+	deployConeLift();
 
   while(true){
 

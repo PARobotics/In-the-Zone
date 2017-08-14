@@ -41,7 +41,7 @@ void lcdGenerateMessage(){
 */
 
 //Slew Rate
-#define USE_SLEW  0 //Disable if slew interferes with move functions or slows robot down
+#define USE_SLEW  1 //Disable if slew interferes with move functions or slows robot down
 int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
 #define USE_MONITOR 0//Toggles the monitor task (Necessary for move functions, should be disabled otherwise)
