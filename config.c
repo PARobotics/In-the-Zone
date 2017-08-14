@@ -33,7 +33,7 @@ void setUpButtons(){ //Only include if using remote
 
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
-  sprintf(lcdStr2, "%4d %4d", firstLiftJoint.val, secondLiftJoint.val);
+  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, secondLiftJoint.val, coneNum);
 }
 
 /*
@@ -41,7 +41,7 @@ void lcdGenerateMessage(){
 */
 
 //Slew Rate
-#define USE_SLEW  1 //Disable if slew interferes with move functions or slows robot down
+#define USE_SLEW  0 //Disable if slew interferes with move functions or slows robot down
 int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
 #define USE_MONITOR 0//Toggles the monitor task (Necessary for move functions, should be disabled otherwise)
@@ -63,6 +63,8 @@ void getWheelVal(){
 /*
   DEBUGGING TOGGLES
 */
+
+#define DEBUG_SLEW  0
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
