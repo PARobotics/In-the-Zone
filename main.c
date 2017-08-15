@@ -164,12 +164,13 @@ task usercontrol(){
 
 		if(F == 0 && S == 0 && CONE_LIFT_COMMAND == MANUAL) CONE_LIFT_COMMAND = HOLD;
 
+		*/
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND != HOLD) CONE_LIFT_COMMAND = HOLD;
 			else CONE_LIFT_COMMAND = STOP;
 
 			resetPrButton(Btn8L_Partner);
-		}*/
+		}
 
 		userControlUpdate();
 	}
