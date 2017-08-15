@@ -36,7 +36,7 @@ task mobileGoalTask(){
      		moveMobileGoalLift(DOWN);
         wait1Msec(10);
       }
-      t0 = time1[T1];
+      /*t0 = time1[T1];
       while(!isTimedOut(t0 + 300)){
       	moveMobileGoalLift(-30);
         wait1Msec(10);
@@ -45,7 +45,7 @@ task mobileGoalTask(){
       while(!isTimedOut(t0 + 200)){
       	moveMobileGoalLift(30);
         wait1Msec(10);
-    	}
+    	}*/
 
       coneNum = 0;
       moveMobileGoalLift(STOP);
