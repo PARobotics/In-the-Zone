@@ -56,6 +56,7 @@ void deployConeLift();
 // ** Global variables **
 #define PRESET 20
 int clawIsClosed = 0;
+int clawIsOpened = 0;
 int coneNum = 0;
 int firstLiftVal, secondLiftVal;
 

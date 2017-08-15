@@ -55,8 +55,8 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
 	CONE_LIFT_COMMAND = STOP;
-  clawIsClosed = false;
-  clawIsOpened = false;
+  clawIsClosed = 0;
+  clawIsOpened = 0;
 }
 
 void move(int V, int H, int X){
