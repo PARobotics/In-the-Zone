@@ -249,6 +249,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       currentlyCarrying = 0;
     }
     else if(CONE_LIFT_COMMAND == STOP){
+    	currentlyCarrying = 0;
+
       moveFirstLiftJoint(0);
     	moveSecondLiftJoint(0);
     }
