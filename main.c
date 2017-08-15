@@ -81,14 +81,17 @@ task usercontrol(){
 		if(abs(H) < 15) H = 0;
 		move(V, H, 0);
 
-    if(vexRT[Btn5U] == 1 || vexRT[Btn6U] == 1){
+    if(vexRT[Btn6U] == 1){
       MOBILE_GOAL_COMMAND = UP;
     }
-    else if(vexRT[Btn6D] == 1){
-      MOBILE_GOAL_COMMAND = DOWN;
-    }
-		else if(vexRT[Btn5D] == 1){
+		else if(vexRT[Btn6D] == 1){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+		}
+		else if(vexRT[Btn5U] == 1){
+			MOBILE_GOAL_COMMAND = MANUAL_UP;
+		}
+		else if(vexRT[Btn5D] == 1){
+			MOBILE_GOAL_COMMAND = MANUAL_DOWN;
 		}
 
 		// ** Partner Joystick**
