@@ -54,7 +54,7 @@ task mobileGoalTask(){
     else if(MOBILE_GOAL_COMMAND == DOWN_WITHOUT_GOAL){ //Pushes the lift to ground if it doesn't have a mobile goal
       int t0 = time1[T1];
       moveMobileGoalLift(DOWN);
-      while(!isTimedOut(t0 + 2500)){
+      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0){
         moveMobileGoalLift(DOWN);
         wait1Msec(10);
       }
