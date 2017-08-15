@@ -126,8 +126,11 @@ task usercontrol(){
       closeClaw();
     }
     else if(clawIsClosed){ //Apply a small voltage to keep claw closed
-    	moveClaw(10);
+    	moveClaw(15);
     }
+		else if(clawIsOpened){ //Apply a small voltage to keep claw open
+			moveClaw(-15);
+		}
 
 		// LIFT CONTROLS
 

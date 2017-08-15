@@ -100,6 +100,7 @@ void openClaw(){ //Automatically opens the claw
   int t0 = time1[T1];
   moveClaw(OPEN);
   clawIsClosed = 0;
+  clawIsOpened = 1;
   while(!isTimedOut(t0 + 150)){
     moveClaw(OPEN);
     wait1Msec(10);
@@ -111,6 +112,7 @@ void closeClaw(){ //Automatically closes the claw
   int t0 = time1[T1];
   moveClaw(CLOSE);
   clawIsClosed = 1;
+  clawIsOpened = 0;
   while(!isTimedOut(t0 +400)){
     moveClaw(100);
     wait1Msec(10);
