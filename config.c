@@ -44,21 +44,7 @@ void lcdGenerateMessage(){
 #define USE_SLEW  1 //Disable if slew interferes with move functions or slows robot down
 int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
-#define USE_MONITOR 0//Toggles the monitor task (Necessary for move functions, should be disabled otherwise)
-
-
-//Move functions
-
-void getWheelVal(){
-  DRV.raw[X_POS] = 0;
-  DRV.raw[Y_POS] = 0;
-  DRV.raw[THETA] = 0;
-}
-
-/*
-  SENSORS
-*/
-
+#define USE_MOVE 0
 
 /*
   DEBUGGING TOGGLES
