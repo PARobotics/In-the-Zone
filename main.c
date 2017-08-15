@@ -70,8 +70,6 @@ task usercontrol(){
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
 
-	deployConeLift();
-
   while(true){
 
 		// ** Primary joystick **

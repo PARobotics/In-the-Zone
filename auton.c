@@ -18,15 +18,15 @@ void deployConeLift(){ //Swings cone lift out into ready position
 }
 
 void autoA(){
-
+  deployConeLift();
 }
 
 void autoB(){
-
+  deployConeLift();
 }
 
 void autoC(){
-
+  deployConeLift();
 }
 
 void prgSkills(){
