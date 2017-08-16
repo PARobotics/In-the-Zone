@@ -46,7 +46,7 @@ void deployConeLift();
 #define CONE_LIFT2_MAX_V 127
 #define CONE_LIFT2_MIN_V -127
 #define CONE_LIFT2_DEFAULT_V 0
-#define CONE_LIFT2_KX -0.5
+#define CONE_LIFT2_KX -1.5
 #define CONE_LIFT2_KV -0.02
 
 
