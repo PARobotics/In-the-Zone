@@ -170,6 +170,8 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
   int tnow = time1[T1];
   int appliedVoltages[2] = {0, 0};
 
+  int dbgCnt = 0;
+
   while(BAILOUT == 0 &&!isTimedOut(tnow + tlimit)){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
@@ -178,8 +180,13 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
     appliedVoltages[1] = sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
     #if DEBUG_CONE_LIFT == 1
-      writeDebugStreamLine("[LIFT 1] %d %d %d %d", firstVal, firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
-		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", secondVal, secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+      if(dbgCnt == 10){
+        writeDebugStreamLine("[LIFT 1] %d %d %d %d", firstVal, firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
+  		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", secondVal, secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+
+        dbgCnt = 0;
+      }
+      else dbgCnt++;
     #endif
 
     moveFirstLiftJoint(appliedVoltages[0]);
@@ -216,6 +223,8 @@ task coneLiftTask(){ //Controls the position of the lift continuously
 
   writeDebugStreamLine("Default: %d Min: %d Max: %d KP : %.2f KD: %.2f", CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT2_MAX_V, CONE_LIFT2_KX, CONE_LIFT2_KV);
 
+  int dbgCnt = 0;
+
   while(true){
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
@@ -232,8 +241,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
 
       #if DEBUG_CONE_LIFT == 1
-        writeDebugStreamLine("[LIFT 1] %d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
-			  writeDebugStreamLine("[LIFT 2] %d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+        if(dbgCnt == 10){
+          writeDebugStreamLine("[LIFT 1] %d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
+  			  writeDebugStreamLine("[LIFT 2] %d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
+          dbgCnt = 0;
+        }
+        else dbgCnt++;
       #endif
 
       moveFirstLiftJoint(appliedVoltages[0]);
