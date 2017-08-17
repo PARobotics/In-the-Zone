@@ -167,7 +167,7 @@ task usercontrol(){
 		if(S != 0){
 			CONE_LIFT_COMMAND = HOLD;
 			holdSecondJoint = 0;
-			moveSecondLiftJoint(SIGN(F) * 127);
+			moveSecondLiftJoint(SIGN(S) * 127);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdSecondJoint == 0){
 			moveSecondLiftJoint(0);
