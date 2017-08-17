@@ -199,7 +199,6 @@ void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to t
 }
 
 task coneLiftTask(){ //Controls the position of the lift continuously
-  int currentlyCarrying = 0;
   int targetVals[2] = {0, 0};
   int appliedVoltages[2] = {0, 0};
 
@@ -229,6 +228,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   	updateSensorValue(&firstLiftJoint);
     updateSensorValue(&secondLiftJoint);
 
+    if(CONE_LIFT_COMMAND != HOLD){
+      currentlyCarrying = 0;
+      holdFirstJoint = 1;
+      holdSecondJoint = 1;
+    }
+
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
       if(currentlyCarrying == 0){
         //Initially set desired values
@@ -249,24 +254,17 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         else dbgCnt++;
       #endif
 
-      moveFirstLiftJoint(appliedVoltages[0]);
-    	moveSecondLiftJoint(appliedVoltages[1]);
+      if(holdFirstJoint == 1) moveFirstLiftJoint(appliedVoltages[0]);
+    	if(holdSecondJoint == 1) moveSecondLiftJoint(appliedVoltages[1]);
     }
     else if(CONE_LIFT_COMMAND == MOVE){
-      currentlyCarrying = 0;
       moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum], 2000);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
-      currentlyCarrying = 0;
       moveLiftTo(firstLiftVal, secondLiftVal, 3000);
       CONE_LIFT_COMMAND = STOP;
     }
-    else if(CONE_LIFT_COMMAND == MANUAL){
-      currentlyCarrying = 0;
-    }
     else if(CONE_LIFT_COMMAND == STOP){
-    	currentlyCarrying = 0;
-
       moveFirstLiftJoint(0);
     	moveSecondLiftJoint(0);
     }

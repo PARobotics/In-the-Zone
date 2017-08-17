@@ -59,6 +59,9 @@ int clawIsClosed = 0;
 int clawIsOpened = 0;
 int coneNum = 0;
 int firstLiftVal, secondLiftVal;
+int holdFirstJoint = 1;
+int holdSecondJoint = 1;
+int currentlyCarrying = 0;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;

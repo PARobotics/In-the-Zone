@@ -154,18 +154,26 @@ task usercontrol(){
 
 		//Manual lift controls
 		if(F != 0){
-			CONE_LIFT_COMMAND = MANUAL;
+			CONE_LIFT_COMMAND = HOLD;
+			holdFirstJoint = 0;
 			moveFirstLiftJoint(SIGN(F) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) 	moveFirstLiftJoint(0);
+		else if(CONE_LIFT_COMMAND == HOLD && holdFirstJoint == 0){
+			moveFirstLiftJoint(0);
+			currentlyCarrying = 0;
+			holdFirstJoint = 1;
+		}
 
 		if(S != 0){
-			CONE_LIFT_COMMAND = MANUAL;
-			moveSecondLiftJoint(SIGN(S) * 127);
+			CONE_LIFT_COMMAND = HOLD;
+			holdSecondJoint = 0;
+			moveSecondLiftJoint(SIGN(F) * 127);
 		}
-		else if(CONE_LIFT_COMMAND == MANUAL) 	moveSecondLiftJoint(0);
-
-		if(F == 0 && S == 0 && CONE_LIFT_COMMAND == MANUAL) CONE_LIFT_COMMAND = HOLD;
+		else if(CONE_LIFT_COMMAND == HOLD && holdSecondJoint == 0){
+			moveSecondLiftJoint(0);
+			currentlyCarrying = 0;
+			holdSecondJoint = 1;
+		}
 
 		if(getPrButton(Btn8L_Partner) == PUSHED_RELEASED){ //Toggle lift hold
 			if(CONE_LIFT_COMMAND != HOLD) CONE_LIFT_COMMAND = HOLD;
