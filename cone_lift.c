@@ -240,10 +240,19 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         targetVals[0] = firstLiftJoint.val;
         targetVals[1] = secondLiftJoint.val;
         currentlyCarrying = 1;
+        secondJointHasStalled = 0;
       }
 
       appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, -127, 127);
-      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, -127, 30);
+      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, -127, 127);
+
+      //Detect stalling on joint 2
+      if(appliedVoltages[1] == 127 && secondLiftJoint.speed == 0){ //If the joint should be applying a high voltage, but it is not moving.
+        secondJointHasStalled = 1;
+        CONE_LIFT_COMMAND = STOP;
+      }
+
+      //appliedVoltages[1] = BOUND(appliedVoltages[1], -127, 30);
 
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
