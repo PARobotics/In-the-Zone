@@ -243,7 +243,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       }
 
       appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, -127, 127);
-      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, -127, 35);
+      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, -127, 30);
 
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
