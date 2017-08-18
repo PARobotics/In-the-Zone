@@ -252,7 +252,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         CONE_LIFT_COMMAND = STOP;
       }
 
-      //appliedVoltages[1] = BOUND(appliedVoltages[1], -127, 30);
+      appliedVoltages[1] = BOUND(appliedVoltages[1], -127, 30);
 
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
