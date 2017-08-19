@@ -33,7 +33,7 @@ void setUpButtons(){ //Only include if using remote
 
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
-  sprintf(lcdStr2, "%3d %3d %d %d", motor[M_FIRST_LIFT2], motor[M_SECOND_LIFT], coneNum, secondJointHasStalled);
+  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, secondLiftJoint.val, coneNum);
 }
 
 /*
