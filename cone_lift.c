@@ -203,8 +203,19 @@ task coneLiftTask(){ //Controls the position of the lift continuously
   int appliedVoltages[2] = {0, 0};
 
   //Store values for the lifting up and down
-  int firstLiftValsForLifting[] = {1116, 1210, 1269, 1283, 1337, 1320, 1320, 1276, 1250, 1195, 1162};
-  int secondLiftValsForLifting[] = {3050, 3010, 2950, 2870, 2800, 2700, 2580, 2470, 2300, 2140, 1720};
+  int valsForLifting[][] = {
+    {1098, 3050},
+    {1370, 2850},
+    {1381, 2690},
+    {1377, 2600},
+    {1377, 2430},
+    {1381, 2390},
+    {1380, 2300},
+    {1380, 2180},
+    {1250, 1960},
+    {1230, 1750},
+    {1067, 1320},
+  };
 
   pid firstPid, secondPid, turntablePid;
   firstPid.kp = CONE_LIFT1_KX;
@@ -267,7 +278,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
     	if(holdSecondJoint == 1) moveSecondLiftJoint(appliedVoltages[1]);
     }
     else if(CONE_LIFT_COMMAND == MOVE){
-      moveLiftTo(firstLiftValsForLifting[coneNum], secondLiftValsForLifting[coneNum], 2000);
+      moveLiftTo(valsForLifting[coneNum][0], valsForLifting[coneNum][1], 1000);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
       moveLiftTo(firstLiftVal, secondLiftVal, 3000);
