@@ -44,7 +44,7 @@ void lcdGenerateMessage(){
 #define USE_SLEW  1 //Disable if slew interferes with move functions or slows robot down
 int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
-#define USE_MOVE 0
+#define USE_MOVE 1
 
 /*
   DEBUGGING TOGGLES

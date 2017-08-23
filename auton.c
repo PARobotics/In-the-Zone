@@ -19,7 +19,6 @@ void deployConeLift(){ //Swings cone lift out into ready position
   CONE_LIFT_COMMAND = MANUAL;
   moveLiftTo(918, 3150, 2000);
   openClaw();
-
 }
 
 void autoA(){

@@ -37,6 +37,12 @@
 sensor firstLiftJoint;
 sensor secondLiftJoint;
 sensor turntable;
+sensor baseLeft;
+sensor baseRight;
+sensor gyro;
+pid baseLeftPID;
+pid baseRightPID;
+pid gyroPID;
 
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"
@@ -48,7 +54,21 @@ void pre_auton(){
 	startTask(mobileGoalTask);
 	startTask(coneLiftTask, 9); //TODO: Change task priority
 
+	baseLeftPID.kp = BASE_LEFT_KP;
+	baseLeftPID.kd = BASE_LEFT_KD;
+	baseRightPID.kp = BASE_RIGHT_KP;
+	baseRightPID.kd = BASE_RIGHT_KD;
+	gyroPID.kp = GYRO_KP;
+	gyroPID.kd = GYRO_KD;
+
+	initializeSensor(&baseLeft, 2.0 * M_PI / 9, dgtl1, &baseLeftPID);
+	initializeSensor(&baseRight, 2.0 * M_PI / 9, dgtl3, &baseRightPID);
+	initializeSensor(&gyro, 1.0, in2, &gyroPID);
+
+	initializeDrive(0.0, &baseLeft, &baseRight, &gyro);
 	initialize();
+
+	wait1Msec(2000); //Calibrate the gyro
 }
 
 task autonomous(){
@@ -70,7 +90,13 @@ task usercontrol(){
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
 
-	//deployConeLift();
+	//A simple move (move 20 inches forward)
+	MOVE_MONITOR = START;
+	refreshDrive(); //Refresh
+	moveFwd(); //Movement Function
+	moveBy(200, 5000); //Tracker Function
+	moveStop(); //End the movement
+	MOVE_MONITOR = STOP;
 
   while(true){
 
