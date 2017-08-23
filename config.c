@@ -51,6 +51,7 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 */
 
 #define DEBUG_SLEW  0
+#define DEBUG_MOVE 1
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){

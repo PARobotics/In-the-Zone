@@ -1,5 +1,6 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in1,    PWR,            sensorPotentiometer)
+#pragma config(Sensor, in2,    Gyro,           sensorGyro)
 #pragma config(Sensor, dgtl1,  wheelEncoderLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  wheelEncoderRight, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  mobileGoalLimitSwitch, sensorTouch)
@@ -61,14 +62,12 @@ void pre_auton(){
 	gyroPID.kp = GYRO_KP;
 	gyroPID.kd = GYRO_KD;
 
-	initializeSensor(&baseLeft, 2.0 * M_PI / 9, dgtl1, &baseLeftPID);
-	initializeSensor(&baseRight, 2.0 * M_PI / 9, dgtl3, &baseRightPID);
+	initializeSensor(&baseLeft, M_PI / 9.0, dgtl1, &baseLeftPID);
+	initializeSensor(&baseRight, -1.0 * M_PI / 9, dgtl3, &baseRightPID);
 	initializeSensor(&gyro, 1.0, in2, &gyroPID);
 
 	initializeDrive(0.0, &baseLeft, &baseRight, &gyro);
 	initialize();
-
-	wait1Msec(2000); //Calibrate the gyro
 }
 
 task autonomous(){
@@ -89,14 +88,6 @@ task usercontrol(){
 
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
-
-	//A simple move (move 20 inches forward)
-	MOVE_MONITOR = START;
-	refreshDrive(); //Refresh
-	moveFwd(); //Movement Function
-	moveBy(200, 5000); //Tracker Function
-	moveStop(); //End the movement
-	MOVE_MONITOR = STOP;
 
   while(true){
 
