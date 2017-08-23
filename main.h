@@ -49,6 +49,13 @@ void deployConeLift();
 #define CONE_LIFT2_KX -0.5
 #define CONE_LIFT2_KV 0
 
+#define BASE_LEFT_KP 1
+#define BASE_LEFT_KD 1
+#define BASE_RIGHT_KP 1
+#define BASE_RIGHT_KD 1
+#define GYRO_KP 1
+#define GYRO_KD 1
+
 
 // ** Custom Easy Names **
 #define DOWN_WITHOUT_GOAL 10
