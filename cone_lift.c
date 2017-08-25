@@ -243,6 +243,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
       currentlyCarrying = 0;
       holdFirstJoint = 1;
       holdSecondJoint = 1;
+      makeLED(dgtl12, OFF);
     }
 
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
@@ -252,6 +253,7 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         targetVals[1] = secondLiftJoint.val;
         currentlyCarrying = 1;
         secondJointHasStalled = 0;
+        makeLED(dgtl12, ON);
       }
 
       appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, -127, 127);

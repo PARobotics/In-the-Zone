@@ -66,10 +66,10 @@ void pre_auton(){
 	initializeSensor(&baseRight, -1.0 * M_PI / 9, dgtl3, &baseRightPID);
 	initializeSensor(&gyro, 1.0, in2, &gyroPID);
 
+	makeLED(dgtl12, OFF);
+
 	initializeDrive(0.0, &baseLeft, &baseRight, &gyro);
 	initialize();
-
-	makeLED(dgtl12, ON);
 }
 
 task autonomous(){
