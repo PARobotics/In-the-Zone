@@ -68,6 +68,8 @@ void pre_auton(){
 
 	initializeDrive(0.0, &baseLeft, &baseRight, &gyro);
 	initialize();
+
+	makeLED(dgtl12, ON);
 }
 
 task autonomous(){
