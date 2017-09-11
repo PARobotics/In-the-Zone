@@ -21,9 +21,9 @@ void userControlProcedure(){
 #define Btn8L_Partner 2
 
 void setUpButtons(){ //Only include if using remote
-  addPrButton(Btn8U_Partner, Btn8U);
-  addPrButton(Btn8D_Partner, Btn8D);
-  addPrButton(Btn8L_Partner, Btn8L);
+  addPrButton(Btn8U_Partner, Btn8UXmtr2);
+  addPrButton(Btn8D_Partner, Btn8DXmtr2);
+  addPrButton(Btn8L_Partner, Btn8LXmtr2);
 }
 
 //Configure Sensors

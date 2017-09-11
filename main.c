@@ -95,7 +95,7 @@ task usercontrol(){
 
 		// ** Primary joystick **
 
-    /*V = vexRT[Ch3];
+  	V = vexRT[Ch3];
 		H = vexRT[Ch1];
 
 		if(abs(V) < 15) V = 0;
@@ -113,13 +113,13 @@ task usercontrol(){
 		}
 		else if(vexRT[Btn5D] == 1){
 			MOBILE_GOAL_COMMAND = MANUAL_DOWN;
-		}*/
+		}
 
 		// ** Partner Joystick**
 
-		T = vexRT[Ch4]; //Turntable channel
-		F = vexRT[Ch1]; //First lift joint channel
-		S = vexRT[Ch2]; //Second lift joint channel
+		T = vexRT[Ch4Xmtr2]; //Turntable channel
+		F = vexRT[Ch1Xmtr2]; //First lift joint channel
+		S = vexRT[Ch2Xmtr2]; //Second lift joint channel
 
 		//Prevent tiny accidental motions
 		if(abs(T) < 15) T = 0;
@@ -128,10 +128,10 @@ task usercontrol(){
 
 		// TURNTABLE CONTROLS
 
-		if(vexRT[Btn5U] == 1){ //Turntable to mobile goal
+		if(vexRT[Btn5UXmtr2] == 1){ //Turntable to mobile goal
 			moveTurntableToGoal();
 		}
-		else if(vexRT[Btn5D] == 1){ //Turntable to grabbing position
+		else if(vexRT[Btn5DXmtr2] == 1){ //Turntable to grabbing position
 			moveTurntableToFront();
 		}
 		else{
@@ -140,10 +140,10 @@ task usercontrol(){
 
 		// CLAW CONTROLS
 
-		if(vexRT[Btn6U] == 1){
+		if(vexRT[Btn6UXmtr2] == 1){
       openClaw();
     }
-    else if(vexRT[Btn6D] == 1){
+    else if(vexRT[Btn6DXmtr2] == 1){
       closeClaw();
     }
     else if(clawIsClosed){ //Apply a small voltage to keep claw closed
@@ -155,13 +155,13 @@ task usercontrol(){
 
 		// LIFT CONTROLS
 
-		if(vexRT[Btn7U] == 1){ //Hovering preset
+		if(vexRT[Btn7UXmtr2] == 1){ //Hovering preset
 			moveLiftToPreset(975, 3170);
 		}
-		else if(vexRT[Btn7L] == 1){ //Loader preset
+		else if(vexRT[Btn7LXmtr2] == 1){ //Loader preset
 			//moveLiftToPreset();
 		}
-		else if(vexRT[Btn7R] == 1){ //On the ground preset
+		else if(vexRT[Btn7RXmtr2] == 1){ //On the ground preset
 			moveLiftToPreset(764, 3170);
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
