@@ -106,13 +106,13 @@ task usercontrol(){
       MOBILE_GOAL_COMMAND = UP;
     }
 		else if(vexRT[Btn6D] == 1){
-			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+			MOBILE_GOAL_COMMAND = DOWN;
 		}
 		else if(vexRT[Btn5U] == 1){
-			MOBILE_GOAL_COMMAND = MANUAL_UP;
+			MOBILE_GOAL_COMMAND = UP;
 		}
 		else if(vexRT[Btn5D] == 1){
-			MOBILE_GOAL_COMMAND = MANUAL_DOWN;
+			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
 		// ** Partner Joystick**
