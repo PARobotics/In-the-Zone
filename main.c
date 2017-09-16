@@ -1,6 +1,7 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in1,    PWR,            sensorPotentiometer)
 #pragma config(Sensor, in2,    Gyro,           sensorGyro)
+#pragma config(Sensor, in3,    MobileGoal,     sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  wheelEncoderLeft, sensorQuadEncoder)
 #pragma config(Sensor, dgtl3,  wheelEncoderRight, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  mobileGoalLimitSwitch, sensorTouch)
@@ -40,10 +41,12 @@ sensor secondLiftJoint;
 sensor turntable;
 sensor baseLeft;
 sensor baseRight;
+sensor mobileGoalLift;
 sensor gyro;
 pid baseLeftPID;
 pid baseRightPID;
 pid gyroPID;
+pid mobileGoalPID;
 
 #include "parallax-lib/main.c"
 #include "mobile_goal.c"

@@ -77,5 +77,6 @@ int CONE_LIFT_COMMAND = 0;
 
 //Debug flags
 #define DEBUG_CONE_LIFT 1
+#define DEBUG_MOBILE_GOAL 1
 
 #endif
