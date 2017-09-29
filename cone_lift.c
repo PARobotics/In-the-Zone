@@ -253,6 +253,11 @@ task coneLiftTask(){ //Controls the position of the lift continuously
         targetVals[1] = secondLiftJoint.val;
         currentlyCarrying = 1;
         secondJointHasStalled = 0;
+
+				#if DEBUG_CONE_LIFT == 1
+					writeDebugStreamLine("entered hold");
+				#endif
+
         makeLED(dgtl12, ON);
       }
 

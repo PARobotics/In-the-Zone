@@ -33,7 +33,7 @@ void setUpButtons(){ //Only include if using remote
 
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
-  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, secondLiftJoint.val, coneNum);
+  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, mobileGoalLift.val, coneNum);
 }
 
 /*
@@ -52,6 +52,7 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
 #define DEBUG_SLEW  0
 #define DEBUG_MOVE 1
+#define DEBUG_REMOTE 1
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
