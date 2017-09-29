@@ -1,6 +1,9 @@
 #ifndef CONE_LIFT_C
 #define CONE_LIFT_C
 
+#define TURNTABLE_180_POSITION 806
+#define TURNTABLE_360_POSITION 1607
+
 /*
   CONE_LIFT.C
   Contains all the code for the cone claw and lift
@@ -8,7 +11,7 @@
 
 // ** Turntable **
 int ticksToDegrees(int ticks){
-  int degrees = (ticks * 360 * 10 * 12 / RPM_393_HS / 66) % 3600; //Make sure degrees dont overflow past 360 degrees
+  int degrees = (ticks * 360 * 10 * 12 / RPM_393_HS / 60) % 3600; //Make sure degrees dont overflow past 360 degrees
 
   if(degrees < 0) degrees += 3600;
 
@@ -32,11 +35,10 @@ void moveTurntable(int val){ //Manually controls the turntable rotation
   else motorReq[M_TURNTABLE] = val;
 }
 
-void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
+void moveTurntableBy(int ticks, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
   updateSensorValue(&turntable);
 
-  int target = turntable.val + status * abs(degreesToTicks(degrees));
-
+  int target = turntable.val + status * ticks;
   int t0 = time1[T1];
 
   moveTurntable(status * 80);
@@ -45,7 +47,7 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 
   int vcmd;
 
-  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){ //TODO: Make this a real p control
+  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
     updateSensorValue(&turntable);
 
     vcmd = sensorPDControl(&turntable, target, 0);
@@ -63,28 +65,33 @@ void moveTurntableBy(int degrees, int status, int tlimit){ //Automatically rotat
 }
 
 void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
-  int currentTheta = getTurntableDegrees();
+	updateSensorValue(&turntable);
+  int currentValue = turntable.val;
 
-  if(currentTheta <= 1800){
+  currentValue %= TURNTABLE_360_POSITION;
+
+  if(currentValue < 0) currentValue += TURNTABLE_360_POSITION;
+
+  if(currentValue <= TURNTABLE_180_POSITION){
     //Counterclockwise
-    moveTurntableBy(currentTheta, COUNTERCLOCKWISE, 1500);
+    moveTurntableBy(currentValue, COUNTERCLOCKWISE, 1500);
   }
   else{
     //Clockwise
-    moveTurntableBy(3600 - currentTheta, CLOCKWISE, 1500);
+    moveTurntableBy(TURNTABLE_360_POSITION - currentValue, CLOCKWISE, 1500);
   }
 }
 
 void moveTurntableToFront(){ //Automatically snaps the turntable to the front
-  int currentTheta = getTurntableDegrees();
-  int desiredTheta = 1800;
+  updateSensorValue(&turntable);
+  int currentValue = turntable.val;
 
-  if(currentTheta <= 1800){
+  if(currentValue <= TURNTABLE_180_POSITION){
   	//Clockwise
-  	moveTurntableBy(desiredTheta - currentTheta, CLOCKWISE, 1500);
+  	moveTurntableBy(TURNTABLE_180_POSITION - currentValue, CLOCKWISE, 1500);
 	}
 	else{
-		moveTurntableBy(currentTheta - desiredTheta, COUNTERCLOCKWISE, 1500);
+		moveTurntableBy(currentValue - TURNTABLE_180_POSITION, COUNTERCLOCKWISE, 1500);
 	}
 }
 

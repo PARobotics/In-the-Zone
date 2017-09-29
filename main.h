@@ -17,7 +17,7 @@ void automaticMobileGoalLift();
 void moveTurntable(int val);
 void moveFirstLiftJoint(int status);
 int getTurntableDegrees();
-void moveTurntableBy(int degrees, int status, int tlimit);
+void moveTurntableBy(int ticks, int status, int tlimit);
 void moveTurntableToGoal();
 void moveTurntableToFront();
 void moveClaw(int status);
@@ -34,7 +34,7 @@ void deployConeLift();
 
 // ** Constants **
 //#define TURNTABLE_KP 0.43992
-#define TURNTABLE_KP 0.4
+#define TURNTABLE_KP 0.5
 #define TURNTABLE_KD 0.03
 
 #define CONE_LIFT1_MAX_V 127
