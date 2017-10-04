@@ -118,6 +118,11 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
+		if(getPrButton(Btn7U_Main) == PUSHED_RELEASED){
+			playSoundFile("yeahboi.wav");
+			resetPrButton(Btn7U_Main);
+		}
+
 		// ** Partner Joystick**
 
 		T = vexRT[Ch4Xmtr2]; //Turntable channel

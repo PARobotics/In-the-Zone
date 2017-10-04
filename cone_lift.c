@@ -226,10 +226,12 @@ task coneLiftTask(){ //Controls the position of the lift continuously
 
   pid firstPid, secondPid, turntablePid;
   firstPid.kp = CONE_LIFT1_KX;
-  firstPid.kd = CONE_LIFT1_KV;
+  //firstPid.kd = CONE_LIFT1_KV;
+  firstPid.kd = 0;
 
   secondPid.kp = CONE_LIFT2_KX;
-  secondPid.kd = CONE_LIFT2_KV;
+  //secondPid.kd = CONE_LIFT2_KV;
+  secondPid.kd = 0;
 
   turntablePid.kp = TURNTABLE_KP;
   turntablePid.kd = TURNTABLE_KD;
