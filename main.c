@@ -94,6 +94,14 @@ task usercontrol(){
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
 
+  //A simple move (move 20 inches forward)
+	MOVE_MONITOR = START;
+	refreshDrive(); //Refresh
+	moveBkwd(); //Movement Function
+	moveBy(100, 2000); //Tracker Function
+	moveStop(); //End the movement
+	MOVE_MONITOR = STOP;
+
   while(true){
 
 		// ** Primary joystick **
