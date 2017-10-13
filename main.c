@@ -89,18 +89,8 @@ task usercontrol(){
 
   stopTask(autonomous);
 
-  playSoundFile("yeahboi.wav");
-
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
-
-  //A simple move (move 20 inches forward)
-	MOVE_MONITOR = START;
-	refreshDrive(); //Refresh
-	moveBkwd(); //Movement Function
-	moveBy(100, 2000); //Tracker Function
-	moveStop(); //End the movement
-	MOVE_MONITOR = STOP;
 
   while(true){
 
@@ -193,7 +183,7 @@ task usercontrol(){
 		if(F != 0){
 			CONE_LIFT_COMMAND = HOLD;
 			holdFirstJoint = 0;
-			moveFirstLiftJoint(SIGN(F) * 127);
+			moveFirstLiftJoint(F);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdFirstJoint == 0){
 			moveFirstLiftJoint(0);
@@ -204,7 +194,7 @@ task usercontrol(){
 		if(S != 0){
 			CONE_LIFT_COMMAND = HOLD;
 			holdSecondJoint = 0;
-			moveSecondLiftJoint(SIGN(S) * 127);
+			moveSecondLiftJoint(S);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdSecondJoint == 0){
 			moveSecondLiftJoint(0);

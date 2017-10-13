@@ -46,24 +46,30 @@ task mobileGoalTask(){
       int t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
-      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
-      	updateSensorValue(&mobileGoalLift);
-      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
-      	//if(mobileGoalLift.val < 2700) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
-     		moveMobileGoalLift(mobileGoalAppliedVoltage);
+      updateSensorValue(&firstLiftJoint);
+      updateSensorValue(&secondLiftJoint);
+      updateSensorValue(&turntable);
 
-     		if(isTimedOut(t0 + 750) && mobileGoalIsInPlace()){ //Make sure gears dont chip
-     			moveMobileGoalStop();
-     			MOBILE_GOAL_COMMAND = STOP;
-     			break;
-     		}
+      if(!(secondLiftJoint.val < 10 && firstLiftJoint.val < 10 && abs(turntable.val) < 10)){
+	      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
+	      	updateSensorValue(&mobileGoalLift);
+	      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
+	      	//if(mobileGoalLift.val < 2700) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
+	     		moveMobileGoalLift(mobileGoalAppliedVoltage);
 
-				#if DEBUG_MOBILE_GOAL == 1
-					writeDebugStreamLine("[MOBILE_GOAL] %d %d %d %d %d", time1[T1] - t0, MOBILE_GOAL_BOTTOM_LIMIT, mobileGoalLift.val, mobileGoalLift.speed, mobileGoalAppliedVoltage);
-				#endif
+	     		if(isTimedOut(t0 + 750) && mobileGoalIsInPlace()){ //Make sure gears dont chip
+	     			moveMobileGoalStop();
+	     			MOBILE_GOAL_COMMAND = STOP;
+	     			break;
+	     		}
 
-        wait1Msec(10);
-      }
+					#if DEBUG_MOBILE_GOAL == 1
+						writeDebugStreamLine("[MOBILE_GOAL] %d %d %d %d %d", time1[T1] - t0, MOBILE_GOAL_BOTTOM_LIMIT, mobileGoalLift.val, mobileGoalLift.speed, mobileGoalAppliedVoltage);
+					#endif
+
+	        wait1Msec(10);
+	      }
+    	}
       coneNum = 0;
       moveMobileGoalLift(STOP);
       MOBILE_GOAL_COMMAND = STOP;
