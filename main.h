@@ -31,6 +31,7 @@ void moveLiftToPreset(int firstVal, int secondVal);
 
 //Auton
 void deployConeLift();
+void grabAndStoreCone();
 
 // ** Constants **
 //#define TURNTABLE_KP 0.43992

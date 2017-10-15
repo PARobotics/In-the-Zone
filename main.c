@@ -164,11 +164,12 @@ task usercontrol(){
 		if(vexRT[Btn7UXmtr2] == 1){ //Hovering preset
 			moveLiftToPreset(975, 3170);
 		}
-		else if(vexRT[Btn7LXmtr2] == 1){ //Loader preset
+		else if(vexRT[Btn7LXmtr2] == 1){ //Grabbing cone preset
+			grabAndStoreCone();
 			//moveLiftToPreset();
 		}
 		else if(vexRT[Btn7RXmtr2] == 1){ //On the ground preset
-			moveLiftToPreset(764, 3170);
+			deployClaw();
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
