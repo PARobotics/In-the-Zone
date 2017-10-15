@@ -166,10 +166,12 @@ task usercontrol(){
 		}
 		else if(vexRT[Btn7LXmtr2] == 1){ //Grabbing cone preset
 			grabAndStoreCone();
-			//moveLiftToPreset();
 		}
-		else if(vexRT[Btn7RXmtr2] == 1){ //On the ground preset
+		else if(vexRT[Btn7RXmtr2] == 1){ //Deploying cone preset
 			deployClaw();
+		}
+		else if(vexRT[Btn8RXmtr2] == 1){
+			deployConeLift();
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
