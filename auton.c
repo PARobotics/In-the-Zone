@@ -11,6 +11,12 @@ void deployConeLift(){
 	CONE_LIFT_COMMAND = STOP;
 }
 
+void bringLiftBackToStart(){
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(0, 0, 500);
+	CONE_LIFT_COMMAND = STOP;
+}
+
 void grabAndStoreCone(){
 	CONE_LIFT_COMMAND = MANUAL;
 	moveLiftTo(0, 980, 300);

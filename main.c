@@ -161,8 +161,8 @@ task usercontrol(){
 
 		// LIFT CONTROLS
 
-		if(vexRT[Btn7UXmtr2] == 1){ //Hovering preset
-			moveLiftToPreset(975, 3170);
+		if(vexRT[Btn7UXmtr2] == 1){ //Reset lift preset
+			bringLiftBackToStart();
 		}
 		else if(vexRT[Btn7LXmtr2] == 1){ //Grabbing cone preset
 			grabAndStoreCone();
