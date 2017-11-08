@@ -55,8 +55,8 @@ pid mobileGoalPID;
 void pre_auton(){
 	bStopTasksBetweenModes = false; //Make sure all tasks we create actually execute in user control
 
-	startTask(mobileGoalTask);
-	startTask(coneLiftTask, 9); //TODO: Change task priority
+	startTask(mobileGoalTask, 9);
+	startTask(coneLiftTask, 9);
 
 	baseLeftPID.kp = BASE_LEFT_KP;
 	baseLeftPID.kd = BASE_LEFT_KD;
@@ -118,7 +118,7 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
-		// ** Partner Joystick**
+		// ** Partner Joystick **
 
 		T = vexRT[Ch4Xmtr2]; //Turntable channel
 		F = vexRT[Ch1Xmtr2]; //First lift joint channel
