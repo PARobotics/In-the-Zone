@@ -89,8 +89,6 @@ task usercontrol(){
 
   stopTask(autonomous);
 
-  playSoundFile("yeahboi.wav");
-
   moveFirstLiftJoint(0);
   moveSecondLiftJoint(0);
 
@@ -118,7 +116,12 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 		}
 
-		// ** Partner Joystick **
+		if(getPrButton(Btn7U_Main) == PUSHED_RELEASED){
+			playSoundFile("yeahboi.wav");
+			resetPrButton(Btn7U_Main);
+		}
+
+		// ** Partner Joystick**
 
 		T = vexRT[Ch4Xmtr2]; //Turntable channel
 		F = vexRT[Ch1Xmtr2]; //First lift joint channel
@@ -158,14 +161,17 @@ task usercontrol(){
 
 		// LIFT CONTROLS
 
-		if(vexRT[Btn7UXmtr2] == 1){ //Hovering preset
-			moveLiftToPreset(975, 3170);
+		if(vexRT[Btn7UXmtr2] == 1){ //Reset lift preset
+			bringLiftBackToStart();
 		}
-		else if(vexRT[Btn7LXmtr2] == 1){ //Loader preset
-			//moveLiftToPreset();
+		else if(vexRT[Btn7LXmtr2] == 1){ //Grabbing cone preset
+			grabAndStoreCone();
 		}
-		else if(vexRT[Btn7RXmtr2] == 1){ //On the ground preset
-			moveLiftToPreset(764, 3170);
+		else if(vexRT[Btn7RXmtr2] == 1){ //Deploying cone preset
+			deployClaw();
+		}
+		else if(vexRT[Btn8RXmtr2] == 1){
+			deployConeLift();
 		}
 		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
@@ -180,7 +186,7 @@ task usercontrol(){
 		if(F != 0){
 			CONE_LIFT_COMMAND = HOLD;
 			holdFirstJoint = 0;
-			moveFirstLiftJoint(SIGN(F) * 127);
+			moveFirstLiftJoint(F);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdFirstJoint == 0){
 			moveFirstLiftJoint(0);
@@ -191,7 +197,7 @@ task usercontrol(){
 		if(S != 0){
 			CONE_LIFT_COMMAND = HOLD;
 			holdSecondJoint = 0;
-			moveSecondLiftJoint(SIGN(S) * 127);
+			moveSecondLiftJoint(S);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdSecondJoint == 0){
 			moveSecondLiftJoint(0);

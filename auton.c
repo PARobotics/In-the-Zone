@@ -1,24 +1,35 @@
 #ifndef AUTON_C
 #define AUTON_C
 
-void deployConeLift(){ //Swings cone lift out into ready position
-  //Stage 1: Release the rubber bands
-  CONE_LIFT_COMMAND = MANUAL;
-  moveLiftTo(0, 500, 1000);
+void deployConeLift(){
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(400, 0, 1000);
+	CONE_LIFT_COMMAND = HOLD;
+	moveTurntableToFront();
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(0, 0, 300);
+	CONE_LIFT_COMMAND = STOP;
+}
 
-  //Stage 1: Move the first lift up to clear out of the way
-  CONE_LIFT_COMMAND = MANUAL;
-  moveLiftTo(440, 500, 1000);
+void bringLiftBackToStart(){
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(0, 0, 500);
+	CONE_LIFT_COMMAND = STOP;
+}
 
-  CONE_LIFT_COMMAND = HOLD;
+void grabAndStoreCone(){
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(0, 980, 300);
+	closeClaw();
+	moveLiftTo(0, 0, 1000);
+	CONE_LIFT_COMMAND = STOP;
+}
 
-  //Stage 2: Rotate the turntable
-  moveTurntableToFront();
-
-  //Stage 3: Deploy the second lift
-  CONE_LIFT_COMMAND = MANUAL;
-  moveLiftTo(918, 3150, 2000);
-  openClaw();
+void deployClaw(){
+	CONE_LIFT_COMMAND = MANUAL;
+	moveLiftTo(0, 900, 700);
+	openClaw();
+	CONE_LIFT_COMMAND = HOLD;
 }
 
 void autoA(){

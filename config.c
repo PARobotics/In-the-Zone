@@ -14,16 +14,18 @@ void userControlProcedure(){
 
 //Set up push release buttons
 #define USE_PR_BUTTON  1
-#define NUM_PR_BUTTONS  3 //Only include if using remote
+#define NUM_PR_BUTTONS  4 //Only include if using remote
 
 #define Btn8U_Partner 0
 #define Btn8D_Partner 1
 #define Btn8L_Partner 2
+#define Btn7U_Main 3
 
 void setUpButtons(){ //Only include if using remote
   addPrButton(Btn8U_Partner, Btn8UXmtr2);
   addPrButton(Btn8D_Partner, Btn8DXmtr2);
   addPrButton(Btn8L_Partner, Btn8LXmtr2);
+  addPrButton(Btn7U_Main, Btn7U);
 }
 
 //Configure Sensors
@@ -33,7 +35,7 @@ void setUpButtons(){ //Only include if using remote
 
 void lcdGenerateMessage(){
   sprintf(lcdStr1, "8900 %4.1fV %4.1fV", getMainBatteryVoltage() / 1000.0, getSecondBatteryVoltage() / 1000.0);
-  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, secondLiftJoint.val, coneNum);
+  sprintf(lcdStr2, "%4d %4d %d", firstLiftJoint.val, mobileGoalLift.val, coneNum);
 }
 
 /*
@@ -52,6 +54,7 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 255, 255, 255, 255, 40, 40, 255};
 
 #define DEBUG_SLEW  0
 #define DEBUG_MOVE 1
+#define DEBUG_REMOTE 1
 
 #define BAILOUT_BUTTON Btn7D
 void bailOut(){
