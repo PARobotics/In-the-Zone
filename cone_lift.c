@@ -1,99 +1,10 @@
 #ifndef CONE_LIFT_C
 #define CONE_LIFT_C
 
-#define TURNTABLE_180_POSITION 806
-#define TURNTABLE_360_POSITION 1607
-
 /*
   CONE_LIFT.C
   Contains all the code for the cone claw and lift
 */
-
-// ** Turntable **
-int ticksToDegrees(int ticks){
-  int degrees = (ticks * 360 * 10 * 12 / RPM_393_HS / 60) % 3600; //Make sure degrees dont overflow past 360 degrees
-
-  if(degrees < 0) degrees += 3600;
-
-  return degrees;
-}
-
-int degreesToTicks(int degrees){
-  int ticks = degrees * 66 * RPM_393_HS / 360 / 10 / 12;
-
-  return ticks;
-}
-
-int getTurntableDegrees(){ //Returns the degree value of the turntable in units of 0.1 degrees
-  return ticksToDegrees(turntable.val);
-}
-
-void moveTurntable(int val){ //Manually controls the turntable rotation
-  if(val == CLOCKWISE) motorReq[M_TURNTABLE] = 127;
-  else if(val == COUNTERCLOCKWISE) motorReq[M_TURNTABLE] = -127;
-  else if(val == STOP) motorReq[M_TURNTABLE] = 0;
-  else motorReq[M_TURNTABLE] = val;
-}
-
-void moveTurntableBy(int ticks, int status, int tlimit){ //Automatically rotates the turntable by x degrees (parameter is in units of 0.1 degrees)
-  updateSensorValue(&turntable);
-
-  int target = turntable.val + status * ticks;
-  int t0 = time1[T1];
-
-  moveTurntable(status * 80);
-
-  int distanceToTarget = 0;
-
-  int vcmd;
-
-  while(vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + tlimit)){
-    updateSensorValue(&turntable);
-
-    vcmd = sensorPDControl(&turntable, target, 0);
-
-    #if DEBUG_CONE_LIFT == 1
-      writeDebugStreamLine("[TURNTABLE] %4d %4d %4d %3d", target, turntable.val, turntable.speed, vcmd);
-    #endif
-
-    moveTurntable(vcmd);
-
-    wait1Msec(10);
-  }
-
-  moveTurntable(STOP);
-}
-
-void moveTurntableToGoal(){ //Automatically snaps the turntable back to the mobile goal position
-	updateSensorValue(&turntable);
-  int currentValue = turntable.val;
-
-  currentValue %= TURNTABLE_360_POSITION;
-
-  if(currentValue < 0) currentValue += TURNTABLE_360_POSITION;
-
-  if(currentValue <= TURNTABLE_180_POSITION){
-    //Counterclockwise
-    moveTurntableBy(currentValue, COUNTERCLOCKWISE, 1500);
-  }
-  else{
-    //Clockwise
-    moveTurntableBy(TURNTABLE_360_POSITION - currentValue, CLOCKWISE, 1500);
-  }
-}
-
-void moveTurntableToFront(){ //Automatically snaps the turntable to the front
-  updateSensorValue(&turntable);
-  int currentValue = turntable.val;
-
-  if(currentValue <= TURNTABLE_180_POSITION){
-  	//Clockwise
-  	moveTurntableBy(TURNTABLE_180_POSITION - currentValue, CLOCKWISE, 1500);
-	}
-	else{
-		moveTurntableBy(currentValue - TURNTABLE_180_POSITION, COUNTERCLOCKWISE, 1500);
-	}
-}
 
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
@@ -120,189 +31,58 @@ void closeClaw(){ //Automatically closes the claw
   moveClaw(CLOSE);
   clawIsClosed = 1;
   clawIsOpened = 0;
-  while(!isTimedOut(t0 +400)){
-    moveClaw(100);
+  while(!isTimedOut(t0 + 150)){
+    moveClaw(CLOSE);
     wait1Msec(10);
   }
+  moveClaw(20);
 }
 
 // ** Lift **
-void moveFirstLiftJoint(int status){ //Manually controls the first lift joint
+void moveLift(int status){
   if(status == UP){
-    motorReq[M_FIRST_LIFT1] = 127;
-    motorReq[M_FIRST_LIFT2] = 127;
+    moveLift(127);
   }
   else if(status == DOWN){
-    motorReq[M_FIRST_LIFT1] = -127;
-    motorReq[M_FIRST_LIFT2] = -127;
-  }
-  else if(status == STOP){
-    motorReq[M_FIRST_LIFT1] = 0;
-    motorReq[M_FIRST_LIFT2] = 0;
+    moveLift(-127);
   }
   else{
-    motorReq[M_FIRST_LIFT1] = status;
-    motorReq[M_FIRST_LIFT2] = status;
+    motorReq[M_LIFT_1] = status;
+    motorReq[M_LIFT_2] = status;
+    motorReq[M_LIFT_3] = status;
+    motorReq[M_LIFT_4] = status;
   }
 }
 
-void moveSecondLiftJoint(int status){ //Manually controls the second lift joint
-  if(status == UP) motorReq[M_SECOND_LIFT] = 127;
-  else if(status == DOWN) motorReq[M_SECOND_LIFT] = -127;
-  else if(status == STOP) motorReq[M_SECOND_LIFT] = 0;
-  else motorReq[M_SECOND_LIFT] = status;
-}
+task coneLiftTask(){
 
-void moveLiftUp(){ //Increments the cone lift's height up one
-  if(coneNum < 10){
-    coneNum++;
-    CONE_LIFT_COMMAND = MOVE;
-  }
-}
+  pid liftPid;
+  liftPid.kp = 0;
+  liftPid.kd = 0;
 
-void moveLiftDown(){ //Decrements the cone lift's height up one
-  if(coneNum > 0){
-    coneNum--;
-    CONE_LIFT_COMMAND = MOVE;
-  }
-}
-
-void moveLiftToPreset(int firstVal, int secondVal){
-  firstLiftVal = firstVal;
-  secondLiftVal = secondVal;
-  CONE_LIFT_COMMAND = PRESET;
-}
-
-void moveLiftTo(int firstVal, int secondVal, int tlimit){ //Swings the lift to the preset
-  int tnow = time1[T1];
-  int appliedVoltages[2] = {0, 0};
-
-  int dbgCnt = 0;
-
-  while(BAILOUT == 0 &&!isTimedOut(tnow + tlimit)){
-  	updateSensorValue(&firstLiftJoint);
-    updateSensorValue(&secondLiftJoint);
-
-    appliedVoltages[0] = sensorHold(&firstLiftJoint, firstVal, CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT1_MAX_V);
-    appliedVoltages[1] = sensorHold(&secondLiftJoint, secondVal, CONE_LIFT2_DEFAULT_V, CONE_LIFT2_MIN_V, CONE_LIFT2_MAX_V);
-
-    #if DEBUG_CONE_LIFT == 1
-      if(dbgCnt == 10){
-        writeDebugStreamLine("[LIFT 1] %d %d %d %d", firstVal, firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
-  		  writeDebugStreamLine("[LIFT 2] %d %d %d %d", secondVal, secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
-
-        dbgCnt = 0;
-      }
-      else dbgCnt++;
-    #endif
-
-    moveFirstLiftJoint(appliedVoltages[0]);
-    moveSecondLiftJoint(appliedVoltages[1]);
-
-    wait1Msec(10);
-  }
-
-  CONE_LIFT_COMMAND = HOLD;
-}
-
-task coneLiftTask(){ //Controls the position of the lift continuously
-  int targetVals[2] = {0, 0};
-  int appliedVoltages[2] = {0, 0};
-
-  //Store values for the lifting up and down
-  int valsForLifting[][] = {
-    {1098, 3050},
-    {1370, 2850},
-    {1400, 2690},
-    {1400, 2600},
-    {1400, 2430},
-    {1400, 2390},
-    {1400, 2300},
-    {1400, 2180},
-    {1250, 1960},
-    {1230, 1750},
-    {1067, 1320},
-  };
-
-  pid firstPid, secondPid, turntablePid;
-  firstPid.kp = CONE_LIFT1_KX;
-  //firstPid.kd = CONE_LIFT1_KV;
-  firstPid.kd = 0;
-
-  secondPid.kp = CONE_LIFT2_KX;
-  //secondPid.kd = CONE_LIFT2_KV;
-  secondPid.kd = 0;
-
-  turntablePid.kp = TURNTABLE_KP;
-  turntablePid.kd = TURNTABLE_KD;
-
-  initializeSensor(&firstLiftJoint, 720.0 / RPM_393_HS, I2C_2, &firstPid); //Overclocked 1 to 5 gear ratio
-  initializeSensor(&secondLiftJoint, 10.0, dgtl6, &secondPid); //Underclocked 1 to 3 gear ratio
-  initializeSensor(&turntable, 1.0, I2C_1, &turntablePid); //Underclocked 1 to 3 gear ratio
-
-  writeDebugStreamLine("Default: %d Min: %d Max: %d KP : %.2f KD: %.2f", CONE_LIFT1_DEFAULT_V, CONE_LIFT1_MIN_V, CONE_LIFT2_MAX_V, CONE_LIFT2_KX, CONE_LIFT2_KV);
+  initializeSensor(&liftSensor, 720.0 / RPM_393_HS, I2C_2, &liftPid); //Overclocked 1 to 5 gear ratio
 
   int dbgCnt = 0;
 
   while(true){
-  	updateSensorValue(&firstLiftJoint);
-    updateSensorValue(&secondLiftJoint);
-
-    if(CONE_LIFT_COMMAND != HOLD){
-      currentlyCarrying = 0;
-      holdFirstJoint = 1;
-      holdSecondJoint = 1;
-      makeLED(dgtl12, OFF);
-    }
+  	updateSensorValue(&liftSensor);
 
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
-      if(currentlyCarrying == 0){
-        //Initially set desired values
-        targetVals[0] = firstLiftJoint.val;
-        targetVals[1] = secondLiftJoint.val;
-        currentlyCarrying = 1;
-        secondJointHasStalled = 0;
-
-				#if DEBUG_CONE_LIFT == 1
-					writeDebugStreamLine("entered hold");
-				#endif
-
-        makeLED(dgtl12, ON);
-      }
-
-      appliedVoltages[0] = sensorHold(&firstLiftJoint, targetVals[0], CONE_LIFT1_DEFAULT_V, -127, 127);
-      appliedVoltages[1] = sensorHold(&secondLiftJoint, targetVals[1], CONE_LIFT2_DEFAULT_V, -127, 127);
-
-      //Detect stalling on joint 2
-      if(appliedVoltages[1] == 127 && secondLiftJoint.speed == 0){ //If the joint should be applying a high voltage, but it is not moving.
-        secondJointHasStalled = 1;
-        CONE_LIFT_COMMAND = STOP;
-      }
-
-      appliedVoltages[1] = BOUND(appliedVoltages[1], -127, 30);
-
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
-          writeDebugStreamLine("[LIFT 1] %d %d %d %d", targetVals[0], firstLiftJoint.val, firstLiftJoint.speed, appliedVoltages[0]);
-  			  writeDebugStreamLine("[LIFT 2] %d %d %d %d", targetVals[1], secondLiftJoint.val, secondLiftJoint.speed, appliedVoltages[1]);
           dbgCnt = 0;
         }
         else dbgCnt++;
       #endif
-
-      if(holdFirstJoint == 1) moveFirstLiftJoint(appliedVoltages[0]);
-    	if(holdSecondJoint == 1) moveSecondLiftJoint(appliedVoltages[1]);
     }
-    else if(CONE_LIFT_COMMAND == MOVE){
-      moveLiftTo(valsForLifting[coneNum][0], valsForLifting[coneNum][1], 1000);
+    else if(CONE_LIFT_COMMAND == UP){
+      moveLift(UP);
     }
-    else if(CONE_LIFT_COMMAND == PRESET){
-      moveLiftTo(firstLiftVal, secondLiftVal, 3000);
-      CONE_LIFT_COMMAND = STOP;
+    else if(CONE_LIFT_COMMAND == DOWN){
+      moveLift(DOWN);
     }
     else if(CONE_LIFT_COMMAND == STOP){
-      moveFirstLiftJoint(0);
-    	moveSecondLiftJoint(0);
+      moveLift(STOP);
     }
 
     wait1Msec(10);
