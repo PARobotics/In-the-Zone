@@ -14,32 +14,14 @@ int mobileGoalIsInPlace();
 void automaticMobileGoalLift();
 
 //Cone lift
-void moveTurntable(int val);
-void moveFirstLiftJoint(int status);
-int getTurntableDegrees();
-void moveTurntableBy(int ticks, int status, int tlimit);
-void moveTurntableToGoal();
-void moveTurntableToFront();
 void moveClaw(int status);
-void moveSecondLiftJoint(int status);
 void openClaw();
 void closeClaw();
-void moveLiftDown();
-void moveLiftUp();
-void moveLiftTo(int firstVal, int secondVal, int tlimit);
-void moveLiftToPreset(int firstVal, int secondVal);
+void moveLift();
 
 //Auton
-void deployConeLift();
-void grabAndStoreCone();
-void deployClaw();
-void bringLiftBackToStart();
 
 // ** Constants **
-//#define TURNTABLE_KP 0.43992
-#define TURNTABLE_KP 0.5
-#define TURNTABLE_KD 0.03
-
 #define CONE_LIFT1_MAX_V 127
 #define CONE_LIFT1_MIN_V -127
 #define CONE_LIFT1_DEFAULT_V 0

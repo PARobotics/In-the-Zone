@@ -30,10 +30,11 @@ task mobileGoalTask(){
 	mobileGoalPID.kd = MOBILE_GOAL_KD;
 	initializeSensor(&mobileGoalLift, 1.0, in3, &mobileGoalPID);
 	int mobileGoalAppliedVoltage = 0;
+  int t0;
 
   while (true) {
     if(MOBILE_GOAL_COMMAND == UP){ //Automatically raises mobile goal into place
-      int t0 = time1[T1];
+      t0 = time1[T1];
       moveMobileGoalLift(UP);
       while(!isTimedOut(t0 + 5000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
      		moveMobileGoalLift(UP);
@@ -43,14 +44,10 @@ task mobileGoalTask(){
       MOBILE_GOAL_COMMAND = STOP;
     }
     else if(MOBILE_GOAL_COMMAND == DOWN){ //Automatically lowers mobile goal stack into place
-      int t0 = time1[T1];
+      t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
-      updateSensorValue(&firstLiftJoint);
-      updateSensorValue(&secondLiftJoint);
-      updateSensorValue(&turntable);
 
-      if(!(secondLiftJoint.val < 10 && firstLiftJoint.val < 10 && abs(turntable.val) < 10)){
 	      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
 	      	updateSensorValue(&mobileGoalLift);
 	      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
@@ -69,13 +66,13 @@ task mobileGoalTask(){
 
 	        wait1Msec(10);
 	      }
-    	}
+
       coneNum = 0;
       moveMobileGoalLift(STOP);
       MOBILE_GOAL_COMMAND = STOP;
     }
     else if(MOBILE_GOAL_COMMAND == DOWN_WITHOUT_GOAL){ //Pushes the lift to ground if it doesn't have a mobile goal
-      int t0 = time1[T1];
+      t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
       while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){

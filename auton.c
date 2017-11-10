@@ -1,8 +1,8 @@
 #ifndef AUTON_C
 #define AUTON_C
 
-void deployConeLift(){
-	CONE_LIFT_COMMAND = MANUAL;
+/*void deployConeLift(){
+	/*CONE_LIFT_COMMAND = MANUAL;
 	moveLiftTo(400, 0, 1000);
 	CONE_LIFT_COMMAND = HOLD;
 	moveTurntableToFront();
@@ -31,7 +31,7 @@ void deployClaw(){
 	openClaw();
 	CONE_LIFT_COMMAND = HOLD;
 }
-
+*/
 void autoA(){
   deployConeLift();
 }
