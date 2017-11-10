@@ -54,6 +54,12 @@ void moveLift(int status){
   }
 }
 
+void moveLiftToCone(int coneNum){
+	int liftVals[7] = {970, 1900, 2299, 2728, 3355, 3803, 4000};
+	liftVal = liftVals[coneNum];
+	CONE_LIFT_COMMAND = PRESET;
+}
+
 task coneLiftTask(){
 
   pid liftPid;
@@ -82,7 +88,7 @@ task coneLiftTask(){
       moveLift(DOWN);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
-      moveLift(SIGN(liftVal - liftSensor.val));
+   		moveLift(SIGN(liftVal - liftSensor.val));
       if(abs(liftSensor.val - liftVal) < 10) CONE_LIFT_COMMAND = STOP;
     }
     else if(CONE_LIFT_COMMAND == STOP){

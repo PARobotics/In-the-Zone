@@ -18,6 +18,7 @@ void moveClaw(int status);
 void openClaw();
 void closeClaw();
 void moveLift();
+void moveLiftToCone(int coneNum);
 
 //Auton
 
