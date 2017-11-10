@@ -50,9 +50,7 @@ void moveLift();
 int clawIsClosed = 0;
 int clawIsOpened = 0;
 int coneNum = 0;
-int firstLiftVal, secondLiftVal;
-int holdFirstJoint = 1;
-int holdSecondJoint = 1;
+int liftVal;
 int currentlyCarrying = 0;
 int secondJointHasStalled = 0;
 

@@ -111,10 +111,21 @@ task usercontrol(){
 			moveClaw(-20);
 		}
 
+		if(vexRT[Btn8U] == 1){
+			//Automatically raise to loader height
+			liftVal = 0;
+			CONE_LIFT_COMMAND = PRESET;
+		}
+		else if(vexRT[Btn8D] == 1){
+			//Automatically lower
+			liftVal = 0;
+			CONE_LIFT_COMMAND = PRESET;
+		}
+
 		//Mobile Goal
-		if(vexRT[Btn8R] == 1) MOBILE_GOAL_COMMAND = DOWN;
-		else if(vexRT[Btn8D] == 1) MOBILE_GOAL_COMMAND = UP;
-		else if(vexRT[Btn8U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
+		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
+		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
 		//YEAH BOIII
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){

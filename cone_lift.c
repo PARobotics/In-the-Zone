@@ -60,7 +60,7 @@ task coneLiftTask(){
   liftPid.kp = 0;
   liftPid.kd = 0;
 
-  initializeSensor(&liftSensor, 720.0 / RPM_393_HS, I2C_2, &liftPid); //Overclocked 1 to 5 gear ratio
+  initializeSensor(&liftSensor, 1.0, I2C_1, &liftPid);
 
   int dbgCnt = 0;
 
@@ -80,6 +80,10 @@ task coneLiftTask(){
     }
     else if(CONE_LIFT_COMMAND == DOWN){
       moveLift(DOWN);
+    }
+    else if(CONE_LIFT_COMMAND == PRESET){
+      moveLift(SIGN(liftSensor.val - liftVal));
+      if(abs(liftSensor.val - liftVal) < 10) CONE_LIFT_COMMAND = STOP;
     }
     else if(CONE_LIFT_COMMAND == STOP){
       moveLift(STOP);
