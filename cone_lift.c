@@ -82,7 +82,7 @@ task coneLiftTask(){
       moveLift(DOWN);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
-      moveLift(SIGN(liftSensor.val - liftVal));
+      moveLift(SIGN(liftVal - liftSensor.val));
       if(abs(liftSensor.val - liftVal) < 10) CONE_LIFT_COMMAND = STOP;
     }
     else if(CONE_LIFT_COMMAND == STOP){

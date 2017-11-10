@@ -1,3 +1,4 @@
+#pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in1,    PWR,            sensorPotentiometer)
 #pragma config(Sensor, in2,    Gyro,           sensorGyro)
 #pragma config(Sensor, in3,    MobileGoal,     sensorPotentiometer)
@@ -5,11 +6,12 @@
 #pragma config(Sensor, dgtl3,  wheelEncoderRight, sensorQuadEncoder)
 #pragma config(Sensor, dgtl5,  mobileGoalLimitSwitch, sensorTouch)
 #pragma config(Sensor, dgtl6,  secondLiftEncoder, sensorQuadEncoder)
+#pragma config(Sensor, I2C_1,  LIFT,           sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           M_MOBILE_GOAL_LIFT, tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port4,           M_LIFT_1,      tmotorVex393_MC29, openLoop, reversed)
-#pragma config(Motor,  port5,           M_LIFT_2,      tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port5,           M_LIFT_2,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
 #pragma config(Motor,  port6,           M_LIFT_3,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port7,           M_LIFT_4,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port8,           M_WHEEL_L1,    tmotorVex393_MC29, openLoop, reversed)
@@ -98,7 +100,7 @@ task usercontrol(){
     //Lift
 		if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
 		else if(vexRT[Btn6D] == 1) CONE_LIFT_COMMAND = DOWN;
-		else CONE_LIFT_COMMAND = STOP;
+		else if(CONE_LIFT_COMMAND != PRESET) CONE_LIFT_COMMAND = STOP;
 
 		//Claw
 		if(vexRT[Btn5U] == 1) closeClaw();
@@ -113,7 +115,7 @@ task usercontrol(){
 
 		if(vexRT[Btn8U] == 1){
 			//Automatically raise to loader height
-			liftVal = 0;
+			liftVal = 1730;
 			CONE_LIFT_COMMAND = PRESET;
 		}
 		else if(vexRT[Btn8D] == 1){
