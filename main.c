@@ -124,17 +124,17 @@ task usercontrol(){
 		// ** Partner Joystick**
 
 		T = vexRT[Ch4Xmtr2]; //Turntable channel
-		F = vexRT[Ch1Xmtr2]; //First lift joint channel
-		S = vexRT[Ch2Xmtr2]; //Second lift joint channel
+		//F = vexRT[Ch1Xmtr2]; //First lift joint channel
+		//S = vexRT[Ch2Xmtr2]; //Second lift joint channel
 
 		//Prevent tiny accidental motions
 		if(abs(T) < 15) T = 0;
-		if(abs(F) < 15) F = 0;
-		if(abs(S) < 15) S = 0;
+		//if(abs(F) < 15) F = 0;
+		//if(abs(S) < 15) S = 0;
 
 		// TURNTABLE CONTROLS
 
-		if(vexRT[Btn5UXmtr2] == 1){ //Turntable to mobile goal
+		/*if(vexRT[Btn5UXmtr2] == 1){ //Turntable to mobile goal
 			moveTurntableToGoal();
 		}
 		else if(vexRT[Btn5DXmtr2] == 1){ //Turntable to grabbing position
@@ -142,14 +142,16 @@ task usercontrol(){
 		}
 		else{
 			moveTurntable(T);
-		}
+		}*/
+
+		moveTurntable(T);
 
 		// CLAW CONTROLS
 
-		if(vexRT[Btn6UXmtr2] == 1){
+		if(vexRT[Btn8UXmtr2] == 1){
       openClaw();
     }
-    else if(vexRT[Btn6DXmtr2] == 1){
+    else if(vexRT[Btn8DXmtr2] == 1){
       closeClaw();
     }
     else if(clawIsClosed){ //Apply a small voltage to keep claw closed
@@ -173,20 +175,25 @@ task usercontrol(){
 		else if(vexRT[Btn8RXmtr2] == 1){
 			deployConeLift();
 		}
-		else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
+		/*else if(getPrButton(Btn8U_Partner) == PUSHED_RELEASED){ //Move lift up by one
 			moveLiftUp();
 			resetPrButton(Btn8U_Partner);
 		}
 		else if(getPrButton(Btn8D_Partner) == PUSHED_RELEASED){ //Move lift down by one
 			moveLiftDown();
 			resetPrButton(Btn8D_Partner);
-		}
+		}*/
 
 		//Manual lift controls
-		if(F != 0){
+		if(vexRT[Btn6UXmtr2] == 1){
 			CONE_LIFT_COMMAND = HOLD;
 			holdFirstJoint = 0;
-			moveFirstLiftJoint(F);
+			moveFirstLiftJoint(127);
+		}
+		else if(vexRT[Btn6DXmtr2] == 1){
+			CONE_LIFT_COMMAND = HOLD;
+			holdFirstJoint = 0;
+			moveFirstLiftJoint(-127);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdFirstJoint == 0){
 			moveFirstLiftJoint(0);
@@ -194,10 +201,17 @@ task usercontrol(){
 			holdFirstJoint = 1;
 		}
 
-		if(S != 0){
+
+		if(vexRT[Btn5UXmtr2] == 1){
 			CONE_LIFT_COMMAND = HOLD;
 			holdSecondJoint = 0;
-			moveSecondLiftJoint(S);
+			moveSecondLiftJoint(127);
+		}
+		else
+			if(vexRT[Btn5DXmtr2] == 1){
+			CONE_LIFT_COMMAND = HOLD;
+			holdSecondJoint = 0;
+			moveSecondLiftJoint(-127);
 		}
 		else if(CONE_LIFT_COMMAND == HOLD && holdSecondJoint == 0){
 			moveSecondLiftJoint(0);
