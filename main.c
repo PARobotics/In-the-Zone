@@ -129,7 +129,7 @@ task usercontrol(){
 		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
 		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
-		//YEAH BOIII
+		//YEAH BOIII :(
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
 			playSoundFile("yeahboi.wav");
 			resetPrButton(Btn7R_Main);

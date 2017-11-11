@@ -1,47 +1,91 @@
 #ifndef AUTON_C
 #define AUTON_C
 
-/*void deployConeLift(){
-	/*CONE_LIFT_COMMAND = MANUAL;
-	moveLiftTo(400, 0, 1000);
-	CONE_LIFT_COMMAND = HOLD;
-	moveTurntableToFront();
-	CONE_LIFT_COMMAND = MANUAL;
-	moveLiftTo(0, 0, 300);
-	CONE_LIFT_COMMAND = STOP;
-}
-
-void bringLiftBackToStart(){
-	CONE_LIFT_COMMAND = MANUAL;
-	moveLiftTo(0, 0, 500);
-	CONE_LIFT_COMMAND = STOP;
-}
-
-void grabAndStoreCone(){
-	CONE_LIFT_COMMAND = MANUAL;
-	moveLiftTo(0, 980, 300);
-	closeClaw();
-	moveLiftTo(0, 0, 1000);
-	CONE_LIFT_COMMAND = STOP;
-}
-
-void deployClaw(){
-	CONE_LIFT_COMMAND = MANUAL;
-	moveLiftTo(0, 900, 700);
-	openClaw();
-	CONE_LIFT_COMMAND = HOLD;
-}
+/*
+	Auto A
+	Scores 3 cones on a mobile goal
 */
+
 void autoA(){
-  deployConeLift();
+	MOVE_MONITOR = START;
+	// ** Score Preload **
+	//Get into position
+		//Wiggle Claw
+	refreshDrive();
+	rotate(-127);
+	rotateBy(225, 1000);
+	moveStop();
+	wait1Msec(100);
+
+	//Drive Forward onto cone + Close Claw
+	refreshDrive();
+	moveFwd();
+	moveBy(50, 1000);
+	closeClaw();
+
+	//Move To mobile goal while lifting
+	refreshDrive();
+	moveLiftToCone(1);
+	moveBy(450, 5000);
+	moveStop();
+
+	//Move cone down and open claw
+	moveLiftToCone(0);
+	while(CONE_LIFT_COMMAND == PRESET) wait1Msec(10);
+	openClaw();
+
+	// ** Score Cone #2 **
+	//Back up + start going down
+	refreshDrive();
+	moveBkwd();
+	moveBy(50, 1000);
+	moveStop();
+	liftVal = 0;
+	CONE_LIFT_COMMAND = PRESET;
+
+	//Rotate 45 to right
+	refreshDrive();
+	rotate(127);
+	rotateBy(450, 1000);
+	moveStop();
+	wait1Msec(100);
+
+	//Move forward + close claw
+	refreshDrive();
+	moveFwd();
+	moveBy(50, 1000);
+	moveStop();
+	closeClaw();
+
+	//Start lifting to #2 height + moving into position
+	moveLiftToCone(2);
+	refreshDrive();
+	moveBkwd();
+	moveBy(50, 1000);
+	moveStop();
+	rotate(-127);
+	rotateBy(450, 1000);
+	moveStop();
+	moveFwd();
+	moveBy(80, 1000);
+	moveStop();
+
+	//Move cone down and open claw
+	moveLiftToCone(1);
+	while(CONE_LIFT_COMMAND == PRESET) wait1Msec(10);
+	openClaw();
+
+	// ** Score Cone #3 **
+
+	MOVE_MONITOR = STOP;
 }
 
 void autoB(){
-  deployConeLift();
+
 }
 
 void autoC(){
-  deployConeLift();
+
 }
 
 void prgSkills(){
