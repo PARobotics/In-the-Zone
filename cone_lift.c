@@ -31,11 +31,10 @@ void closeClaw(){ //Automatically closes the claw
   moveClaw(CLOSE);
   clawIsClosed = 1;
   clawIsOpened = 0;
-  while(!isTimedOut(t0 + 150)){
+  while(!isTimedOut(t0 + 250)){
     moveClaw(CLOSE);
     wait1Msec(10);
   }
-  moveClaw(20);
 }
 
 // ** Lift **

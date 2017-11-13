@@ -10,10 +10,10 @@
 #pragma config(Motor,  port1,           M_MOBILE_GOAL_LIFT, tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port4,           M_LIFT_1,      tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port4,           M_LIFT_1,      tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           M_LIFT_2,      tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
-#pragma config(Motor,  port6,           M_LIFT_3,      tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port7,           M_LIFT_4,      tmotorVex393_MC29, openLoop)
+#pragma config(Motor,  port6,           M_LIFT_3,      tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port7,           M_LIFT_4,      tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port8,           M_WHEEL_L1,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port9,           M_WHEEL_L2,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port10,          M_CLAW,        tmotorVex393_HBridge, openLoop)
@@ -107,7 +107,7 @@ task usercontrol(){
 		else if(vexRT[Btn5D] == 1) openClaw();
 
 		if(clawIsClosed == 1){
-			moveClaw(30);
+			moveClaw(35);
 		}
 		else if(clawIsOpened == 1){
 			moveClaw(-20);
