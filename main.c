@@ -107,7 +107,7 @@ task usercontrol(){
 		else if(vexRT[Btn5D] == 1) openClaw();
 
 		if(clawIsClosed == 1){
-			moveClaw(20);
+			moveClaw(30);
 		}
 		else if(clawIsOpened == 1){
 			moveClaw(-20);
