@@ -12,35 +12,73 @@ void autoA(){
 	//Get into position
 	openClaw();
 	refreshDrive();
-	moveBkwd();
-	moveBy(50, 1000);
 	moveFwd();
 	moveBy(50, 1000);
+	refreshDrive();
+	moveBkwd();
+	moveBy(10, 500);
 	moveStop();
 
 	refreshDrive();
 	rotate(-127);
-	rotateBy(225, 1000);
+	rotateBy(450, 1000);
 	moveStop();
 	wait1Msec(100);
 
-	//Drive Forward onto cone + Close Claw
 	refreshDrive();
 	moveFwd();
-	moveBy(50, 1000);
+	moveBy(360, 3000);
+	moveStop();
 	closeClaw();
 
-	//Move To mobile goal while lifting
-	refreshDrive();
 	moveLiftToCone(1);
-	moveBy(450, 5000);
+	wait1Msec(100);
+
+	refreshDrive();
+	rotate(-127);
+	rotateBy(450, 1000);
 	moveStop();
 
-	//Move cone down and open claw
+	refreshDrive();
+	moveFwd();
+	moveBy(120, 1500);
+	moveStop();
+
 	moveLiftToCone(0);
 	while(CONE_LIFT_COMMAND == PRESET) wait1Msec(10);
 	openClaw();
 
+	refreshDrive();
+	moveBkwd();
+	moveBy(30, 1000);
+	moveStop();
+
+	liftVal = 0;
+	CONE_LIFT_COMMAND = PRESET;
+
+	refreshDrive();
+	rotate(-127);
+	rotateBy(450, 1000);
+	moveStop();
+
+	refreshDrive();
+	moveFwd();
+	moveBy(30, 1000);
+	closeClaw();
+	refreshDrive();
+	moveBkwd();
+	moveBy(30, 1000);
+	moveStop();
+	closeClaw();
+
+	moveLiftToCone(2);
+	refreshDrive();
+	rotate(127);
+	rotateBy(450, 1000);
+	moveStop();
+
+
+	/*
 	// ** Score Cone #2 **
 	//Back up + start going down
 	refreshDrive();
@@ -83,7 +121,7 @@ void autoA(){
 	openClaw();
 
 	// ** Score Cone #3 **
-
+*/
 	MOVE_MONITOR = STOP;
 }
 

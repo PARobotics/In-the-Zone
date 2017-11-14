@@ -131,7 +131,8 @@ task usercontrol(){
 
 		//YEAH BOIII :(
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
-			playSoundFile("yeahboi.wav");
+			//playSoundFile("yeahboi.wav");
+			autoA();
 			resetPrButton(Btn7R_Main);
 		}
 
