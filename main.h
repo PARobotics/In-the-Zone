@@ -38,9 +38,9 @@ void moveLiftToCone(int coneNum);
 #define LOADER_HEIGHT 577
 
 #define BASE_LEFT_KP 1
-#define BASE_LEFT_KD 1
+#define BASE_LEFT_KD 0
 #define BASE_RIGHT_KP 1
-#define BASE_RIGHT_KD 1
+#define BASE_RIGHT_KD 0
 #define GYRO_KP 1
 #define GYRO_KD 1
 
