@@ -21,7 +21,7 @@ void autoA(){
 
 	refreshDrive();
 	rotate(-127);
-	rotateBy(450, 1000);
+	rotateByPID(450, -1, 1000);
 	moveStop();
 	wait1Msec(100);
 
