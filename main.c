@@ -115,7 +115,7 @@ task usercontrol(){
 
 		if(vexRT[Btn8U] == 1){
 			//Automatically raise to loader height
-			liftVal = 1730;
+			liftVal = LOADER_HEIGHT;
 			CONE_LIFT_COMMAND = PRESET;
 		}
 		else if(vexRT[Btn8D] == 1){
