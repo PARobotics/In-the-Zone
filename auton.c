@@ -10,7 +10,14 @@ void autoA(){
 	MOVE_MONITOR = START;
 	// ** Score Preload **
 	//Get into position
-		//Wiggle Claw
+	openClaw();
+	refreshDrive();
+	moveBkwd();
+	moveBy(50, 1000);
+	moveFwd();
+	moveBy(50, 1000);
+	moveStop();
+
 	refreshDrive();
 	rotate(-127);
 	rotateBy(225, 1000);
