@@ -41,8 +41,8 @@ void moveLiftToCone(int coneNum);
 #define BASE_LEFT_KD 0
 #define BASE_RIGHT_KP 1
 #define BASE_RIGHT_KD 0
-#define GYRO_KP 1
-#define GYRO_KD 1
+#define GYRO_KP 0.4
+#define GYRO_KD -0.005
 
 
 // ** Custom Easy Names **

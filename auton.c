@@ -13,7 +13,7 @@ void autoA(){
 	openClaw();
 	refreshDrive();
 	moveFwd();
-	moveBy(50, 1000);
+	moveBy(70,1000);
 	refreshDrive();
 	moveBkwd();
 	moveBy(10, 500);
@@ -27,7 +27,7 @@ void autoA(){
 
 	refreshDrive();
 	moveFwd();
-	moveBy(360, 3000);
+	moveByPID(400, 1, 2000);
 	moveStop();
 	closeClaw();
 
@@ -36,12 +36,14 @@ void autoA(){
 
 	refreshDrive();
 	rotate(-127);
-	rotateBy(450, 1000);
+	rotateByPID(400, -1, 1000);
 	moveStop();
+
+	while(CONE_LIFT_COMMAND == PRESET) wait1Msec(10);
 
 	refreshDrive();
 	moveFwd();
-	moveBy(120, 1500);
+	moveByPID(110,1, 700);
 	moveStop();
 
 	moveLiftToCone(0);
@@ -50,78 +52,51 @@ void autoA(){
 
 	refreshDrive();
 	moveBkwd();
-	moveBy(30, 1000);
+	moveByPID(110, -1, 700);
 	moveStop();
 
-	liftVal = 0;
+	liftVal = 30;
 	CONE_LIFT_COMMAND = PRESET;
 
 	refreshDrive();
-	rotate(-127);
-	rotateBy(450, 1000);
+	rotate(127);
+	rotateByPID(400, 1, 1000);
 	moveStop();
+
+	CONE_LIFT_COMMAND = STOP;
+
+	openClaw();
 
 	refreshDrive();
 	moveFwd();
-	moveBy(30, 1000);
+	moveByPID(100, 1, 1000);
 	closeClaw();
+
 	refreshDrive();
 	moveBkwd();
-	moveBy(30, 1000);
+	moveByPID(100, -1, 1000);
 	moveStop();
 	closeClaw();
 
 	moveLiftToCone(2);
-	refreshDrive();
-	rotate(127);
-	rotateBy(450, 1000);
-	moveStop();
-
-
-	/*
-	// ** Score Cone #2 **
-	//Back up + start going down
-	refreshDrive();
-	moveBkwd();
-	moveBy(50, 1000);
-	moveStop();
-	liftVal = 0;
-	CONE_LIFT_COMMAND = PRESET;
-
-	//Rotate 45 to right
-	refreshDrive();
-	rotate(127);
-	rotateBy(450, 1000);
-	moveStop();
 	wait1Msec(100);
 
-	//Move forward + close claw
 	refreshDrive();
-	moveFwd();
-	moveBy(50, 1000);
-	moveStop();
-	closeClaw();
-
-	//Start lifting to #2 height + moving into position
-	moveLiftToCone(2);
-	refreshDrive();
-	moveBkwd();
-	moveBy(50, 1000);
-	moveStop();
 	rotate(-127);
-	rotateBy(450, 1000);
-	moveStop();
-	moveFwd();
-	moveBy(80, 1000);
+	rotateByPID(380, -1, 1000);
 	moveStop();
 
-	//Move cone down and open claw
-	moveLiftToCone(1);
+	refreshDrive();
+	moveFwd();
+	moveByPID(110, 1, 700);
+	moveStop();
+
+	moveLiftToCone(0);
 	while(CONE_LIFT_COMMAND == PRESET) wait1Msec(10);
 	openClaw();
 
-	// ** Score Cone #3 **
-*/
+
+
 	MOVE_MONITOR = STOP;
 }
 

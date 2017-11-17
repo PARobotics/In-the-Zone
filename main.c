@@ -62,8 +62,8 @@ void pre_auton(){
 	gyroPID.kp = GYRO_KP;
 	gyroPID.kd = GYRO_KD;
 
-	initializeSensor(&baseLeft, M_PI / 9.0, dgtl1, &baseLeftPID);
-	initializeSensor(&baseRight, -1.0 * M_PI / 9, dgtl3, &baseRightPID);
+	initializeSensor(&baseLeft, -1.0 * M_PI / 9.0, dgtl1, &baseLeftPID);
+	initializeSensor(&baseRight, 1.0 * M_PI / 9, dgtl3, &baseRightPID);
 	initializeSensor(&gyro, 1.0, in2, &gyroPID);
 
 	makeLED(dgtl12, OFF);
