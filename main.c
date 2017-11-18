@@ -133,7 +133,7 @@ task usercontrol(){
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
 			//playSoundFile("yeahboi.wav");
 			autoA();
-			resetPrButton(Btn7R_Main);
+		resetPrButton(Btn7R_Main);
 		}
 
 		userControlUpdate();

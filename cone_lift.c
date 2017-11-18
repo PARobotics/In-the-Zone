@@ -54,7 +54,7 @@ void moveLift(int status){
 }
 
 void moveLiftToCone(int coneNum){
-	int liftVals[7] = {323, 640, 770, 909, 1118, 1267, 1333};
+	int liftVals[7] = {323, 640, 800, 909, 1118, 1267, 1333};
 	liftVal = liftVals[coneNum];
 	CONE_LIFT_COMMAND = PRESET;
 }
