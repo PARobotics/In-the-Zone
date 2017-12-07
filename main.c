@@ -82,7 +82,7 @@ task autonomous(){
 */
 
 task usercontrol(){
-  int V, H, T, F, S;
+  int V, H, X;
 
   stopTask(autonomous);
 
@@ -91,11 +91,14 @@ task usercontrol(){
 		// ** Primary joystick **
 
   	V = vexRT[Ch3];
+  	X = vexRT[Ch4];
 		H = vexRT[Ch1];
 
 		if(abs(V) < 15) V = 0;
 		if(abs(H) < 15) H = 0;
-		move(V, H, 0);
+		if(abs(X) < 15) X = 0;
+
+		move(V, H, X);
 
     //Lift
 		if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
@@ -113,27 +116,15 @@ task usercontrol(){
 			moveClaw(-20);
 		}
 
-		if(vexRT[Btn8U] == 1){
-			//Automatically raise to loader height
-			liftVal = LOADER_HEIGHT;
-			CONE_LIFT_COMMAND = PRESET;
-		}
-		else if(vexRT[Btn8D] == 1){
-			//Automatically lower
-			liftVal = 0;
-			CONE_LIFT_COMMAND = PRESET;
-		}
-
 		//Mobile Goal
 		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
 		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
 		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
-		//YEAH BOIII :(
+		//YEAH BOIII :)
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
-			//playSoundFile("yeahboi.wav");
-			autoA();
-		resetPrButton(Btn7R_Main);
+			playSoundFile("yeahboi.wav");
+			resetPrButton(Btn7R_Main);
 		}
 
 		userControlUpdate();
