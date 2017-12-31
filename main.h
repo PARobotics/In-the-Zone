@@ -10,7 +10,7 @@
 
 //Mobile Goal
 void moveMobileGoalLift(int status);
-int mobileGoalIsInPlace();
+bool mobileGoalIsInPlace();
 void automaticMobileGoalLift();
 
 //Cone lift

@@ -8,9 +8,8 @@
 
 // ** Claw **
 void moveClaw(int status){ //Manually opens and closes the claw
-  if(status == CLOSE) motorReq[M_CLAW] = 127;
-  else if(status == OPEN) motorReq[M_CLAW] = -127;
-  else if(status == STOP) motorReq[M_CLAW] = 0;
+  if(status == CLOSE) moveClaw(127);
+  else if(status == OPEN) moveClaw(-127);
   else motorReq[M_CLAW] = status;
 }
 
@@ -37,6 +36,17 @@ void closeClaw(){ //Automatically closes the claw
   }
 }
 
+// ** Swinging Arm **
+void moveSwingArm(int status){
+  if(status == UP){
+    moveSwingArm(127);
+  }
+  else if(status == DOWN){
+    moveSwingArm(-127);
+  }
+  else motorReq[M_SWING_ARM] = status;
+}
+
 // ** Lift **
 void moveLift(int status){
   if(status == UP){
@@ -48,8 +58,6 @@ void moveLift(int status){
   else{
     motorReq[M_LIFT_1] = status;
     motorReq[M_LIFT_2] = status;
-    motorReq[M_LIFT_3] = status;
-    motorReq[M_LIFT_4] = status;
   }
 }
 
@@ -88,7 +96,7 @@ task coneLiftTask(){
     }
     else if(CONE_LIFT_COMMAND == PRESET){
    		moveLift(SIGN(liftVal - liftSensor.val));
-      if(abs(liftSensor.val - liftVal) < 5) CONE_LIFT_COMMAND = STOP;
+      if(abs(liftSensor.val - liftVal) < 5) CONE_LIFT_COMMAND = HOLD;
     }
     else if(CONE_LIFT_COMMAND == STOP){
       moveLift(STOP);

@@ -15,14 +15,13 @@
 */
 
 void moveMobileGoalLift(int status){ //Manually sets value for mobile goal lift
-  if(status == UP) motorReq[M_MOBILE_GOAL_LIFT] = 127;
-  else if(status == DOWN) motorReq[M_MOBILE_GOAL_LIFT] = -127;
-  else if(status == STOP) motorReq[M_MOBILE_GOAL_LIFT] = 0;
+  if(status == UP) moveMobileGoalLift(127);
+  else if(status == DOWN) moveMobileGoalLift(-127);
   else motorReq[M_MOBILE_GOAL_LIFT] = status;
 }
 
-int mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the robot.
-  return SensorValue(mobileGoalLimitSwitch);
+bool mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the robot.
+  return SensorValue(mobileGoalLimitSwitch) == 1;
 }
 
 task mobileGoalTask(){
@@ -46,10 +45,10 @@ task mobileGoalTask(){
     else if(MOBILE_GOAL_COMMAND == DOWN){ //Automatically lowers mobile goal stack into place
       t0 = time1[T1];
       moveMobileGoalLift(DOWN);
-      updateSensorValue(&mobileGoalLift);
+      updateSensor(&mobileGoalLift);
 
-	      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
-	      	updateSensorValue(&mobileGoalLift);
+	      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
+	      	updateSensor(&mobileGoalLift);
 	      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
 	      	//if(mobileGoalLift.val < 2700) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
 	     		moveMobileGoalLift(mobileGoalAppliedVoltage);
@@ -75,17 +74,16 @@ task mobileGoalTask(){
       t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
-      while(!isTimedOut(t0 + 2500) && vexRT[BAILOUT_BUTTON] == 0 && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
+      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
       	updateSensorValue(&mobileGoalLift);
         moveMobileGoalLift(DOWN);
         wait1Msec(10);
 
-        if(isTimedOut(t0 + 750) && mobileGoalIsInPlace()){ //Make sure gears dont chip
-     			moveMobileGoalStop();
+        if(isTimedOut(t0 + 750) || mobileGoalIsInPlace()){ //Make sure gears dont chip
+     			moveMobileGoalLift(STOP);
      			MOBILE_GOAL_COMMAND = STOP;
      			break;
      		}
-
       }
       moveMobileGoalLift(STOP);
       MOBILE_GOAL_COMMAND = STOP;

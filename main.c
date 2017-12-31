@@ -25,6 +25,8 @@
   Jeffrey Shen
 */
 
+#pragma DebuggerWindows("debugStream") //Include when debugging (automatically enables debug window)
+
 #pragma platform(VEX)
 #pragma competitionControl(Competition)
 #pragma autonomousDuration(20)
