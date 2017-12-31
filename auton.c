@@ -7,7 +7,7 @@
 */
 
 void autoA(){
-	MOVE_MONITOR = START;
+	/*MOVE_MONITOR = START;
 	// ** Score Preload **
 	//Get into position
 	openClaw();
@@ -116,7 +116,7 @@ void autoA(){
 
 	refreshDrive();
 	moveFwd();
-	moveBySlowPID(120, 1, 1000);
+	moveByPID(120, 1, 1000);
 	moveStop();
 
 	closeClaw();
@@ -151,6 +151,7 @@ void autoA(){
 	moveStop();
 
 	MOVE_MONITOR = STOP;
+	*/
 }
 
 void autoB(){

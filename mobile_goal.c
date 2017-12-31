@@ -17,7 +17,7 @@
 void moveMobileGoalLift(int status){ //Manually sets value for mobile goal lift
   if(status == UP) moveMobileGoalLift(127);
   else if(status == DOWN) moveMobileGoalLift(-127);
-  else motorReq[M_MOBILE_GOAL_LIFT] = status;
+  else motorReq[M_MOBILE_GOAL] = status;
 }
 
 bool mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto the robot.

@@ -55,10 +55,8 @@ void moveLift(int status){
   else if(status == DOWN){
     moveLift(-127);
   }
-  else{
-    motorReq[M_LIFT_1] = status;
-    motorReq[M_LIFT_2] = status;
-  }
+  else motorReq[M_LIFT] = status;
+
 }
 
 void moveLiftToCone(int coneNum){
