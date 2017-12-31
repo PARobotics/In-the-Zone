@@ -35,7 +35,7 @@ task mobileGoalTask(){
     if(MOBILE_GOAL_COMMAND == UP){ //Automatically raises mobile goal into place
       t0 = time1[T1];
       moveMobileGoalLift(UP);
-      while(!isTimedOut(t0 + 5000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
+      while(!isTimedOut(t0 + 2000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
      		moveMobileGoalLift(UP);
         wait1Msec(10);
       }
