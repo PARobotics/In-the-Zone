@@ -1,12 +1,12 @@
 #ifndef MOBILE_GOAL_C
 #define MOBILE_GOAL_C
 
-#define MOBILE_GOAL_BOTTOM_LIMIT  2300
+#define MOBILE_GOAL_BOTTOM_LIMIT  2400
 #define MOBILE_GOAL_DEFAULT_V 15
 #define MOBILE_GOAL_MIN_V -127
 #define MOBILE_GOAL_MAX_V 127
-#define MOBILE_GOAL_KP 0.1
-#define MOBILE_GOAL_KD 0.03
+#define MOBILE_GOAL_KP -0.08
+#define MOBILE_GOAL_KD -0.03
 
 
 /*
@@ -27,7 +27,7 @@ bool mobileGoalIsInPlace(){ //Returns if the mobile goal has been loaded onto th
 task mobileGoalTask(){
 	mobileGoalPID.kp = MOBILE_GOAL_KP;
 	mobileGoalPID.kd = MOBILE_GOAL_KD;
-	initializeSensor(&mobileGoalLift, 1.0, in3, &mobileGoalPID);
+	initializeSensor(&mobileGoalLift, 1.0, in2, &mobileGoalPID);
 	int mobileGoalAppliedVoltage = 0;
   int t0;
 
@@ -36,7 +36,9 @@ task mobileGoalTask(){
       t0 = time1[T1];
       moveMobileGoalLift(UP);
       while(!isTimedOut(t0 + 2000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
-     		moveMobileGoalLift(UP);
+      	updateSensor(&mobileGoalLift);
+     		if(mobileGoalLift.val < 1500) moveMobileGoalLift(60);
+     		else moveMobileGoalLift(UP);
         wait1Msec(10);
       }
       moveMobileGoalLift(STOP);
@@ -47,17 +49,11 @@ task mobileGoalTask(){
       moveMobileGoalLift(DOWN);
       updateSensor(&mobileGoalLift);
 
-	      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
+	      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val < MOBILE_GOAL_BOTTOM_LIMIT){
 	      	updateSensor(&mobileGoalLift);
 	      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
-	      	//if(mobileGoalLift.val < 2700) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
+	      	if(mobileGoalLift.val > 2200) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
 	     		moveMobileGoalLift(mobileGoalAppliedVoltage);
-
-	     		if(isTimedOut(t0 + 750) && mobileGoalIsInPlace()){ //Make sure gears dont chip
-	     			moveMobileGoalStop();
-	     			MOBILE_GOAL_COMMAND = STOP;
-	     			break;
-	     		}
 
 					#if DEBUG_MOBILE_GOAL == 1
 						writeDebugStreamLine("[MOBILE_GOAL] %d %d %d %d %d", time1[T1] - t0, MOBILE_GOAL_BOTTOM_LIMIT, mobileGoalLift.val, mobileGoalLift.speed, mobileGoalAppliedVoltage);
@@ -74,16 +70,10 @@ task mobileGoalTask(){
       t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
-      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
+      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val < MOBILE_GOAL_BOTTOM_LIMIT){
       	updateSensorValue(&mobileGoalLift);
         moveMobileGoalLift(DOWN);
         wait1Msec(10);
-
-        if(isTimedOut(t0 + 750) || mobileGoalIsInPlace()){ //Make sure gears dont chip
-     			moveMobileGoalLift(STOP);
-     			MOBILE_GOAL_COMMAND = STOP;
-     			break;
-     		}
       }
       moveMobileGoalLift(STOP);
       MOBILE_GOAL_COMMAND = STOP;

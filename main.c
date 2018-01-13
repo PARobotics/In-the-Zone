@@ -1,16 +1,18 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, in1,    PWR,            sensorPotentiometer)
+#pragma config(Sensor, in2,    mobileGoalLiftSensor, sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  mobileGoalLimitSwitch, sensorTouch)
 #pragma config(Sensor, dgtl2,  liftEncoder,    sensorQuadEncoder)
-#pragma config(Sensor, I2C_1,  LIFT,           sensorQuadEncoderOnI2CPort,    , AutoAssign )
-#pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_1,  DRV_LEFT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_2,  DRV_RIGHT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  SWING_ARM_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Motor,  port1,           M_SWING_ARM,   tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           M_WHEEL_R3,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port4,           M_WHEEL_L3,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           M_WHEEL_L1,    tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port6,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_2)
-#pragma config(Motor,  port7,           M_WHEEL_L2,    tmotorVex393_MC29, openLoop, encoderPort, I2C_1)
+#pragma config(Motor,  port6,           M_WHEEL_R2,    tmotorVex393_MC29, openLoop, encoderPort, I2C_2)
+#pragma config(Motor,  port7,           M_WHEEL_L2,    tmotorVex393_MC29, openLoop, reversed, encoderPort, I2C_1)
 #pragma config(Motor,  port8,           M_MOBILE_GOAL, tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port9,           M_LIFT,        tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port10,          M_CLAW,        tmotorVex393_HBridge, openLoop)
@@ -35,6 +37,7 @@
 #include "auton.c"
 
 sensor liftSensor;
+sensor swingArm;
 sensor baseLeft;
 sensor baseRight;
 sensor mobileGoalLift;
@@ -64,6 +67,7 @@ void pre_auton(){
 	initializeSensor(&baseLeft, -1.0 * M_PI / 9.0, dgtl1, &baseLeftPID);
 	initializeSensor(&baseRight, 1.0 * M_PI / 9, dgtl3, &baseRightPID);
 	initializeSensor(&gyro, 1.0, in2, &gyroPID);
+	initializeSensor(&swingArm, 1.0, I2C_3);
 
 	makeLED(dgtl12, OFF);
 
@@ -111,8 +115,16 @@ task usercontrol(){
 		if(clawIsClosed == 1){
 			moveClaw(35);
 		}
-		else if(clawIsOpened == 1){
+		if(clawIsOpened == 1){
 			moveClaw(-20);
+		}
+
+		//Swing arm
+		if(vexRT[Btn8U] == 1) swingArmUp();
+		else if(vexRT[Btn8D] == 1) swingArmDown();
+
+		if(swingArmIsUp == 1){
+			moveSwingArm(30);
 		}
 
 		//Mobile Goal

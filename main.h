@@ -19,6 +19,8 @@ void openClaw();
 void closeClaw();
 void moveLift();
 void moveLiftToCone(int coneNum);
+void swingArmUp();
+void swingArmDown();
 
 //Auton
 
@@ -56,6 +58,7 @@ int coneNum = 0;
 int liftVal = 0;
 int currentlyCarrying = 0;
 int secondJointHasStalled = 0;
+int swingArmIsUp = 0;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;

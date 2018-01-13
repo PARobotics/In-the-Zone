@@ -1,6 +1,9 @@
 #ifndef CONE_LIFT_C
 #define CONE_LIFT_C
 
+#define SWING_ARM_MAX 265
+#define SWING_ARM_MIN 5
+
 /*
   CONE_LIFT.C
   Contains all the code for the cone claw and lift
@@ -18,7 +21,7 @@ void openClaw(){ //Automatically opens the claw
   moveClaw(OPEN);
   clawIsClosed = 0;
   clawIsOpened = 1;
-  while(!isTimedOut(t0 + 150)){
+  while(!isTimedOut(t0 + 50)){
     moveClaw(OPEN);
     wait1Msec(10);
   }
@@ -30,7 +33,7 @@ void closeClaw(){ //Automatically closes the claw
   moveClaw(CLOSE);
   clawIsClosed = 1;
   clawIsOpened = 0;
-  while(!isTimedOut(t0 + 250)){
+  while(!isTimedOut(t0 + 50)){
     moveClaw(CLOSE);
     wait1Msec(10);
   }
@@ -45,6 +48,32 @@ void moveSwingArm(int status){
     moveSwingArm(-127);
   }
   else motorReq[M_SWING_ARM] = status;
+}
+
+void swingArmUp(){
+	int t0 = time1[T1];
+  moveSwingArm(UP);
+  swingArmIsUp = 1;
+  updateSensorValue(&swingArm);
+  while(swingArm.val < SWING_ARM_MAX && !isTimedOut(t0 + 2000)){
+  	updateSensorValue(&swingArm);
+    moveSwingArm(UP);
+    wait1Msec(10);
+  }
+  moveSwingArm(STOP);
+}
+
+void swingArmDown(){
+	int t0 = time1[T1];
+  moveSwingArm(DOWN);
+	swingArmIsUp = 0;
+	updateSensorValue(&swingArm);
+  while(swingArm.val > SWING_ARM_MIN && !isTimedOut(t0 + 500)){
+  	updateSensorValue(&swingArm);
+    moveSwingArm(DOWN);
+    wait1Msec(10);
+  }
+  moveSwingArm(STOP);
 }
 
 // ** Lift **
