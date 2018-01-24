@@ -4,8 +4,8 @@
 #define SWING_ARM_MAX 265
 #define SWING_ARM_MIN 5
 #define CONE_LIFT_DEFAULT_V 10
-#define CONE_LIFT_MAX_V 30
-#define CONE_LIFT_MIN_V -30
+#define CONE_LIFT_MAX_V 10
+#define CONE_LIFT_MIN_V -50
 
 /*
   CONE_LIFT.C
@@ -106,8 +106,8 @@ void moveLiftToCone(int coneNum){
 task coneLiftTask(){
 
   pid liftPid;
-  liftPid.kp = 20;
-  liftPid.kd = 0;
+  liftPid.kp = 13;
+  liftPid.kd = 0.1;
 
   initializeSensor(&liftSensor, 1.0, dgtl2, &liftPid);
 

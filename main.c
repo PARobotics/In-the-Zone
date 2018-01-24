@@ -109,13 +109,8 @@ task usercontrol(){
 		else if(CONE_LIFT_COMMAND != PRESET && CONE_LIFT_COMMAND != STOP) CONE_LIFT_COMMAND = HOLD;
 
 		//Claw
-		if(getPrButton(Btn5U_Main) == PUSHED_RELEASED){
-			if(clawIsOpened == 1) closeClaw();
-			else openClaw();
-
-			resetPrButton(Btn5U_Main);
-		}
-		else if(vexRT[Btn5D] == 1) CONE_LIFT_COMMAND = HOLD;
+		if(vexRT[Btn5U] == 1) closeClaw();
+		else if(vexRT[Btn5D] == 1) openClaw();
 
 		if(clawIsClosed == 1){
 			moveClaw(35);
