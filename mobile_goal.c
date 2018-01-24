@@ -37,7 +37,7 @@ task mobileGoalTask(){
       moveMobileGoalLift(UP);
       while(!isTimedOut(t0 + 2000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
       	updateSensor(&mobileGoalLift);
-     		if(mobileGoalLift.val < 1500) moveMobileGoalLift(60);
+     		if(mobileGoalLift.val < 2000) moveMobileGoalLift(80);
      		else moveMobileGoalLift(UP);
         wait1Msec(10);
       }

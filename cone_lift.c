@@ -3,6 +3,9 @@
 
 #define SWING_ARM_MAX 265
 #define SWING_ARM_MIN 5
+#define CONE_LIFT_DEFAULT_V 10
+#define CONE_LIFT_MAX_V 30
+#define CONE_LIFT_MIN_V -30
 
 /*
   CONE_LIFT.C
@@ -51,7 +54,7 @@ void moveSwingArm(int status){
 }
 
 void swingArmUp(){
-	int t0 = time1[T1];
+	/*int t0 = time1[T1];
   moveSwingArm(UP);
   swingArmIsUp = 1;
   updateSensorValue(&swingArm);
@@ -60,11 +63,14 @@ void swingArmUp(){
     moveSwingArm(UP);
     wait1Msec(10);
   }
+  moveSwingArm(STOP);*/
+  moveSwingArm(UP);
+  wait1Msec(800);
   moveSwingArm(STOP);
 }
 
 void swingArmDown(){
-	int t0 = time1[T1];
+	/*int t0 = time1[T1];
   moveSwingArm(DOWN);
 	swingArmIsUp = 0;
 	updateSensorValue(&swingArm);
@@ -73,6 +79,9 @@ void swingArmDown(){
     moveSwingArm(DOWN);
     wait1Msec(10);
   }
+  moveSwingArm(STOP);*/
+  moveSwingArm(DOWN);
+  wait1Msec(400);
   moveSwingArm(STOP);
 }
 
@@ -97,17 +106,30 @@ void moveLiftToCone(int coneNum){
 task coneLiftTask(){
 
   pid liftPid;
-  liftPid.kp = 0;
+  liftPid.kp = 20;
   liftPid.kd = 0;
 
-  initializeSensor(&liftSensor, 1.0, I2C_1, &liftPid);
+  initializeSensor(&liftSensor, 1.0, dgtl2, &liftPid);
 
   int dbgCnt = 0;
+  int vcmd = 0;
+  int targetVal = 0;
+  int isHolding = 0;
 
   while(true){
-  	updateSensorValue(&liftSensor);
+  	if(CONE_LIFT_COMMAND != HOLD) isHolding = 0;
 
     if(CONE_LIFT_COMMAND == HOLD){ //Keeps the lift at the same place
+    	updateSensor(&liftSensor);
+
+    	if(isHolding == 0){
+    		isHolding = 1;
+    		targetVal = liftSensor.val;
+    	}
+
+    	vcmd = sensorHold(&liftSensor, targetVal, CONE_LIFT_DEFAULT_V, CONE_LIFT_MIN_V, CONE_LIFT_MAX_V);
+   		motorReq[M_LIFT] = vcmd;
+
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
           dbgCnt = 0;

@@ -73,6 +73,10 @@ void pre_auton(){
 
 	initializeDrive(0.0, &baseLeft, &baseRight, &gyro);
 	initialize();
+
+	nMotorEncoder[I2C_1] = 0;
+	nMotorEncoder[I2C_2] = 0;
+	nMotorEncoder[I2C_3] = 0;
 }
 
 task autonomous(){
@@ -97,20 +101,21 @@ task usercontrol(){
   	X = vexRT[Ch4];
 		H = vexRT[Ch1];
 
-		if(abs(V) < 15) V = 0;
-		if(abs(H) < 15) H = 0;
-		if(abs(X) < 15) X = 0;
-
-		move(V, H, X);
+		move(V, H * 0.75, X);
 
     //Lift
 		if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
 		else if(vexRT[Btn6D] == 1) CONE_LIFT_COMMAND = DOWN;
-		else if(CONE_LIFT_COMMAND != PRESET) CONE_LIFT_COMMAND = STOP;
+		else if(CONE_LIFT_COMMAND != PRESET && CONE_LIFT_COMMAND != STOP) CONE_LIFT_COMMAND = HOLD;
 
 		//Claw
-		if(vexRT[Btn5U] == 1) closeClaw();
-		else if(vexRT[Btn5D] == 1) openClaw();
+		if(getPrButton(Btn5U_Main) == PUSHED_RELEASED){
+			if(clawIsOpened == 1) closeClaw();
+			else openClaw();
+
+			resetPrButton(Btn5U_Main);
+		}
+		else if(vexRT[Btn5D] == 1) CONE_LIFT_COMMAND = HOLD;
 
 		if(clawIsClosed == 1){
 			moveClaw(35);
@@ -122,10 +127,6 @@ task usercontrol(){
 		//Swing arm
 		if(vexRT[Btn8U] == 1) swingArmUp();
 		else if(vexRT[Btn8D] == 1) swingArmDown();
-
-		if(swingArmIsUp == 1){
-			moveSwingArm(30);
-		}
 
 		//Mobile Goal
 		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
