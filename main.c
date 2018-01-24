@@ -125,8 +125,9 @@ task usercontrol(){
 		}
 
 		//Swing arm
-		if(vexRT[Btn8U] == 1) swingArmUp();
-		else if(vexRT[Btn8D] == 1) swingArmDown();
+		if(vexRT[Btn8U] == 1) moveSwingArm(UP);
+		else if(vexRT[Btn8D] == 1) moveSwingArm(DOWN);
+		else moveSwingArm(STOP);
 
 		//Mobile Goal
 		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
