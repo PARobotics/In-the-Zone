@@ -121,8 +121,11 @@ task usercontrol(){
 		}
 
 		//Swing arm
-		if(vexRT[Btn8U] == 1) SWING_ARM_COMMAND = UP;
-		else if(vexRT[Btn8D] == 1) SWING_ARM_COMMAND = DOWN;
+		if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
+			if(swingArmIsUp) SWING_ARM_COMMAND = DOWN;
+			else SWING_ARM_COMMAND = UP;
+			resetPrButton(Btn8D_Main);
+		}
 
 		//Mobile Goal
 		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;

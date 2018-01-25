@@ -54,12 +54,14 @@ void moveSwingArm(int status){
 }
 
 void swingArmUp(){
+	swingArmIsUp = 1;
   moveSwingArm(UP);
   wait1Msec(1000);
   moveSwingArm(STOP);
 }
 
 void swingArmDown(){
+	swingArmIsUp = 0;
   moveSwingArm(DOWN);
   wait1Msec(600);
   moveSwingArm(STOP);
