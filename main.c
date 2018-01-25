@@ -110,8 +110,11 @@ task usercontrol(){
 		else if(CONE_LIFT_COMMAND != PRESET && CONE_LIFT_COMMAND != STOP) CONE_LIFT_COMMAND = HOLD;
 
 		//Claw
-		if(vexRT[Btn5U] == 1) closeClaw();
-		else if(vexRT[Btn5D] == 1) openClaw();
+		if(getPrButton(Btn5U_Main) == PUSHED_RELEASED){
+			if(clawIsClosed) openClaw();
+			else closeClaw();
+			resetPrButton(Btn5U_Main);
+		}
 
 		if(clawIsClosed == 1){
 			moveClaw(35);
@@ -121,10 +124,10 @@ task usercontrol(){
 		}
 
 		//Swing arm
-		if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
+		if(getPrButton(Btn5D_Main) == PUSHED_RELEASED){
 			if(swingArmIsUp) SWING_ARM_COMMAND = DOWN;
 			else SWING_ARM_COMMAND = UP;
-			resetPrButton(Btn8D_Main);
+			resetPrButton(Btn5D_Main);
 		}
 
 		//Mobile Goal
