@@ -54,34 +54,14 @@ void moveSwingArm(int status){
 }
 
 void swingArmUp(){
-	/*int t0 = time1[T1];
   moveSwingArm(UP);
-  swingArmIsUp = 1;
-  updateSensorValue(&swingArm);
-  while(swingArm.val < SWING_ARM_MAX && !isTimedOut(t0 + 2000)){
-  	updateSensorValue(&swingArm);
-    moveSwingArm(UP);
-    wait1Msec(10);
-  }
-  moveSwingArm(STOP);*/
-  moveSwingArm(UP);
-  wait1Msec(800);
+  wait1Msec(1000);
   moveSwingArm(STOP);
 }
 
 void swingArmDown(){
-	/*int t0 = time1[T1];
   moveSwingArm(DOWN);
-	swingArmIsUp = 0;
-	updateSensorValue(&swingArm);
-  while(swingArm.val > SWING_ARM_MIN && !isTimedOut(t0 + 500)){
-  	updateSensorValue(&swingArm);
-    moveSwingArm(DOWN);
-    wait1Msec(10);
-  }
-  moveSwingArm(STOP);*/
-  moveSwingArm(DOWN);
-  wait1Msec(400);
+  wait1Msec(600);
   moveSwingArm(STOP);
 }
 
@@ -101,6 +81,27 @@ void moveLiftToCone(int coneNum){
 	int liftVals[7] = {323, 640, 800, 909, 1118, 1267, 1333};
 	liftVal = liftVals[coneNum];
 	CONE_LIFT_COMMAND = PRESET;
+}
+
+task swingArmTask(){
+	while(true){
+		if(SWING_ARM_COMMAND == UP){
+			swingArmUp();
+			SWING_ARM_COMMAND = HOLD;
+		}
+		else if(SWING_ARM_COMMAND == DOWN){
+			swingArmDown();
+			SWING_ARM_COMMAND = STOP;
+		}
+		else if(SWING_ARM_COMMAND == HOLD){
+			moveSwingArm(40);
+		}
+		else{
+			moveSwingArm(STOP);
+		}
+
+		wait1Msec(50);
+	}
 }
 
 task coneLiftTask(){

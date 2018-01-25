@@ -55,6 +55,7 @@ int MOTOR_SLEW[MOTOR_NUM] = {255, 40, 40, 40, 40, 40, 40, 255, 255, 255};
 #define BAILOUT_BUTTON Btn8L
 void bailOut(){
 	CONE_LIFT_COMMAND = STOP;
+	SWING_ARM_COMMAND = STOP;
   clawIsClosed = 0;
   clawIsOpened = 0;
 }

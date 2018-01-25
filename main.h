@@ -21,6 +21,7 @@ void moveLift();
 void moveLiftToCone(int coneNum);
 void swingArmUp();
 void swingArmDown();
+void moveSwingArm(int status);
 
 //Auton
 
@@ -58,11 +59,11 @@ int coneNum = 0;
 int liftVal = 0;
 int currentlyCarrying = 0;
 int secondJointHasStalled = 0;
-int swingArmIsUp = 0;
 
 //Command Flags
 int MOBILE_GOAL_COMMAND = 0;
 int CONE_LIFT_COMMAND = 0;
+int SWING_ARM_COMMAND = 0;
 
 //Debug flags
 #define DEBUG_CONE_LIFT 1

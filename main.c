@@ -55,6 +55,7 @@ void pre_auton(){
 	bStopTasksBetweenModes = false; //Make sure all tasks we create actually execute in user control
 
 	startTask(mobileGoalTask, 9);
+	startTask(swingArmTask, 9);
 	startTask(coneLiftTask, 9);
 
 	baseLeftPID.kp = BASE_LEFT_KP;
@@ -120,9 +121,8 @@ task usercontrol(){
 		}
 
 		//Swing arm
-		if(vexRT[Btn8U] == 1) moveSwingArm(UP);
-		else if(vexRT[Btn8D] == 1) moveSwingArm(DOWN);
-		else moveSwingArm(STOP);
+		if(vexRT[Btn8U] == 1) SWING_ARM_COMMAND = UP;
+		else if(vexRT[Btn8D] == 1) SWING_ARM_COMMAND = DOWN;
 
 		//Mobile Goal
 		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
