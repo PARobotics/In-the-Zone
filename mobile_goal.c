@@ -1,12 +1,12 @@
 #ifndef MOBILE_GOAL_C
 #define MOBILE_GOAL_C
 
-#define MOBILE_GOAL_BOTTOM_LIMIT  2400
+#define MOBILE_GOAL_BOTTOM_LIMIT  1550
 #define MOBILE_GOAL_DEFAULT_V 15
 #define MOBILE_GOAL_MIN_V -127
 #define MOBILE_GOAL_MAX_V 127
-#define MOBILE_GOAL_KP -0.08
-#define MOBILE_GOAL_KD -0.03
+#define MOBILE_GOAL_KP 0.08
+#define MOBILE_GOAL_KD 0.03
 
 
 /*
@@ -37,7 +37,7 @@ task mobileGoalTask(){
       moveMobileGoalLift(UP);
       while(!isTimedOut(t0 + 2000) && mobileGoalIsInPlace() == 0 && vexRT[BAILOUT_BUTTON] == 0){
       	updateSensor(&mobileGoalLift);
-     		if(mobileGoalLift.val < 2000) moveMobileGoalLift(80);
+     		if(mobileGoalLift.val > 2900) moveMobileGoalLift(80);
      		else moveMobileGoalLift(UP);
         wait1Msec(10);
       }
@@ -49,10 +49,10 @@ task mobileGoalTask(){
       moveMobileGoalLift(DOWN);
       updateSensor(&mobileGoalLift);
 
-	      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val < MOBILE_GOAL_BOTTOM_LIMIT){
+	      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
 	      	updateSensor(&mobileGoalLift);
 	      	mobileGoalAppliedVoltage = sensorHold(&mobileGoalLift, MOBILE_GOAL_BOTTOM_LIMIT, MOBILE_GOAL_DEFAULT_V, MOBILE_GOAL_MIN_V, MOBILE_GOAL_MAX_V);
-	      	if(mobileGoalLift.val > 2200) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
+	      	if(mobileGoalLift.val > 1600) mobileGoalAppliedVoltage -= 20; //Push the goal down to the ground at the end
 	     		moveMobileGoalLift(mobileGoalAppliedVoltage);
 
 					#if DEBUG_MOBILE_GOAL == 1
@@ -70,7 +70,7 @@ task mobileGoalTask(){
       t0 = time1[T1];
       moveMobileGoalLift(DOWN);
       updateSensorValue(&mobileGoalLift);
-      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val < MOBILE_GOAL_BOTTOM_LIMIT){
+      while(!isTimedOut(t0 + 2500) && !isBailedOut() && mobileGoalLift.val > MOBILE_GOAL_BOTTOM_LIMIT){
       	updateSensorValue(&mobileGoalLift);
         moveMobileGoalLift(DOWN);
         wait1Msec(10);
