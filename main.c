@@ -131,7 +131,13 @@ task usercontrol(){
 		}
 
 		//Mobile Goal
-		if(vexRT[Btn7L] == 1) MOBILE_GOAL_COMMAND = DOWN;
+		if(getPrButton(Btn7L_Main) == PUSHED_RELEASED) {
+			MOBILE_GOAL_COMMAND = DOWN;
+			wait1Msec(500);
+			swingArmDown();
+			openClaw();
+			resetPrButton(Btn7L_Main);
+		}
 		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
 		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
