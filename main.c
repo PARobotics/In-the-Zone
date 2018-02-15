@@ -134,7 +134,8 @@ task usercontrol(){
 		if(getPrButton(Btn7L_Main) == PUSHED_RELEASED) {
 			MOBILE_GOAL_COMMAND = DOWN;
 			wait1Msec(500);
-			swingArmDown();
+			SWING_ARM_COMMAND = DOWN;
+			wait1Msec(1000);
 			openClaw();
 			resetPrButton(Btn7L_Main);
 		}
