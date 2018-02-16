@@ -135,17 +135,30 @@ task usercontrol(){
 			MOBILE_GOAL_COMMAND = DOWN;
 			wait1Msec(500);
 			SWING_ARM_COMMAND = DOWN;
-			wait1Msec(1000);
-			openClaw();
 			resetPrButton(Btn7L_Main);
 		}
 		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
 		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
-		//YEAH BOIII :)
+		//Automatic internal stacking button
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
-			playSoundFile("yeahboi.wav");
+			SWING_ARM_COMMAND = UP;
+			wait1Msec(1000);
+			CONE_LIFT_COMMAND = DOWN;
+			wait1Msec(300);
+			CONE_LIFT_COMMAND = STOP;
+			openClaw();
+			CONE_LIFT_COMMAND = UP;
+			wait1Msec(300);
+			CONE_LIFT_COMMAND = STOP;
+			SWING_ARM_COMMAND = DOWN;
 			resetPrButton(Btn7R_Main);
+		}
+
+		//YEAH BOIII :)
+		if(getPrButton(Btn8R_Main) == PUSHED_RELEASED){
+			playSoundFile("yeahboi.wav");
+			resetPrButton(Btn8R_Main);
 		}
 
 		userControlUpdate();
