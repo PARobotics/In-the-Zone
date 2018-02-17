@@ -22,6 +22,7 @@ void moveLiftToCone(int coneNum);
 void swingArmUp();
 void swingArmDown();
 void moveSwingArm(int status);
+bool stillNeedToLift();
 
 //Auton
 

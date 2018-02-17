@@ -85,6 +85,10 @@ void moveLiftToCone(int coneNum){
 	CONE_LIFT_COMMAND = PRESET;
 }
 
+bool stillNeedToLift(){
+  return SensorValue(LiftUltraSonic) < 100);
+}
+
 task swingArmTask(){
 	while(true){
 		if(SWING_ARM_COMMAND == UP){
