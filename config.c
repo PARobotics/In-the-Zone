@@ -14,18 +14,20 @@ void userControlProcedure(){
 
 //Set up push release buttons
 #define USE_PR_BUTTON  1
-#define NUM_PR_BUTTONS  4 //Only include if using remote
+#define NUM_PR_BUTTONS  5 //Only include if using remote
 
 #define Btn7R_Main 0
 #define Btn5U_Main 1
 #define Btn5D_Main 2
 #define Btn7L_Main 3
+#define Btn8R_Main 4
 
 void setUpButtons(){ //Only include if using remote
   addPrButton(Btn7R_Main, Btn7R);
   addPrButton(Btn5D_Main, Btn5D);
   addPrButton(Btn5U_Main, Btn5U);
   addPrButton(Btn7L_Main, Btn7L);
+  addPrButton(Btn8R_Main, Btn8R);
 }
 
 //Configure Sensors
