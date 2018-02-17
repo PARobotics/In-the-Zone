@@ -188,6 +188,12 @@ task usercontrol(){
 			resetPrButton(Btn8R_Main);
 		}
 
+		//PODRACING
+		if(getPrButton(Btn8L_Main) == PUSHED_RELEASED){
+			playSoundFile("podracing.wav");
+			resetPrButton(Btn8L_Main);
+		}
+
 		userControlUpdate();
 	}
 }
