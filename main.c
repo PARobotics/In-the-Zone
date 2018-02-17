@@ -3,9 +3,10 @@
 #pragma config(Sensor, in2,    mobileGoalLiftSensor, sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  mobileGoalLimitSwitch, sensorTouch)
 #pragma config(Sensor, dgtl2,  liftEncoder,    sensorQuadEncoder)
+#pragma config(Sensor, dgtl5,  LiftUltraSonic, sensorSONAR_cm)
 #pragma config(Sensor, I2C_1,  DRV_LEFT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  DRV_RIGHT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
-#pragma config(Sensor, I2C_3,  SWING_ARM_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
+#pragma config(Sensor, I2C_3,  SWING_ARM_SENSOR, sensorNone)
 #pragma config(Motor,  port1,           M_SWING_ARM,   tmotorVex393_HBridge, openLoop)
 #pragma config(Motor,  port2,           M_WHEEL_R3,    tmotorVex393_MC29, openLoop, reversed)
 #pragma config(Motor,  port3,           M_WHEEL_R1,    tmotorVex393_MC29, openLoop, reversed)
@@ -153,6 +154,32 @@ task usercontrol(){
 			CONE_LIFT_COMMAND = STOP;
 			SWING_ARM_COMMAND = DOWN;
 			resetPrButton(Btn7R_Main);
+		}
+
+		if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
+			for(int i = 0; i < 10; i++){
+				//ADD BAILOUT
+
+				//Go up
+				//Swing arm up and go down
+				SWING_ARM_COMMAND = UP;
+				wait1Msec(1000);
+				CONE_LIFT_COMMAND = DOWN;
+				wait1Msec(300);
+				CONE_LIFT_COMMAND = STOP;
+
+				if(i != 9){
+					openClaw();
+					CONE_LIFT_COMMAND = UP;
+					wait1Msec(300);
+					CONE_LIFT_COMMAND = STOP;
+					SWING_ARM_COMMAND = DOWN;
+					closeClaw();
+					wait1Msec(300);
+					//Go down to right height
+				}
+			}
+			resetPrButton(Btn8U_Main);
 		}
 
 		//YEAH BOIII :)
