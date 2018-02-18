@@ -86,7 +86,7 @@ void moveLiftToCone(int coneNum){
 }
 
 bool stillNeedToLift(){
-  return SensorValue(LiftUltraSonic) < 100);
+  return SensorValue(LiftUltraSonic) < 10;
 }
 
 task swingArmTask(){

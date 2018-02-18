@@ -22,7 +22,7 @@ void userControlProcedure(){
 #define Btn7L_Main 3
 #define Btn8R_Main 4
 #define Btn8U_Main 5
-#define Btn8L_Main 6
+#define Btn8D_Main 6
 
 
 void setUpButtons(){ //Only include if using remote
@@ -32,8 +32,7 @@ void setUpButtons(){ //Only include if using remote
   addPrButton(Btn7L_Main, Btn7L);
   addPrButton(Btn8R_Main, Btn8R);
   addPrButton(Btn8U_Main, Btn8U);
-  addPrButton(Btn8U_Main, Btn8U);
-  addPrButton(Btn8L_Main, Btn8L);
+  addPrButton(Btn8D_Main, Btn8D);
 }
 
 //Configure Sensors

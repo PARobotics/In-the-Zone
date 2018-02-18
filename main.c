@@ -3,7 +3,7 @@
 #pragma config(Sensor, in2,    mobileGoalLiftSensor, sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  mobileGoalLimitSwitch, sensorTouch)
 #pragma config(Sensor, dgtl2,  liftEncoder,    sensorQuadEncoder)
-#pragma config(Sensor, dgtl5,  LiftUltraSonic, sensorSONAR_cm)
+#pragma config(Sensor, dgtl5,  LiftUltraSonic, sensorSONAR_inch)
 #pragma config(Sensor, I2C_1,  DRV_LEFT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_2,  DRV_RIGHT_SENSOR, sensorQuadEncoderOnI2CPort,    , AutoAssign )
 #pragma config(Sensor, I2C_3,  SWING_ARM_SENSOR, sensorNone)
@@ -143,6 +143,11 @@ task usercontrol(){
 
 		//Automatic internal stacking button
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
+			CONE_LIFT_COMMAND = UP;
+			while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
+				wait1Msec(10);
+			}
+			CONE_LIFT_COMMAND = STOP;
 			SWING_ARM_COMMAND = UP;
 			wait1Msec(1000);
 			CONE_LIFT_COMMAND = DOWN;
@@ -189,9 +194,9 @@ task usercontrol(){
 		}
 
 		//PODRACING
-		if(getPrButton(Btn8L_Main) == PUSHED_RELEASED){
+		if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
 			playSoundFile("podracing.wav");
-			resetPrButton(Btn8L_Main);
+			resetPrButton(Btn8D_Main);
 		}
 
 		userControlUpdate();
