@@ -151,7 +151,7 @@ task usercontrol(){
 			SWING_ARM_COMMAND = UP;
 			wait1Msec(1000);
 			CONE_LIFT_COMMAND = DOWN;
-			wait1Msec(300);
+			wait1Msec(500);
 			CONE_LIFT_COMMAND = STOP;
 			openClaw();
 			CONE_LIFT_COMMAND = UP;
@@ -162,27 +162,40 @@ task usercontrol(){
 		}
 
 		if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
-			for(int i = 0; i < 10; i++){
-				//ADD BAILOUT
+			for(int i = 0; i < 6; i++){
+				if(vexRT[BAILOUT_BUTTON] == 1) break;
 
-				//Go up
-				//Swing arm up and go down
+				CONE_LIFT_COMMAND = UP;
+				while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
+					wait1Msec(10);
+				}
+				CONE_LIFT_COMMAND = STOP;
 				SWING_ARM_COMMAND = UP;
 				wait1Msec(1000);
 				CONE_LIFT_COMMAND = DOWN;
-				wait1Msec(300);
+				wait1Msec(500);
 				CONE_LIFT_COMMAND = STOP;
 
-				if(i != 9){
+				if(i != 5){
 					openClaw();
 					CONE_LIFT_COMMAND = UP;
-					wait1Msec(300);
+					wait1Msec(500);
 					CONE_LIFT_COMMAND = STOP;
 					SWING_ARM_COMMAND = DOWN;
+					wait1Msec(200);
 					closeClaw();
-					wait1Msec(300);
-					//Go down to right height
+					moveClaw(35);
+					wait1Msec(400);
+					liftVal = 20;
+					CONE_LIFT_COMMAND = PRESET;
+					int t0 = time1[T1]
+					while(CONE_LIFT_COMMAND == PRESET && vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + 500)){
+						wait1Msec(10);
+					}
+					CONE_LIFT_COMMAND = STOP;
 				}
+
+				wait1Msec(100);
 			}
 			resetPrButton(Btn8U_Main);
 		}
