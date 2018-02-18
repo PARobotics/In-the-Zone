@@ -178,6 +178,7 @@ task usercontrol(){
 
 				if(i != 5){
 					openClaw();
+					moveClaw(-20);
 					CONE_LIFT_COMMAND = UP;
 					wait1Msec(500);
 					CONE_LIFT_COMMAND = STOP;
@@ -195,7 +196,7 @@ task usercontrol(){
 					CONE_LIFT_COMMAND = STOP;
 				}
 
-				wait1Msec(100);
+				wait1Msec(300);
 			}
 			resetPrButton(Btn8U_Main);
 		}
