@@ -151,6 +151,7 @@ task coneLiftTask(){
       moveLift(DOWN);
     }
     else if(CONE_LIFT_COMMAND == PRESET){
+    	updateSensorValue(&liftSensor);
    		moveLift(SIGN(liftVal - liftSensor.val));
       if(abs(liftSensor.val - liftVal) < 3) CONE_LIFT_COMMAND = STOP;
     }
