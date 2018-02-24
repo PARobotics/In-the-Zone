@@ -143,19 +143,10 @@ task usercontrol(){
 
 		//Automatic internal stacking button
 		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
-			SWING_ARM_COMMAND = PRESET;
-			moveSwingArm(127);
-			wait1Msec(500);
 			CONE_LIFT_COMMAND = UP;
-			wait1Msec(100);
-			SWING_ARM_COMMAND = PRESET;
-			moveSwingArm(-127);
-			wait1Msec(300);
-			SWING_ARM_COMMAND = STOP;
 			while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
 				wait1Msec(10);
 			}
-			wait1Msec(100);
 			CONE_LIFT_COMMAND = STOP;
 			wait1Msec(100);
 			SWING_ARM_COMMAND = UP;
@@ -175,6 +166,7 @@ task usercontrol(){
 			resetPrButton(Btn7R_Main);
 		}
 
+		//Loader
 		if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
 			for(int i = 0; i < 8; i++){
 				if(vexRT[BAILOUT_BUTTON] == 1) break;
@@ -185,7 +177,7 @@ task usercontrol(){
 				}
 				CONE_LIFT_COMMAND = STOP;
 				SWING_ARM_COMMAND = UP;
-				wait1Msec(1000);
+				wait1Msec(800);
 				CONE_LIFT_COMMAND = DOWN;
 				if(i < 3) wait1Msec(600);
 				else wait1Msec(400);
@@ -199,17 +191,16 @@ task usercontrol(){
 					wait1Msec(400);
 					CONE_LIFT_COMMAND = STOP;
 					SWING_ARM_COMMAND = DOWN;
-					wait1Msec(200);
-					closeClaw();
-					moveClaw(35);
-					wait1Msec(200);
-					liftVal = 20;
+					wait1Msec(400);
+					liftVal = 30;
 					CONE_LIFT_COMMAND = PRESET;
 					int t0 = time1[T1]
 					while(CONE_LIFT_COMMAND == PRESET && vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + 500)){
 						wait1Msec(10);
 					}
 					CONE_LIFT_COMMAND = STOP;
+					closeClaw();
+					moveClaw(35);
 				}
 
 				wait1Msec(300);
