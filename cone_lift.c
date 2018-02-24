@@ -102,7 +102,7 @@ task swingArmTask(){
 		else if(SWING_ARM_COMMAND == HOLD){
 			moveSwingArm(40);
 		}
-		else{
+		else if(SWING_ARM_COMMAND != PRESET){
 			moveSwingArm(STOP);
 		}
 
