@@ -28,7 +28,7 @@ void openClaw(){ //Automatically opens the claw
     moveClaw(OPEN);
     wait1Msec(10);
   }
-  moveClaw(STOP);
+  moveClaw(-20);
 }
 
 void closeClaw(){ //Automatically closes the claw
@@ -40,6 +40,7 @@ void closeClaw(){ //Automatically closes the claw
     moveClaw(CLOSE);
     wait1Msec(10);
   }
+  moveClaw(35);
 }
 
 // ** Swinging Arm **
@@ -85,6 +86,28 @@ void moveLiftToCone(int coneNum){
 	CONE_LIFT_COMMAND = PRESET;
 }
 
+void autoInternalStack(){
+	moveLift(UP);
+	while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
+		wait1Msec(10);
+	}
+	moveLift(STOP);
+	wait1Msec(100);
+	SWING_ARM_COMMAND = UP;
+	wait1Msec(1000);
+	moveLift(DOWN);
+	wait1Msec(500);
+	moveLift(STOP);
+	openClaw();
+	wait1Msec(200);
+	moveLift(UP);
+	while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
+		wait1Msec(10);
+	}
+	moveLift(STOP);
+	SWING_ARM_COMMAND = DOWN;
+}
+
 bool stillNeedToLift(){
   return SensorValue(LiftUltraSonic) < 10;
 }
@@ -97,10 +120,13 @@ task swingArmTask(){
 		}
 		else if(SWING_ARM_COMMAND == DOWN){
 			swingArmDown();
-			SWING_ARM_COMMAND = STOP;
+			SWING_ARM_COMMAND = HOLD_DOWN;
 		}
 		else if(SWING_ARM_COMMAND == HOLD){
 			moveSwingArm(40);
+		}
+		else if(SWING_ARM_COMMAND == HOLD_DOWN){
+			moveSwingArm(-20);
 		}
 		else if(SWING_ARM_COMMAND != PRESET){
 			moveSwingArm(STOP);
@@ -155,6 +181,9 @@ task coneLiftTask(){
    		moveLift(SIGN(liftVal - liftSensor.val));
       if(abs(liftSensor.val - liftVal) < 3) CONE_LIFT_COMMAND = STOP;
     }
+    else if(CONE_LIFT_COMMAND == AUTO_INTERNAL_STACK){
+    	autoInternalStack();
+  	}
     else if(CONE_LIFT_COMMAND == STOP){
       moveLift(STOP);
     }

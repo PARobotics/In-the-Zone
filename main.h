@@ -23,6 +23,7 @@ void swingArmUp();
 void swingArmDown();
 void moveSwingArm(int status);
 bool stillNeedToLift();
+void autoInternalStack();
 
 //Auton
 
@@ -54,6 +55,8 @@ bool stillNeedToLift();
 
 // ** Global variables **
 #define PRESET 20
+#define AUTO_INTERNAL_STACK 25
+#define HOLD_DOWN 21
 int clawIsClosed = 0;
 int clawIsOpened = 0;
 int coneNum = 0;
