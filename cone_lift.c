@@ -64,7 +64,7 @@ void swingArmUp(){
 void swingArmDown(){
 	swingArmIsUp = 0;
   moveSwingArm(DOWN);
-  wait1Msec(600);
+  wait1Msec(1000);
   moveSwingArm(STOP);
 }
 
@@ -161,7 +161,8 @@ task coneLiftTask(){
     	}
 
     	vcmd = sensorHold(&liftSensor, targetVal, CONE_LIFT_DEFAULT_V, CONE_LIFT_MIN_V, CONE_LIFT_MAX_V);
-   		motorReq[M_LIFT] = vcmd;
+   		if(liftSensor.val <= 15) motorReq[M_LIFT] = vcmd;
+   		else motorReq[M_LIFT] = 0;
 
       #if DEBUG_CONE_LIFT == 1
         if(dbgCnt == 10){
