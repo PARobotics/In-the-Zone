@@ -17,7 +17,28 @@ void autoA(){
 }
 
 void autoB(){
+  //Deploy Robot
+  closeClaw();
+  swingArmDown();
 
+  //Move lift up
+  liftVal = 1; //Find the actual value
+  CONE_LIFT_COMMAND = PRESET;
+  wait1Msec(500);
+
+  //Drive forwards
+  MOVE_MONITOR = START;
+  refreshDrive();
+  moveFwd();
+  moveBy(200, 5000); //Find actual value
+  moveStop();
+
+  //Score the cone
+  liftVal = 1; //Find the actual value
+  CONE_LIFT_COMMAND = PRESET;
+  wait1Msec(500);
+  openClaw();
+  MOVE_MONITOR = STOP;
 }
 
 void autoC(){
