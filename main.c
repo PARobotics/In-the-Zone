@@ -93,6 +93,8 @@ task autonomous(){
 task usercontrol(){
   int V, H, X;
 
+  autoB();
+
   stopTask(autonomous);
 	SWING_ARM_COMMAND = HOLD_DOWN;
 
