@@ -150,7 +150,7 @@ task usercontrol(){
 
 		//Loader
 		if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
-			for(int i = 0; i < 8; i++){
+			for(int i = 0; i < 9; i++){
 				if(vexRT[BAILOUT_BUTTON] == 1) break;
 
 				CONE_LIFT_COMMAND = UP;
@@ -161,14 +161,13 @@ task usercontrol(){
 				SWING_ARM_COMMAND = UP;
 				wait1Msec(800);
 				CONE_LIFT_COMMAND = DOWN;
-				if(i < 3) wait1Msec(600);
-				else wait1Msec(400);
-
+				wait1Msec(300); //was 200. see if this works consistently now
 				CONE_LIFT_COMMAND = STOP;
 
-				if(i != 7){
+				if(i != 8){
 					openClaw();
 					moveClaw(-20);
+					wait1Msec(200);
 					CONE_LIFT_COMMAND = UP;
 					wait1Msec(400);
 					CONE_LIFT_COMMAND = STOP;
