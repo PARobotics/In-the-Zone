@@ -93,8 +93,6 @@ task autonomous(){
 task usercontrol(){
   int V, H, X;
 
-  autoB();
-
   stopTask(autonomous);
 	SWING_ARM_COMMAND = HOLD_DOWN;
 
@@ -163,7 +161,8 @@ task usercontrol(){
 				SWING_ARM_COMMAND = UP;
 				wait1Msec(800);
 				CONE_LIFT_COMMAND = DOWN;
-				wait1Msec(300); //was 200. see if this works consistently now
+				if(i == 0) wait1Msec(200);
+				else wait1Msec(250);
 				CONE_LIFT_COMMAND = STOP;
 
 				if(i != 8){
@@ -174,7 +173,7 @@ task usercontrol(){
 					wait1Msec(400);
 					CONE_LIFT_COMMAND = STOP;
 					SWING_ARM_COMMAND = DOWN;
-					wait1Msec(400);
+					wait1Msec(800);
 					liftVal = 30;
 					CONE_LIFT_COMMAND = PRESET;
 					int t0 = time1[T1]
