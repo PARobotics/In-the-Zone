@@ -93,10 +93,17 @@ task autonomous(){
 task usercontrol(){
   int V, H, X;
 
-  autoB();
-
   stopTask(autonomous);
 	SWING_ARM_COMMAND = HOLD_DOWN;
+
+	if(MODE == RBT_SKILL){ //Disable slew for the drive during robot skills
+		MOTOR_SLEW[1] = 255;
+		MOTOR_SLEW[2] = 255;
+		MOTOR_SLEW[3] = 255;
+		MOTOR_SLEW[4] = 255;
+		MOTOR_SLEW[5] = 255;
+		MOTOR_SLEW[6] = 255;
+	}
 
   while(true){
 
@@ -106,7 +113,8 @@ task usercontrol(){
   	X = vexRT[Ch4];
 		H = vexRT[Ch1];
 
-		move(V, H * 0.75, X);
+		if(MODE == RBT_SKILL) move(V, H, X);
+		else move(V, H * 0.75, X);
 
     //Lift
 		if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
