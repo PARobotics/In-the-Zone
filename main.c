@@ -113,103 +113,119 @@ task usercontrol(){
   	X = vexRT[Ch4];
 		H = vexRT[Ch1];
 
-		if(MODE == RBT_SKILL) move(V, H, X);
-		else move(V, H * 0.75, X);
+		//Robot skills controls
+		if(MODE == RBT_SKILL){
+			move(V, H, X);
 
-    //Lift
-		if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
-		else if(vexRT[Btn6D] == 1) CONE_LIFT_COMMAND = DOWN;
-		else if(CONE_LIFT_COMMAND != PRESET && CONE_LIFT_COMMAND != STOP && CONE_LIFT_COMMAND != AUTO_INTERNAL_STACK) CONE_LIFT_COMMAND = HOLD;
+			//Lift
+			if(vexRT[Btn5U] == 1) CONE_LIFT_COMMAND = UP;
+			else if(vexRT[Btn5D] == 1) CONE_LIFT_COMMAND = DOWN;
+			else CONE_LIFT_COMMAND = STOP;
 
-		//Claw
-		if(getPrButton(Btn5U_Main) == PUSHED_RELEASED){
-			if(clawIsClosed) openClaw();
-			else closeClaw();
-			resetPrButton(Btn5U_Main);
+			if(vexRT[Btn6U] == 1) MOBILE_GOAL_COMMAND = UP;
+			else if(vexRT[Btn6D] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+
+			//Claw
+			if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
+				if(clawIsClosed) openClaw();
+				else closeClaw();
+				resetPrButton(Btn8D_Main);
+			}
 		}
+		else{
+			move(V, H * 0.75, X);
 
-		if(clawIsClosed == 1){
-			moveClaw(35);
-		}
-		if(clawIsOpened == 1){
-			moveClaw(-20);
-		}
+			//Lift
+			if(vexRT[Btn6U] == 1) CONE_LIFT_COMMAND = UP;
+			else if(vexRT[Btn6D] == 1) CONE_LIFT_COMMAND = DOWN;
+			else if(CONE_LIFT_COMMAND != PRESET && CONE_LIFT_COMMAND != STOP && CONE_LIFT_COMMAND != AUTO_INTERNAL_STACK) CONE_LIFT_COMMAND = HOLD;
 
-		//Swing arm
-		if(getPrButton(Btn5D_Main) == PUSHED_RELEASED){
-			if(swingArmIsUp) SWING_ARM_COMMAND = DOWN;
-			else SWING_ARM_COMMAND = UP;
-			resetPrButton(Btn5D_Main);
-		}
+			//Mobile Goal
+			if(getPrButton(Btn7L_Main) == PUSHED_RELEASED) {
+				MOBILE_GOAL_COMMAND = DOWN;
+				wait1Msec(500);
+				SWING_ARM_COMMAND = DOWN;
+				resetPrButton(Btn7L_Main);
+			}
+			else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
+			else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
 
-		//Mobile Goal
-		if(getPrButton(Btn7L_Main) == PUSHED_RELEASED) {
-			MOBILE_GOAL_COMMAND = DOWN;
-			wait1Msec(500);
-			SWING_ARM_COMMAND = DOWN;
-			resetPrButton(Btn7L_Main);
-		}
-		else if(vexRT[Btn7D] == 1) MOBILE_GOAL_COMMAND = UP;
-		else if(vexRT[Btn7U] == 1) MOBILE_GOAL_COMMAND = DOWN_WITHOUT_GOAL;
+			//Swing arm
+			if(getPrButton(Btn5D_Main) == PUSHED_RELEASED){
+				if(swingArmIsUp) SWING_ARM_COMMAND = DOWN;
+				else SWING_ARM_COMMAND = UP;
+				resetPrButton(Btn5D_Main);
+			}
 
-		//Automatic internal stacking button
-		if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
-			CONE_LIFT_COMMAND = AUTO_INTERNAL_STACK;
-			resetPrButton(Btn7R_Main);
-		}
+			//Automatic internal stacking button
+			if(getPrButton(Btn7R_Main) == PUSHED_RELEASED){
+				CONE_LIFT_COMMAND = AUTO_INTERNAL_STACK;
+				resetPrButton(Btn7R_Main);
+			}
 
-		//Loader
-		if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
-			for(int i = 0; i < 9; i++){
-				if(vexRT[BAILOUT_BUTTON] == 1) break;
+			//Claw
+			if(getPrButton(Btn5U_Main) == PUSHED_RELEASED){
+				if(clawIsClosed) openClaw();
+				else closeClaw();
+				resetPrButton(Btn5U_Main);
+			}
 
-				CONE_LIFT_COMMAND = UP;
-				while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
-					wait1Msec(10);
-				}
-				CONE_LIFT_COMMAND = STOP;
-				SWING_ARM_COMMAND = UP;
-				wait1Msec(800);
-				CONE_LIFT_COMMAND = DOWN;
-				if(i == 0) wait1Msec(200);
-				else wait1Msec(250);
-				CONE_LIFT_COMMAND = STOP;
+			//Loader
+			if(getPrButton(Btn8U_Main) == PUSHED_RELEASED){
+				for(int i = 0; i < 9; i++){
+					if(vexRT[BAILOUT_BUTTON] == 1) break;
 
-				if(i != 8){
-					openClaw();
-					moveClaw(-20);
-					wait1Msec(200);
 					CONE_LIFT_COMMAND = UP;
-					wait1Msec(400);
-					CONE_LIFT_COMMAND = STOP;
-					SWING_ARM_COMMAND = DOWN;
-					wait1Msec(800);
-					liftVal = 30;
-					CONE_LIFT_COMMAND = PRESET;
-					int t0 = time1[T1]
-					while(CONE_LIFT_COMMAND == PRESET && vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + 500)){
+					while(stillNeedToLift() && vexRT[BAILOUT_BUTTON] == 0){
 						wait1Msec(10);
 					}
 					CONE_LIFT_COMMAND = STOP;
-					closeClaw();
-					moveClaw(35);
-				}
+					SWING_ARM_COMMAND = UP;
+					wait1Msec(800);
+					CONE_LIFT_COMMAND = DOWN;
+					if(i == 0) wait1Msec(200);
+					else wait1Msec(250);
+					CONE_LIFT_COMMAND = STOP;
 
-				wait1Msec(300);
+					if(i != 8){
+						openClaw();
+						moveClaw(-20);
+						wait1Msec(200);
+						CONE_LIFT_COMMAND = UP;
+						wait1Msec(400);
+						CONE_LIFT_COMMAND = STOP;
+						SWING_ARM_COMMAND = DOWN;
+						wait1Msec(800);
+						liftVal = 30;
+						CONE_LIFT_COMMAND = PRESET;
+						int t0 = time1[T1]
+						while(CONE_LIFT_COMMAND == PRESET && vexRT[BAILOUT_BUTTON] == 0 && !isTimedOut(t0 + 500)){
+							wait1Msec(10);
+						}
+						CONE_LIFT_COMMAND = STOP;
+						closeClaw();
+						moveClaw(35);
+					}
+
+					wait1Msec(300);
+				}
+				resetPrButton(Btn8U_Main);
 			}
-			resetPrButton(Btn8U_Main);
+
+			//PODRACING
+			if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
+				playSoundFile("podracing.wav");
+				resetPrButton(Btn8D_Main);
+			}
 		}
+
+		if(clawIsClosed == 1) moveClaw(35);
+		if(clawIsOpened == 1) moveClaw(-20);
 
 		//YEAH BOIII :)
 		if(getPrButton(Btn8R_Main) == PUSHED_RELEASED){
 			playSoundFile("yeahboi.wav");
 			resetPrButton(Btn8R_Main);
-		}
-
-		//PODRACING
-		if(getPrButton(Btn8D_Main) == PUSHED_RELEASED){
-			playSoundFile("podracing.wav");
-			resetPrButton(Btn8D_Main);
 		}
 
 		userControlUpdate();
