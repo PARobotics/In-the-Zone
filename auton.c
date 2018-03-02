@@ -43,6 +43,13 @@ void autoB(){
   moveBkwd();
   wait1Msec(300);
   moveStop();
+
+  refreshDrive();
+  rotate(127 * SIDE);
+  rotateBy(900, 1000);
+  moveFwd();
+  wait1Msec(500);
+  moveStop();
   MOVE_MONITOR = STOP;
 }
 
