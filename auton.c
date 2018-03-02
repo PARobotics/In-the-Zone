@@ -7,13 +7,9 @@
 */
 
 void autoA(){
-  openClaw();
-  CONE_LIFT_COMMAND = UP;
-  wait1Msec(1000);
-  CONE_LIFT_COMMAND = DOWN;
-  moveSwingArm(DOWN);
-  wait1Msec(2000);
-  moveSwingArm(STOP);
+  closeClaw();
+  SWING_ARM_COMMAND = DOWN;
+	wait1Msec(1000);
 }
 
 void autoB(){
